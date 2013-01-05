@@ -1,0 +1,99 @@
+.geui-circle {
+	display: inline-block;
+	.rounded(68px);
+	width: 68px;
+	height: 68px;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #ccc9c6;
+	background-color: rgba(0,0,0,0.3);
+	line-height: 68px;
+	color: white;
+	font-family: @gefont;
+	font-size: 2.5em;
+	font-weight: 700;
+	.geui-icon {
+		vertical-align: middle;
+		margin-top: -4px;
+		&.geui-icon-rss {
+			margin-top: -9px;
+			margin-left: 6px;
+		}
+		&.geui-icon-article,
+		&.geui-icon-calendar,
+		&.geui-icon-kit,
+		&.geui-icon-star,
+		&.geui-icon-quote {
+			margin-top: -6px;
+		}
+		&.geui-icon-phone {
+			margin-top: -5px;
+		}
+		&.geui-icon-info {
+			margin-top: -4px;
+		}
+	}
+}
+
+.geui-circle.geui-circle-small {
+	.rounded(28px);
+	width: 28px;
+	height: 28px;
+	background-color: @dark-grey;
+	line-height: 28px;
+	font-size: 15px;
+	font-weight: 300;
+}
+
+.geui-circle.geui-circle-large {
+	
+	.rounded(140px);
+	width: 140px;
+	height: 140px;
+	line-height: normal;
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: 700;
+
+	.geui-icon{
+
+		display: block;
+		margin: 41px 0 17px 56px;
+
+		&.geui-icon-moving-large {
+			margin-left: 51px;
+			margin-bottom: 24px;
+		}
+		&.geui-icon-curing-large {
+			margin-left: 46px;
+		}
+		&.geui-icon-powering-large {
+			margin-top: 34px;
+		}
+
+		&.geui-circle-large-sprite-rd{
+			background-position-x: 0;
+		}
+
+		&.geui-circle-large-sprite-history{
+			background-position-x: -148px;
+		}
+
+		&.geui-circle-large-sprite-citizenship{
+			background-position-x: -296px;
+		}
+
+		&.geui-circle-large-sprite-leadership{
+			background-position-x: -444px;
+		}
+
+	}
+}
+
+.lt-ie9 {
+	.geui-circle {
+		background-image: url("../../img/ie-circle.png");
+		background-repeat: no-repeat;
+		background-color: transparent;
+	}
+}

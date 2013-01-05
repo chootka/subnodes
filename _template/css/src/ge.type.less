@@ -1,0 +1,149 @@
+// font family helper classes
+.gefont {
+	font-family: @gefont;
+	font-weight: 500;
+}
+.copy {
+	font-family: @copy;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+// Typeface selection
+h1, h2, h3, h4, h5 { 
+	font-family: @gefont;
+}
+body,
+p {
+    font-size: 14px;
+    line-height: 1.571428571 em; /*22px*/
+    font-family: @copy;
+}
+
+// Sizing
+h1, h2, h3, h4 {
+	font-weight: 700;
+	line-height: 1.6em;
+}
+h1 {
+	/*font-size: 40px;*/
+    .ems(40);
+}
+h2 {
+    .ems(26);
+	/*font-size: 26px;*/
+}
+h3 {
+    .ems(20);
+	/*font-size: 20px;*/
+}
+h4 {
+    .ems(16);
+	/*font-size: 16px;*/
+}
+
+p {
+	/*font-size: 14px;*/
+	line-height: 20px;
+}
+
+a {
+    color: @blue;
+	&:hover {
+		color: darken(@blue, 10%);
+		text-decoration: none;
+	}
+}
+mark {
+	background-color: @desaturated-yellow;
+}
+strong {
+	font-weight: bold;
+}
+em {
+	font-style: italic;
+}
+
+.copy-wrapper {
+	ul {
+		margin: 0.4em;
+		list-style: disc inside;
+	}
+	ol {
+		margin: 0.4em;
+		list-style: decimal inside;
+	}
+	li {
+		margin: 0.4em 0;
+	}
+	p {
+		margin-bottom: 0.4em;
+	}
+
+	table {
+		border: 1px solid #ccc;
+		border-collapse: collapse;
+		width: 100%;
+		margin: 1em 0;
+		th,
+		td {
+			border: 1px solid #ccc;
+			border-collapse: collapse;
+			padding: 0.3em 0.5em;
+		}
+		th {
+			text-align: center;
+			font-weight: bold;
+			
+		}
+		td {
+			text-align: left;
+		}
+		.text-left {
+			text-align: left;
+			& th,
+			& tr {
+				text-align: left;
+			}
+		}
+		.text-center {
+			text-align: center;
+			& th,
+			& tr {
+				text-align: center;
+			}
+		}
+		.text-right {
+			text-align: right;
+			& th,
+			& tr {
+				text-align: right;
+			}
+		}
+	}
+}
+
+.h1, 
+.h2,
+.h3,
+.h4 {
+	.gefont();
+	line-height: 1.6em;
+	font-weight: bold;
+}
+
+.h1 {
+	font-size: 2.85714em;
+}
+
+.h2 {
+	font-size: 1.85714em;
+}
+
+.h3 {
+	font-size: 1.42857em;
+}
+
+.h4 {
+	font-size: 1.14286em;
+}

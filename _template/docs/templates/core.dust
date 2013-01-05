@@ -1,0 +1,629 @@
+{^xhr}
+  {>"docs/templates/shared/layout.dust"/}
+{:else}
+  {+content/}
+{/xhr}
+{<content}
+		<div class="container">
+			<h1>Core CSS</h1>
+			<!-- COLOR DOC -->
+			<section id="colors">
+				<h2>Colors</h2>
+				<hr>
+				<h3>Background Color Classes</h3>
+				<div class="row">
+					<ul class="group gefont span6">
+						<li class="color-block desaturated-blue">.desaturated-blue</li>
+						<li class="color-block desaturated-green">.desaturated-green</li>
+						<li class="color-block desaturated-red">.desaturated-red</li>
+						<li class="color-block desaturated-yellow">.desaturated-yellow</li>
+						<li class="color-block desaturated-grey">.desaturated-grey</li>
+					</ul>
+					<ul class="group gefont span6">
+						<li class="color-block blue">.blue</li>
+						<li class="color-block dark-grey">.dark-grey</li>
+						<li class="color-block text-grey">.text-grey</li>
+						<li class="color-block med-grey">.med-grey</li>
+						<li class="color-block light-grey">.light-grey</li>
+					</ul>
+				</div>
+				<h3>Text Color Classes</h3>
+				<div class="row">
+					<ul class="group gefont span6">
+						<li class="color-block-text desaturated-blue-text">.desaturated-blue-text</li>
+						<li class="color-block-text desaturated-green-text">.desaturated-green-text</li>
+						<li class="color-block-text desaturated-red-text">.desaturated-red-text</li>
+						<li class="color-block-text desaturated-yellow-text">.desaturated-yellow-text</li>
+						<li class="color-block-text desaturated-grey-text">.desaturated-grey-text</li>
+					</ul>
+					<ul class="group gefont span6">
+						<li class="color-block-text blue-text">.blue-text</li>
+						<li class="color-block-text dark-grey-text">.dark-grey-text</li>
+						<li class="color-block-text text-grey-text">.text-grey-text</li>
+						<li class="color-block-text med-grey-text">.med-grey-text</li>
+						<li class="color-block-text light-grey-text">.light-grey-text</li>
+					</ul>
+				</div>
+			</section>
+			<section id="type">
+				<h2>Typography</h2>
+				<hr>
+				<div class="row">
+					<div class="span6">
+						<h1>h1. Heading Level One</h1>
+						<p class="alert">Only one h1 should be used per page</p>
+						<h2>h2. Heading Level Two</h2>
+						<h3>h3. Heading Level Three</h3>
+						<h4>h4. Heading Level Four</h4>
+					</div>
+					<div class="span6">
+						<div class="copy-wrapper">
+							<p>This is an example of some <strong>body copy</strong>. It has a <mark>font size of 14px and a line height of 20px</mark>. And now <em>we're going to repeat ourselves</em>, so you can see it demonstrated at <u>lenght</u>. This is an example of some body copy. It has a font size of 14px and a line height of 20px. And now we're going to repeat ourselves, so you can see it demonstrated at length.</p>
+							<p>This is an example of some <strong>body copy</strong>. It has a <mark>font size of 14px and a line height of 20px</mark>. And now <em>we're going to repeat ourselves</em>, so you can see it demonstrated at <u>lenght</u>. This is an example of some body copy. It has a font size of 14px and a line height of 20px. And now we're going to repeat ourselves, so you can see it demonstrated at length.</p>
+
+							<table cellspacing="0" summary="Example Table">
+								<thead>
+									<tr>
+										<th>Year</th>
+										<th>Ratio</th>
+										<th class="text-right">Certificate Date/Pay Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>2000</td>
+										<td>3-for-1</td>
+										<td>5-May-00</td>
+									</tr>
+									<tr class="text-left">
+										<td>1997</td>
+										<td>2-for-1</td>
+										<td>9-May-97</td>
+									</tr>
+									<tr class="text-right">
+										<td>1994</td>
+										<td>2-for-1</td>
+										<td>13-May-94</td>
+									</tr>
+									<tr>
+										<td class="text-right">1987</td>
+										<td class="text-center">2-for-1</td>
+										<td class="text-left">22-May-87</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;copy-wrapper&quot;&gt;
+	&lt;p&gt;This is an example of some &lt;strong&gt;body copy&lt;/strong&gt;. It has a &lt;mark&gt;font size of 14px and a line height of 20px&lt;/mark&gt;. And now &lt;em&gt;we&#039;re going to repeat ourselves&lt;/em&gt;, so you can see it demonstrated at &lt;u&gt;lenght&lt;/u&gt;. This is an example of some body copy.&lt;/p&gt;
+
+	&lt;table cellspacing=&quot;0&quot; summary=&quot;Example Table&quot;&gt;
+		&lt;thead&gt;
+			&lt;tr&gt;
+				&lt;th&gt;Year&lt;/th&gt;
+				&lt;th&gt;Ratio&lt;/th&gt;
+				&lt;th class=&quot;text-right&quot;&gt;Certificate Date/Pay Date&lt;/th&gt;
+			&lt;/tr&gt;
+		&lt;/thead&gt;
+		&lt;tbody&gt;
+			&lt;tr&gt;
+				&lt;td&gt;2000&lt;/td&gt;
+				&lt;td&gt;3-for-1&lt;/td&gt;
+				&lt;td&gt;5-May-00&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr class=&quot;text-left&quot;&gt;
+				&lt;td&gt;1997&lt;/td&gt;
+				&lt;td&gt;2-for-1&lt;/td&gt;
+				&lt;td&gt;9-May-97&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr class=&quot;text-right&quot;&gt;
+				&lt;td&gt;1994&lt;/td&gt;
+				&lt;td&gt;2-for-1&lt;/td&gt;
+				&lt;td&gt;13-May-94&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class=&quot;text-right&quot;&gt;1987&lt;/td&gt;
+				&lt;td class=&quot;text-center&quot;&gt;2-for-1&lt;/td&gt;
+				&lt;td class=&quot;text-left&quot;&gt;22-May-87&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/tbody&gt;
+	&lt;/table&gt;
+&lt;/div&gt;
+</pre>
+					</div>
+				</div>
+				<div class="row copy-wrapper">
+					<div class="span12">
+						<h2>Lists</h2>
+						<hr>
+					</div>
+					
+					<div class="span3">
+						<ul>
+							<li>This</li>
+							<li>List</li>
+							<li>Is</li>
+							<li>Unordered</li>
+						</ul>
+					</div>
+					<div class="span3">
+						<ol>
+							<li>This</li>
+							<li>List</li>
+							<li>Is</li>
+							<li>Ordered</li>
+						</ol>
+					</div>
+					<div class="span6">
+<pre class="prettyprint linenums">
+&lt;div class=&quot;copy-wrapper&quot;&gt;
+	&lt;ul&gt;
+		&lt;li&gt;This&lt;/li&gt;
+		&lt;li&gt;List&lt;/li&gt;
+		&lt;li&gt;Is&lt;/li&gt;
+		&lt;li&gt;Unordered&lt;/li&gt;
+	&lt;/ul&gt;
+	&lt;ol&gt;
+		&lt;li&gt;This&lt;/li&gt;
+		&lt;li&gt;List&lt;/li&gt;
+		&lt;li&gt;Is&lt;/li&gt;
+		&lt;li&gt;Ordered&lt;/li&gt;
+	&lt;/ol&gt;
+&lt;/div&gt;
+</pre>
+					</div>
+				</div>
+				<div class="row copy-wrapper">
+					<div class="span12">
+						<h2>Links</h2>
+						<hr>
+					</div>
+					
+					<div class="span3">
+						<p>
+							<a href="#" class="geui-icon-link">a.geui-icon-link <i class="geui-icon geui-icon-blue geui-icon-arrow-small-right"></i></a>
+						</p>
+						<form>
+							<button class="geui-icon-link">
+								button.geui-icon-link
+								<i class="geui-icon geui-icon-blue geui-icon-arrow-small-right"></i>
+							</button>
+						</form>
+					</div>
+					<div class="span9">
+<pre class="prettyprint linenums">
+&lt;a href=&quot;#&quot; class=&quot;geui-icon-link&quot;&gt;
+	a.geui-icon-link 
+	&lt;i class=&quot;geui-icon geui-icon-blue geui-icon-arrow-small-right&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+
+&lt;button class=&quot;geui-icon-link&quot;&gt;
+	button.geui-icon-link
+	&lt;i class=&quot;geui-icon geui-icon-blue geui-icon-arrow-small-right&quot;&gt;&lt;/i&gt;
+&lt;/button&gt;
+</pre>
+					</div>
+				</div>
+			</section>
+
+			<section id="code" class="row">
+				<div class="span12">
+					<h2>Buttons</h2>
+					<hr>
+
+					<h3>All Buttons</h3>
+					<div class="row">
+						<div class="span12" style="margin-bottom:5px;">
+							<a href="#" class="geui-button desaturated-blue">Learn more about</a>
+							<a href="#" class="geui-button desaturated-green">Learn more about</a>
+							<a href="#" class="geui-button desaturated-red">Learn more about</a>
+							<a href="#" class="geui-button desaturated-yellow">Learn more about</a>
+							<a href="#" class="geui-button desaturated-grey">Learn more about</a>
+						</div>
+					</div>
+					<div class="row" >
+						<div class="span12">
+							<a href="#" class="geui-button blue">Learn more about</a>
+							<a href="#" class="geui-button dark-grey">Learn more about</a>
+							<a href="#" class="geui-button text-grey">Learn more about</a>
+							<a href="#" class="geui-button med-grey">Learn more about</a>
+							<a href="#" class="geui-button light-grey">Learn more about</a>
+						</div>
+					</div>
+					<p style="margin-bottom:10px;margin-top:10px;" >With arrow</p>
+					<div class="row">
+						<div class="span12">
+							<a href="#" class="geui-button dark-grey">Learn more about <i class="geui-icon geui-icon-white geui-icon-arrow-small-right"></i></a>
+						</div>
+					</div>
+						
+<pre class="prettyprint linenums">
+&lt;a href=&quot;#&quot; class=&quot;geui-button desaturated-blue&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button desaturated-green&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button desaturated-red&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button desaturated-yellow&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button desaturated-grey&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button desaturated-blue&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button dark-grey&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button text-gray&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button med-grey&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-button light-grey&quot;&gt;
+	Learn more about 
+&lt;/a&gt;
+</pre>
+
+					<h3>Square Buttons</h3>
+					<p>These buttons have a bit of copy with the pillar's icon somewhere in them.</p>
+						<a href="#" class="geui-button desaturated-green">Learn more about <span class="geui-icon geui-icon-white geui-icon-curing"></span> Curing</a>
+						<a href="#" class="geui-button desaturated-blue">Learn more about <span class="geui-icon geui-icon-white geui-icon-powering"></span> Powering</a>
+						<a href="#" class="geui-button desaturated-red">Learn more about the <span class="geui-icon geui-icon-white geui-icon-curing"></span> Vscan</a>
+<pre class="prettyprint linenums">
+&lt;a href=&quot;#&quot; class=&quot;geui-button desaturated-green&quot;&gt;
+	Learn more about &lt;span class=&quot;geui-icon-curing&quot;&gt;&lt;/span&gt; Curing
+&lt;/a&gt;
+</pre>
+					<h3>Square Buttons - Responsive!</h3>
+					<p>Square buttons with a responsive flare. These buttons will fill the width provided by their containing element</p>
+					<div class="row">
+						<div class="span4">
+							<a href="#" class="geui-button geui-button-responsive desaturated-green">Learn more about <span class="geui-icon geui-icon-white geui-icon-curing"></span> Curing</a>
+						</div>
+						<div class="span4">
+							<a href="#" class="geui-button geui-button-responsive desaturated-blue">Learn more about <span class="geui-icon geui-icon-white geui-icon-powering"></span> Powering</a>
+						</div>
+						<div class="span4">
+							<a href="#" class="geui-button geui-button-responsive desaturated-red">Learn more about the <span class="geui-icon geui-icon-white geui-icon-curing"></span> Vscan</a>
+						</div>
+					</div>
+						
+							
+<pre class="prettyprint linenums">
+&lt;div class=&quot;row&quot;&gt;
+	&lt;div class=&quot;span4&quot;&gt;
+		&lt;a href=&quot;#&quot; class=&quot;geui-button geui-button-responsive desaturated-green&quot;&gt;Learn more about &lt;span class=&quot;geui-icon geui-icon-white geui-icon-curing&quot;&gt;&lt;/span&gt; Curing&lt;/a&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;span4&quot;&gt;
+		&lt;a href=&quot;#&quot; class=&quot;geui-button geui-button-responsive desaturated-blue&quot;&gt;Learn more about &lt;span class=&quot;geui-icon geui-icon-white geui-icon-powering&quot;&gt;&lt;/span&gt; Powering&lt;/a&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;span4&quot;&gt;
+		&lt;a href=&quot;#&quot; class=&quot;geui-button geui-button-responsive desaturated-red&quot;&gt;Learn more about the &lt;span class=&quot;geui-icon geui-icon-white geui-icon-curing&quot;&gt;&lt;/span&gt; Vscan&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+					<h3>Disabled Buttons</h3>
+					<p>Add a .disabled class to any button to make it disabled visually. <strong>NOTE:</strong> this is a visual helper only. You need to add your own javascript to actually disable the link's click handler.</p>
+					<div class="row">
+						{#colors}
+						<div class="span4">
+							<a href="#" class="geui-button geui-button-responsive {.} disabled">Disabled {.}</a>
+						</div>						
+						{/colors}
+					</div>
+	                <h2>Circle Buttons</h2>
+	                <p>These buttons are to be used in conjunction with a geui-icon. We use them for social icons primarily, but these are not limited to that purpose.</p>
+					<div class="geui-circle-buttons">
+						<a href="#" class="geui-circle-button" title="Follow GE on Twitter">
+							<i class="geui-icon geui-icon-white geui-icon-twitter"></i>
+						</a>
+						<a href="#" class="geui-circle-button" title="Follow GE on Facebook">
+							<i class="geui-icon geui-icon-white geui-icon-facebook"></i>
+						</a>
+						<a href="#" class="geui-circle-button" title="Follow GE on Tumblr">
+							<i class="geui-icon geui-icon-white geui-icon-tumblr"></i>
+						</a>
+						<a href="#" class="geui-circle-button" title="Follow GE on Pinterest">
+							<i class="geui-icon geui-icon-white geui-icon-pinterest"></i>
+						</a>
+						<a href="#" class="geui-circle-button" title="Follow GE on YouTube">
+							<i class="geui-icon geui-icon-white geui-icon-youtube"></i>
+						</a>
+					</div>
+<pre class="prettyprint linenums">
+&lt;a href=&quot;#&quot; class=&quot;geui-circle-button&quot; title=&quot;Follow GE on Twitter&quot;&gt;
+	&lt;i class=&quot;geui-icon geui-icon-white geui-icon-twitter&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-circle-button&quot; title=&quot;Follow GE on Facebook&quot;&gt;
+	&lt;i class=&quot;geui-icon geui-icon-white geui-icon-facebook&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-circle-button&quot; title=&quot;Follow GE on Tumblr&quot;&gt;
+	&lt;i class=&quot;geui-icon geui-icon-white geui-icon-twitter&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-circle-button&quot; title=&quot;Follow GE on Pinterest&quot;&gt;
+	&lt;i class=&quot;geui-icon geui-icon-white geui-icon-pinterest&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;geui-circle-button&quot; title=&quot;Follow GE on YouTube&quot;&gt;
+	&lt;i class=&quot;geui-icon geui-icon-white geui-icon-youtube&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+</pre>
+
+					<div class="alert">
+					This code will most likely change depended on what is shared. For example Twitter share buttons will link to a url filled with parameters. A link to Pinterest may contain attributes with metadata. 
+					</div>
+
+					<h2>Box-shadow : radial-gradient</h2>
+					<p>Simply put "geui-boxshadow" as a class on the element that should have a box-shadow.</p>
+
+					<div class="row">
+						<div class="span12">
+							<div class="desaturated-red geui-innershadow">
+								<h3 style="height:100px;">Hello</h3>
+							</div>
+						</div>
+						<div class="span4">
+							<a href="#" class="geui-button geui-button-responsive desaturated-green geui-boxshadow">Learn more about <span class="geui-icon geui-icon-white geui-icon-curing"></span> Curing</a>
+						</div>
+					</div>
+
+<pre class="prettyprint linenums">
+&lt;a href=&quot;#&quot; class=&quot;geui-button geui-button-responsive desaturated-green geui-boxshadow&quot;&gt;
+</pre>
+
+
+				</div>
+			</section>
+
+			<section id="icons">
+				<h2>B&amp;W Icons</h2>
+				<hr>
+				<div class="row">
+					{#icons}
+					<span class="span3"><i class="geui-icon geui-icon-{.}"></i> .geui-icon-{.}</span>
+					{/icons}
+				</div>
+<pre class="prettyprint linenums">
+&lt;!-- Black Icons are the default --&gt;
+&lt;i class=&quot;geui-icon geui-icon-curing&quot;&gt;&lt;/i&gt; .geui-icon-curing&lt;/span&gt;
+&lt;!-- White Icons require .geui-icon-white --&gt;
+&lt;i class=&quot;geui-icon geui-icon-white geui-icon-curing&quot;&gt;&lt;/i&gt; .geui-icon-curing&lt;/span&gt;
+</pre>
+				<h2>Blue Icons</h2>
+				<hr>
+				<div class="row">
+					{#blue_icons}
+					<span class="span3"><i class="geui-icon geui-icon-blue geui-icon-{.}"></i> .geui-icon-{.}</span>
+					{/blue_icons}
+				</div>
+<pre class="prettyprint linenums">
+&lt;i class=&quot;geui-icon geui-icon-blue geui-icon-globe&quot;&gt;&lt;/i&gt; .geui-icon-curing&lt;/span&gt;
+</pre>
+			</section>
+		</div>
+		<div class="desaturated-grey stretch">
+		<section id="geometry">
+			<div class="container padded-container">
+				<h2>Geometry</h2>
+				<hr>
+				<div class="row">
+					{#icons}
+					<div class="span4">
+						<span class="geui-circle"><i class="geui-icon geui-icon-white geui-icon-{.}"></i></span>
+						.geui-circle
+					</div>
+					{/icons}
+					<div class="span4">
+						<span class="geui-circle">1</span>
+					</div>
+					<div class="span4">
+						<span class="geui-circle">2</span>
+					</div>
+					<div class="span4">
+						<span class="geui-circle">3</span>
+					</div>
+				</div>
+<pre class="prettyprint linenums">
+&lt;!-- With an Icon --&gt; 
+&lt;span class=&quot;geui-circle&quot;&gt;&lt;i class=&quot;geui-icon geui-icon-white geui-icon-comment&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+&lt;!-- With a Number --&gt; 
+&lt;span class=&quot;geui-circle&quot;&gt;6&lt;/span&gt;
+</pre>
+
+					<h2>Geometry - Small Number</h2>
+				<hr>
+				<div class="row">
+
+					<div class="span4">
+						<span class="geui-circle geui-circle-small">1</span>
+					</div>
+					<div class="span4">
+						<span class="geui-circle geui-circle-small">2</span>
+					</div>
+					<div class="span4">
+						<span class="geui-circle geui-circle-small">3</span>
+					</div>
+
+				</div>
+<pre class="prettyprint linenums">
+&lt;!-- With a Number --&gt; 
+&lt;span class=&quot;geui-circle geui-circle-small&quot;&gt;6&lt;/span&gt;
+</pre>
+
+				<h2>Geometry - Small icon</h2>
+				<hr>
+				<div class="row">
+
+					{#icons}
+					<div class="span4">
+						<span class="geui-circle geui-circle-small-icon"><i class="geui-icon geui-icon-white geui-icon-{.}"></i></span>
+						.geui-circle.geui-circle-small-icon
+					</div>
+					{/icons}
+
+				</div>
+<pre class="prettyprint linenums">
+&lt;!-- With an icon --&gt; 
+&lt;span class=&quot;geui-circle geui-circle-small-icon&quot;&gt;&lt;i class=&quot;geui-icon geui-icon-white geui-icon-comment&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+</pre>
+
+				<h2>Geometry - Large V2</h2>
+				<p>We also use large versions of the circles at times. These are only used with the pillar icons at this point.</p>
+				<hr>
+				<div class="row">
+					<div class="span3">
+						<!-- This is how it should be, but with a large icon class --> 
+						<span class="geui-circle geui-circle-large">
+							<i class="geui-icon  geui-icon-white geui-icon-moving-large"></i>
+							R&amp;D
+						</span>
+					</div>
+					<div class="span3">
+						<span class="geui-circle geui-circle-large">
+							<i class="geui-icon  geui-icon-white geui-icon-curing-large"></i>
+							History
+						</span>
+					</div>
+					<div class="span3">
+						<span class="geui-circle geui-circle-large">
+							<i class="geui-icon  geui-icon-white geui-icon-building-large"></i>
+							Citizenship
+						</span>
+					</div>
+					<div class="span3">
+						<span class="geui-circle geui-circle-large">
+							<i class="geui-icon  geui-icon-white geui-icon-powering-large"></i>
+							Leadership
+						</span>
+					</div>
+				</div>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;row&quot;&gt;
+	&lt;div class=&quot;span3&quot;&gt;
+		&lt;span class=&quot;geui-circle-large-sprite geui-circle-large-sprite-moving geui-circle-large-sprite-rd&quot;&gt;
+			R&amp;amp;D
+		&lt;/span&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;span3&quot;&gt;
+		&lt;span class=&quot;geui-circle-large-sprite geui-circle-large-sprite-curing geui-circle-large-sprite-history&quot;&gt;
+			History
+		&lt;/span&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;span3&quot;&gt;
+		&lt;span class=&quot;geui-circle-large-sprite geui-circle-large-sprite-building geui-circle-large-sprite-citizenship&quot;&gt;
+			Citizenship
+		&lt;/span&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;span3&quot;&gt;
+		&lt;span class=&quot;geui-circle-large-sprite geui-circle-large-sprite-powering geui-circle-large-sprite-leadership&quot;&gt;
+			Leadership
+		&lt;/span&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+			</div>
+		</section>
+		</div>
+		<section id="form-elements">
+			<div class="container">
+				<h2>Form Elements</h2>
+				<hr>
+				<h3>Select Boxes</h3>
+				<div class="row">
+					<form class="span12">
+						<div class="row">
+							<div class="span6">
+								<select class="geui-select" id="state-select">
+									<option selected disabled>Select State</option>
+									{#states}
+									<option>{.}</option>
+									{/states}
+								</select>
+							</div>
+							<div class="span6">
+								<select class="geui-select" id="state-select-disabled" disabled="disabled">
+									<option selected disabled>Select State</option>
+									{#states}
+									<option>{.}</option>
+									{/states}
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+<pre class="prettyprint linenums">
+&lt;form action=&quot;#&quot;&gt;
+	&lt;select class=&quot;geui-select&quot;&gt;
+		&lt;option selected disabled&gt;Select Number&lt;/option&gt;
+		&lt;option val=&quot;1&quot;&gt;One&lt;/option&gt;
+		&lt;option val=&quot;2&quot;&gt;Two&lt;/option&gt;
+		&lt;option val=&quot;3&quot;&gt;Three&lt;/option&gt;
+	&lt;/select&gt;
+&lt;/form&gt;
+</pre>
+				<h3>Radio Buttons</h3>
+				<form>
+					<fieldset class="geui-radio-button-group row">
+						<div class="span4">
+							<label for="radio-choice-1" class="desaturated-red">
+								Option A
+								<input type="radio" name="radio-choice" id="radio-choice-1" value="choice-1" >
+							</label>
+						</div>
+						<div class="span4">
+							<label for="radio-choice-2" class="desaturated-blue">
+								Option B
+								<input type="radio" name="radio-choice" id="radio-choice-2" value="choice-2" checked="checked">
+							</label>
+						</div>
+						<div class="span4">
+							<label for="radio-choice-3" class="desaturated-green">
+								Option C
+								<input type="radio" name="radio-choice" id="radio-choice-3" value="choice-3">
+							</label>
+						</div>
+					</fieldset>
+				</form>
+<pre class="prettyprint linenums">
+&lt;form action=&quot;#&quot;&gt;
+	&lt;fieldset class=&quot;geui-radio-button-group&quot;&gt;
+		&lt;label for=&quot;radio-choice-1&quot; class=&quot;desaturated-red&quot;&gt;
+			Option A
+			&lt;input type=&quot;radio&quot; name=&quot;radio-choice&quot; id=&quot;radio-choice-1&quot; value=&quot;choice-1&quot;&gt;
+		&lt;/label&gt;
+		&lt;label for=&quot;radio-choice-2&quot; class=&quot;desaturated-blue&quot;&gt;
+			Option B
+			&lt;input type=&quot;radio&quot; name=&quot;radio-choice&quot; id=&quot;radio-choice-2&quot; value=&quot;choice-2&quot;&gt;
+		&lt;/label&gt;
+		&lt;label for=&quot;radio-choice-3&quot; class=&quot;desaturated-green&quot;&gt;
+			Option C
+			&lt;input type=&quot;radio&quot; name=&quot;radio-choice&quot; id=&quot;radio-choice-3&quot; value=&quot;choice-3&quot;&gt;
+		&lt;/label&gt;
+	&lt;/fieldset&gt;
+&lt;/form&gt;
+</pre>
+			</div>
+		</section>
+				<section id="loader">
+			<div class="container">
+				<h2>Loader</h2>
+				<hr>
+				<div class="row">
+					<div class="span12">
+						<div class="geui-loader">
+							Loading
+						</div>
+					</div>
+				</div>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;geui-loader&quot;&gt;
+	Loading
+&lt;/div&gt;
+</pre>
+		</section>
+{/content}

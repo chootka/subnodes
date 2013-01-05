@@ -1,0 +1,65 @@
+{^xhr}
+  {>"docs/templates/shared/layout.dust"/}
+{:else}
+  {+content/}
+{/xhr}
+{<content}
+		<div class="container">
+			<h1>Layout</h1>
+			<hr>
+			<!-- COLOR DOC -->
+			<section id="grid">
+				<h2>Grid System</h2>
+				<hr>
+				<p>We use the bootstrap 12 column grid system with breakpoints at 1200px, 980px, 768px, 480px.</p>
+				<div class="row">
+					<div class="span12"><div class="color-block desaturated-blue">.span12</div></div>
+				</div>
+				<div class="row">
+					<div class="span6"><div class="color-block desaturated-green">.span6</div></div>
+					<div class="span6"><div class="color-block desaturated-green">.span6</div></div>
+				</div>
+				<div class="row">
+					<div class="span4"><div class="color-block light-grey">.span4</div></div>
+					<div class="span4"><div class="color-block light-grey">.span4</div></div>
+					<div class="span4"><div class="color-block light-grey">.span4</div></div>
+				</div>
+				<div class="row">
+					<div class="span3"><div class="color-block desaturated-yellow">.span3</div></div>
+					<div class="span3"><div class="color-block desaturated-yellow">.span3</div></div>
+					<div class="span3"><div class="color-block desaturated-yellow">.span3</div></div>
+					<div class="span3"><div class="color-block desaturated-yellow">.span3</div></div>
+				</div>
+	
+				<div class="row">
+					<div class="span2"><div class="color-block blue">.span2</div></div>
+					<div class="span2"><div class="color-block blue">.span2</div></div>
+					<div class="span2"><div class="color-block blue">.span2</div></div>
+					<div class="span2"><div class="color-block blue">.span2</div></div>
+					<div class="span2"><div class="color-block blue">.span2</div></div>
+					<div class="span2"><div class="color-block blue">.span2</div></div>
+				</div>
+				<div class="row">
+					<div class="span9"><div class="color-block dark-grey">.span9</div></div>
+					<div class="span3"><div class="color-block desaturated-yellow">.span3</div></div>
+				</div>
+
+				<h3>Grid HTML Example</h3>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;row&quot;&gt;
+	&lt;div class=&quot;span9&quot;&gt;...&lt;/div&gt;
+	&lt;div class=&quot;span3&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+			</section>
+		</div>
+			<section>
+				<div class="desaturated-grey stretch">
+					<div class="container padded-container">
+						<h2>Stretch</h2>
+						<p>If you need a block to stretch the full width of the site at all devices sizes, add the `.stretch` helper class. Make sure the element is outside of a .container block or anything else constsrictive.</p>
+					</div>
+				</div>
+			</section>
+		
+{/content}

@@ -1,0 +1,133 @@
+// Documentation Specific Styles
+// no common UI kit styles should go in here.
+// Just specific stlyes for use in the UI Kit documentation 
+
+@media (min-width: 980px) {
+	body {
+	    padding-top: 60px;
+	    padding-bottom: 40px;
+	}
+}
+
+@media (max-width: 767px) {
+	body {
+		padding: 0 20px;
+	}
+	.navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
+		
+	}
+}
+body {
+	position: relative;
+}
+footer {
+	padding-top: 60px;
+}
+
+section {
+	padding-bottom: 40px;
+}
+
+// restore the code styles from bootstrap -- our reset strips them
+code {
+	padding: 2px 4px;
+	color: #d14;
+	background-color: #f7f7f9;
+	border: 1px solid #e1e1e8;
+}
+
+// header control
+.navbar {
+	.brand {
+		font-weight: 700;
+		color: white;
+	}
+	.nav > li > a {
+		padding: 14px 15px;
+	}
+}
+.color-block {
+	height: 30px;
+	padding: 15px;
+	display: block;
+	line-height: 30px;
+	.border-radius(4px);
+	margin: 10px 0;
+}
+
+.color-block-text {
+	font-size: 2em;
+	height: 30px;
+	padding: 15px;
+	display: block;
+	line-height: 30px;
+	.border-radius(4px);
+	margin: 10px 0;
+}
+
+p.note {
+	font-size: 12px;
+	font-style: italic;
+	color: #666;
+	padding: 4px 15px;
+	background-color: #f9f9f9;
+	border: 1px solid #efefef;
+	.border-radius(4px);
+	display: inline-block;
+
+}
+
+#icons {
+	.span3 {
+		height: 50px;
+		margin-bottom: 30px;
+	}
+}
+#geometry {
+	.span4,
+	.span6 {
+		margin-bottom: 30px;
+	}
+}
+// Pretiffy -- From the bootstrap documentation
+.com { color: #93a1a1; }
+.lit { color: #195f91; }
+.pun, .opn, .clo { color: #93a1a1; }
+.fun { color: #dc322f; }
+.str, .atv { color: #D14; }
+.kwd, .prettyprint .tag { color: #1e347b; }
+.typ, .atn, .dec, .var { color: teal; }
+.pln { color: #48484c; }
+
+.prettyprint {
+  margin: 20px 0;
+  padding: 8px;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 12px;
+}
+
+.prettyprint.linenums {
+  -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+     -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+          box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+}
+pre.inline {
+	display: inline;
+	padding: 3px 5px;
+}
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums {
+  margin: 0 0 0 33px; /* IE indents via margin-left */
+  list-style: decimal;
+}
+ol.linenums li {
+  padding-left: 12px;
+  color: #bebec5;
+  line-height: 20px;
+  text-shadow: 0 1px 0 #fff;
+}
+.padded-container {
+	padding: 30px 0;
+}

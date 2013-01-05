@@ -1,0 +1,36 @@
+<html>
+	<body>
+		<h1>Subchat</h1>
+
+		<label for="msg-input">Broadcast message</label>
+		<input id="msg-input" name="msg-input" type="text" size="30" />
+   		<p>Press enter to submit your message</p>
+ 
+		<ul id="broadcast-msg"></ul>
+
+		<!-- Include the socket.io javascript on the client side -->
+		<script src="socket.io/socket.io.js"></script>
+    	<script src="jquery-1.8.3.min.js"></script>
+		<script>
+			var socket = io.connect('http://192.168.2.4:8000');
+
+			// on every message recived we print the new datas inside the #broadcast-msg div
+		    socket.on('broadcast_msg', function (data) {
+		    	console.log('Get broadcasted msg:', data);
+		        var msg = '<li>' + data + '</li>';
+		        $('#broadcast-msg').append(msg);
+		    });
+
+			socket.on('connect', function() {
+				socket.emit('set nickname', prompt('What is your nickname?'));
+
+				$('#msg-input').change( function() {
+					var txt = $(this).val();
+					socket.emit('emit_msg', txt, function(data){
+						console.log('Emit Broadcast msg', data);
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

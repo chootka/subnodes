@@ -1,0 +1,84 @@
+.geui-card-grid {
+	.clearfix();
+	.geui-card {
+		width: 32%;
+		margin-right: 2%;
+		margin-bottom: 2%;
+		float: left;
+		position: relative;
+		&:nth-child(3n) {
+			margin-right: 0;
+		}
+		img {
+			max-width: 100%;
+			width: 100%;
+		}
+		line-height: 0;
+		.geui-card-closed-content {
+			position: absolute;
+			bottom: 0;
+			height: 150px;
+			width: 100%;
+			background-color: rgba(0,0,0,0.5);
+			color: white;
+			padding: 12px 0;
+
+			h2 {
+				a {
+				color: white;
+				font-family: @gefont;
+				font-size: 1.8em;
+				text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+					&:hover {
+						opacity: 0.8;
+					}
+				}
+				padding: 0 10px;
+				.geui-icon {
+					vertical-align: middle;
+				}
+			}
+			p {
+				padding: 4px 10px;
+			}
+			.geui-card-share-buttons {
+				position: absolute;
+				right: 12px;
+				bottom: 12px;
+				.clearfix();
+				li {
+					display: block;
+					float: left;
+					margin-left: 5px;
+				}
+			}
+		}
+	}
+}
+
+// Tablets
+@media (max-width: 767px) {
+  	.geui-card-grid {
+		.geui-card {
+			width: 49%;
+			margin-right: 2%;
+			margin-bottom: 2%;
+			&:nth-child(3n) {
+				margin-right: 2%;
+			}
+			&:nth-child(2n) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+// Phones
+@media (max-width: 479px) {
+    	.geui-card-grid {
+  		.geui-card {
+  			width: 100%;
+  			margin-right: 0;
+  			margin-bottom: 2%;
+  		}
+  	}
+}

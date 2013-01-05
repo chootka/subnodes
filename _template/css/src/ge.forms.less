@@ -1,0 +1,228 @@
+/* Radio Buttons */
+
+.geui-radio-button-group {
+	&:focus {
+		outline: none;
+		.geui-radio-button:first {
+			outline: -webkit-focus-ring-color auto 5px;
+		}
+	}
+	label {
+		.clearfix();
+		width: auto;
+		position: relative;
+		padding: 0 0.9em;
+		letter-spacing: 0.1em;
+		color: white;
+		font-size: 1.1em;
+		font-family: @gefont;
+		font-weight: 500;
+		
+		line-height: 2.7em;
+		text-decoration: none;
+		//background-color: @desaturated-blue;
+		vertical-align: middle;
+		display: block;
+		text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+
+		// This class is applied by the JS
+		// Stash rules in here that only JS enabled devices should get
+		&.geui-radio-button {
+			input[type=radio] {
+				display: none;
+			}
+
+			.geui-radio-button-tick {
+				width: 27px;
+				height: 27px;
+				display: block;
+				position: absolute;
+				right: 5px;
+				top: 50%;
+				margin-top: -14px;
+				background-image: url("../../img/radio_btn.png");
+				background-position: 0 0;
+				background-repeat: no-repeat;
+				background-size: 27px 27px;
+				&.geui-radio-button-tick-selected {
+					background-image: url("../../img/radio_btn_2.png");
+				}
+			}
+			.focus {
+				opacity: 0.8;
+			}
+
+		}
+	}
+	input[type=radio] {
+		float: right;
+	}
+}
+/* Dropdowns */
+
+.geui-select {
+	width: 100%;
+	position: relative;
+	line-height: 1.5em;
+	text-decoration: none;
+	background-color: @desaturated-blue;
+	vertical-align: middle;
+	display: inline-block;
+	cursor: default;
+	&:hover,
+	&:focus {
+		background-color: lighten(@desaturated-blue, 10%);
+		color: white;
+	}
+	&.selectBox-disabled {
+		opacity: 0.4;
+	}
+	.selectBox-label {
+		padding: 0 0.9em;
+		display: block;
+		letter-spacing: 0.1em;
+		color: white;
+		font-size: 1.1em;
+		font-family: @gefont;
+		font-weight: 500;
+		line-height: 2.7em;
+		text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+		height: 41px;
+		overflow: hidden;
+	}
+	.selectBox-arrow {
+		position: absolute;
+		top: 1em;
+		right: 15px;
+		width: 12px;
+		height: 11px;
+	}
+}
+.selectBox-dropdown-menu {
+	position: absolute;
+	z-index: 99999;
+	max-height: 200px;
+	min-height: 1em;
+	background: #eee;
+	overflow: auto;
+}
+.selectBox-options,
+.selectBox-options li,
+.selectBox-options li a {
+	list-style: none;
+	display: block;
+	cursor: default;
+	padding: 0;
+	margin: 0;
+	font-family: @gefont;
+	font-weight: 500;
+}
+.selectBox-options li a {
+	line-height: 1.5;
+	padding: 0.4em 1em;
+	white-space: nowrap;
+	overflow: hidden;
+	color: @dark-grey;
+	text-overflow: ellipsis;
+}
+
+.selectBox-options li.selectBox-selected a {
+	background-color: darken(@desaturated-grey, 10%);
+}
+.selectBox-options li.selectBox-hover a {
+	background-color: @blue;
+	color: white;
+}
+.selectBox-options li.selectBox-disabled a {
+	color: lighten(@dark-grey, 40%);
+	background-color: transparent;
+}
+
+/* ie8 specific */
+.lt-ie9 {
+	.geui-select {
+		.selectBox-label {
+			font-weight: 700;
+		}
+	}
+
+	.geui-radio-button-group {
+		label {
+			&.geui-radio-button {
+				.geui-radio-button-tick {
+					background-image: url("../../img/_ie/radio_btn.png");
+					&.geui-radio-button-tick-selected {
+						background-image: url("../../img/_ie/radio_btn_2.png");
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+/*
+	Additional Optional Styles
+
+.selectBox-dropdown .selectBox-label {
+	padding: 2px 8px;
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+// Inline control
+.selectBox-inline {
+	min-width: 150px;
+	outline: none;
+	border: solid 1px #BBB;
+	background: #FFF;
+	display: inline-block;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	overflow: auto;
+}
+
+.selectBox-inline:focus {
+	border-color: #666;
+}
+.selectBox-dropdown.selectBox-menuShowing {
+
+}
+
+
+// Options 
+
+.selectBox-options .selectBox-optgroup {
+	color: #666;
+	background: #EEE;
+	font-weight: bold;
+	line-height: 1.5;
+	padding: 0 .3em;
+	white-space: nowrap;
+}
+
+
+// Disabled state
+.selectBox.selectBox-disabled {
+	color: #888 !important;
+}
+
+.selectBox-dropdown.selectBox-disabled .selectBox-arrow {
+	opacity: .5;
+	filter: alpha(opacity=50);
+	border-color: #666;
+}
+
+.selectBox-inline.selectBox-disabled {
+	color: #888 !important;
+}
+
+.selectBox-inline.selectBox-disabled .selectBox-options A {
+	background-color: transparent !important;
+}
+*/

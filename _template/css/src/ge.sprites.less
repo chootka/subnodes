@@ -1,0 +1,462 @@
+/*
+	Before altering this file, please be sure to review the Images section of the Readme, 
+	and then also do these things:
+	- Keep background-size rules up to date as the sprite sheets chage
+	- Keep the source imagery around so that the sprite sheets can be regenerated if need be
+	- Name the source image files with a numberic prefix that corresponds to the images position on the sprite sheet
+	- maintain consistent spacing between images
+
+*/ 
+.geui-icon {
+	display: inline-block;
+	vertical-align: text-top;
+	background-image: url("../../img/icon_black_sprite_1x.png");
+	background-size: 50px 1920px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-color: transparent;
+	margin: 0 2px;
+
+	.icon-sprite(@x: 0, @y: 0, @w: 40, @h: 40) {
+		@offsetx: ~`parseInt(@{x}*-80)+'px'`;
+		@offsety: ~`parseInt(@{y}*-40)+'px'`;
+		background-position: @offsetx @offsety;
+		width: @w;
+		height: @h;
+	}
+	&.geui-icon-white {
+		background-image: url("../../img/icon_white_sprite_1x.png");
+	}
+  	&.geui-icon-blue {
+		background-image: url("../../img/icon_blue_sprite_1x.png");
+	}
+	// B&W icons
+	&.geui-icon-curing {
+		.icon-sprite(0, 0, 33px, 21px);
+	}
+	&.geui-icon-building {
+		.icon-sprite(0, 1, 23px, 23px);
+	}
+	&.geui-icon-moving {
+		.icon-sprite(0, 2, 34px, 16px);
+	}
+	&.geui-icon-powering {
+		.icon-sprite(0, 3, 21px, 26px);
+	}
+	&.geui-icon-bulb {
+		.icon-sprite(0, 4, 19px, 30px);
+	}
+	&.geui-icon-comment {
+		.icon-sprite(0, 5, 26px, 25px);
+	}
+	&.geui-icon-search {
+		.icon-sprite(0, 6, 20px, 20px);
+	}
+	&.geui-icon-left-arrow {
+		.icon-sprite(0, 7, 24px, 12px);
+	}
+	&.geui-icon-right-arrow {
+		.icon-sprite(0, 8, 24px, 12px);
+	}
+	&.geui-icon-info {
+		.icon-sprite(0, 9, 14px, 29px);
+	}
+	&.geui-icon-quote {
+		.icon-sprite(0, 10, 32px, 23px);
+	}
+	&.geui-icon-download {
+		.icon-sprite(0, 11, 23px, 23px);
+	}
+	&.geui-icon-award {
+		.icon-sprite(0, 12, 29px, 29px);
+	}
+	&.geui-icon-star {
+		.icon-sprite(0, 13, 29px, 28px);
+	}
+	&.geui-icon-kit {
+		.icon-sprite(0, 14, 28px, 26px);
+	}
+	&.geui-icon-phone {
+		.icon-sprite(0, 15, 21px, 28px);
+	}
+	&.geui-icon-down-arrow {
+		.icon-sprite(0, 16, 12px, 11px);
+	}
+	&.geui-icon-email {
+		.icon-sprite(0, 17, 36px, 21px);
+	}
+	&.geui-icon-rss {
+		.icon-sprite(0, 18, 25px, 25px);
+	}
+	&.geui-icon-calendar {
+		.icon-sprite(0, 19, 28px, 32px);
+	}
+	&.geui-icon-article {
+		.icon-sprite(0, 20, 25px, 30px);
+	}
+	&.geui-icon-share {
+		.icon-sprite(0, 21, 23px, 24px);
+	}
+	&.geui-icon-video-play {
+		.icon-sprite(0, 22, 24px, 25px);
+	}
+	&.geui-icon-alert {
+		.icon-sprite(0, 23, 26px, 22px);
+	}
+	&.geui-icon-download-small {
+		.icon-sprite(0, 24, 23px, 23px);
+	}
+	&.geui-icon-print {
+		.icon-sprite(0, 25, 21px, 25px);
+	}
+	&.geui-icon-article-small {
+		.icon-sprite(0, 26, 16px, 21px);
+	}
+	&.geui-icon-camera {
+		.icon-sprite(0, 27, 22px, 18px);
+	}
+	&.geui-icon-building-large {
+		.icon-sprite(0, 28, 31px, 31px);
+	}
+	&.geui-icon-powering-large {
+		.icon-sprite(0, 29, 31px, 38px);
+	}
+	&.geui-icon-curing-large {
+		.icon-sprite(0, 30, 47px, 30px);
+	}
+	&.geui-icon-moving-large {
+		.icon-sprite(0, 31, 46px, 22px);
+	}
+	&.geui-icon-pinterest {
+		.icon-sprite(0, 32, 14px, 18px);
+	}
+	&.geui-icon-facebook {
+		.icon-sprite(0, 33, 7px, 15px);
+	}
+	&.geui-icon-youtube {
+		.icon-sprite(0, 34, 16px, 16px);
+	}
+	&.geui-icon-twitter {
+		.icon-sprite(0, 35, 16px, 13px);
+	}
+	&.geui-icon-tumblr {
+		.icon-sprite(0, 36, 10px, 15px);
+	}
+	&.geui-icon-plus {
+		.icon-sprite(0, 37, 11px, 11px);
+	}
+	&.geui-icon-minus {
+		.icon-sprite(0, 38, 11px, 3px);
+	}
+	&.geui-icon-links {
+		.icon-sprite(0, 39, 23px, 29px);
+	}
+	&.geui-icon-connect {
+		.icon-sprite(0, 40, 29px, 31px);
+	}
+	&.geui-icon-globe {
+		.icon-sprite(0, 41, 16px, 17px);
+	}
+	&.geui-icon-arrow-small-right {
+		.icon-sprite(0, 42, 16px, 10px);
+		vertical-align: middle;
+	}
+	&.geui-icon-weibo {
+		.icon-sprite(0, 43, 18px, 14px);
+	}
+	&.geui-icon-attention {
+		.icon-sprite(0, 44, 8px, 33px);
+	}
+	&.geui-icon-military {
+		.icon-sprite(0, 45, 23px, 30px);
+	}
+	&.geui-icon-student {
+		.icon-sprite(0, 46, 43px, 25px);
+	}
+	&.geui-icon-external {
+		.icon-sprite(0, 47, 14px, 15px);
+		vertical-align: middle;
+	}
+	// end B&W icons
+
+	// Blue icons
+	&.geui-icon-blue {
+		background-image: url("../../img/icon_blue_sprite_1x.png");
+		background-size: 50px 440px;
+
+		&.geui-icon-arrow-small-right {
+			.icon-sprite(0, 0, 14px, 8px);
+			vertical-align: middle;
+		}
+		&.geui-icon-plus {
+			.icon-sprite(0, 1, 11px, 10px);
+		}
+		&.geui-icon-minus {
+			.icon-sprite(0, 2, 11px, 3px);
+		}
+		&.geui-icon-arrow-wide-right {
+			.icon-sprite(0, 3, 10px, 14px);
+		}
+		&.geui-icon-globe {
+			.icon-sprite(0, 4, 16px, 17px);
+		}
+		&.geui-icon-arrow-fat-down {
+			.icon-sprite(0, 5, 11px, 12px);
+		}
+		&.geui-icon-arrow-fat-up {
+			.icon-sprite(0, 6, 11px, 12px);
+		}
+		&.geui-icon-arrow-left {
+			.icon-sprite(0, 7, 24px, 12px);
+		}
+		&.geui-icon-arrow-right {
+			.icon-sprite(0, 8, 24px, 12px);
+		}
+		&.geui-icon-external {
+			.icon-sprite(0, 9, 14px, 15px);
+		}
+		&.geui-icon-twitter	 {
+			.icon-sprite(0, 10, 16px, 13px);
+		}
+	}
+	
+
+	// end Blue icons
+}
+
+// accordion icons
+.accordion-heading {
+	a {
+		outline: none;
+		
+		i {
+			margin-left: 5px;
+			&.geui-icon-plus {
+				margin-top: 3px;
+			}
+			&.geui-icon-minus {
+				margin-top: 8px;
+			}
+		}
+	}
+}
+
+// FIXME - this needs removed, and the pilar icons need done in a smaller size
+.geui-circle.geui-circle-small-icon{
+
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    margin: 0 16px 0 0;
+
+    .geui-icon{
+        width: 13px;
+        height: 13px;
+        background-size: 25px 960px;
+        margin-left: 4px;
+
+        &.geui-icon-curing {
+        	width: 17px;
+        }
+
+        &.geui-icon-building{
+        	background-position: 0px -20px;
+        }
+
+        &.geui-icon-moving{
+            width: 17px;
+            background-position: 0px -40px;
+            margin-top: -2px;
+        }
+
+        &.geui-icon-powering{
+        	width: 11px;
+			background-position: 0px -60px;
+        }
+
+        &.geui-icon-bulb{
+        	width: 10px;
+			height: 15px;
+			background-position: 0px -80px;
+        }
+
+        &.geui-icon-comment{
+        	background-position: 0px -100px;
+			margin-top: -2px;
+        }
+
+        &.geui-icon-circle{
+        	width: 10px;
+			height: 10px;
+			background-position: 0px -119px;
+			margin-top: -8px;
+        }
+
+        &.geui-icon-search{
+        	width: 10px;
+			height: 10px;
+			background-position: 0px -119px;
+			margin-top: -8px;
+        }
+
+        &.geui-icon-left-arrow{
+        	width: 12px;
+			height: 11px;
+			background-position: 0px -139px;
+			margin-top: -2px;
+        }
+
+        &.geui-icon-right-arrow{
+        	width: 12px;
+			height: 11px;
+			background-position: 0px -159px;
+			margin-top: -2px;
+        }
+
+        &.geui-icon-info{
+        	width: 7px;
+			height: 15px;
+			background-position: 0px -179px;
+			margin-left: 2px;
+			margin-top: -6px;
+        }
+
+        &.geui-icon-quote{
+        	width: 16px;
+			height: 12px;
+			background-position: 0px -199px;
+			margin-left: 2px;
+        }
+
+        &.geui-icon-download{
+        	width: 12px;
+			height: 12px;
+			background-position: 0px -437px;
+			margin-left: 2px;
+			margin-top: -6px;
+        }
+
+        &.geui-icon-award{
+        	width: 15px;
+			height: 15px;
+			background-position: 0px -238px;
+			margin-left: 2px;
+        }
+
+        &.geui-icon-star{
+        	width: 15px;
+			height: 14px;
+			background-position: 0px -259px;
+			margin-top: -5px;
+        }
+
+        &.geui-icon-kit{
+        	width: 14px;
+			height: 13px;
+			background-position: 0px -280px;
+			margin-top: -3px;
+			margin-left: 2px;
+        }
+
+        &.geui-icon-phone{
+        	width: 11px;
+			height: 14px;
+			background-position: 0px -299px;
+        }
+
+        &.geui-icon-down-arrow{
+        	height: 6px;
+			width: 6px;
+			background-position: 0px -318px;
+        }
+
+        &.geui-icon-email{
+        	width: 18px;
+			height: 11px;
+			background-position: 0px -337px;
+			margin-top: -8px;
+			margin-left: 2px;
+        }
+
+        &.geui-icon-rss{
+        	background-position: 0px -357px;
+			margin-top: -8px;
+        }
+
+        &.geui-icon-calendar{
+        	width: 14px;
+			height: 16px;
+			background-position: 0px -377px;
+			margin-left: 2px;
+        }
+
+        &.geui-icon-article{
+        	height: 15px;
+			background-position: 0px -397px;
+			margin-left: 3px;
+        }
+
+        &.geui-icon-share{
+        	width: 12px;
+			height: 12px;
+			background-position: 0px -417px;
+			margin-top: -7px;
+			margin-left: 2px;
+        }
+
+        &.geui-icon-video-play{
+        	width: 12px;
+			background-position: 0px -437px;
+        }
+
+        &.geui-icon-alert{
+        	height: 11px;
+			background-position: 0px -457px;
+			margin-top: -8px;
+			margin-left: 3px;
+        }
+
+        &.geui-icon-download-small{
+        	width: 12px;
+			height: 12px;
+			background-position: 0px -476px;
+        }
+
+        &.geui-icon-print{
+        	width: 11px;
+			background-position: 0px -496px;
+        }
+
+        &.geui-icon-article-small{
+        	width: 8px;
+			height: 11px;
+			background-position: 0px -515px;
+			margin-top: -7px;
+			margin-left: 2px;
+        }
+
+        &.geui-icon-camera{
+        	width: 11px;
+			height: 9px;
+			background-position: 0px -536px;
+			margin-top: -6px;
+        }
+
+    }
+                  
+}
+
+// Target retina displays
+@retinaDisplays: ~"only screen and (min--moz-device-pixel-ratio: 1.5),(-o-min-device-pixel-ratio: 3/2),(-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)";
+
+@media @retinaDisplays {
+  .geui-icon {
+  	background-image: url("../../img/icon_black_sprite_2x.png");
+  	&.geui-icon-white {
+		background-image: url("../../img/icon_white_sprite_2x.png");
+	}
+	&.geui-icon-blue {
+		background-image: url("../../img/icon_blue_sprite_2x.png");
+	}
+  }
+}

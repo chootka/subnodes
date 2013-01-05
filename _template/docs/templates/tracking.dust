@@ -1,0 +1,90 @@
+{^xhr}
+  {>"docs/templates/shared/layout.dust"/}
+{:else}
+  {+content/}
+{/xhr}
+{<content}
+		<div class="container">
+			<h1>Tracking</h1>
+			<hr>
+			<!-- COLOR DOC -->
+			<section id="grid">
+				<h2>Tools</h2>
+				<hr>
+				<p>We use google analytics on GE.com to handle tracking page loads and user interactions.</p>
+			</section>
+			<section>
+				<h2>Setup and Page Tracking</h2>
+				<p>Here's the basic setup code that should be included on all pages on you wish to be tracking. This code will also queue up the trackPageview request.</p>
+<pre class="prettyprint linenums">
+&lt;script type=&quot;text/javascript&quot;&gt;
+    // Begin GA
+    var _gaq = _gaq || [];
+     _gaq.push([&#039;_setAccount&#039;, &#039;UA-XXXXX-X&#039;]);
+     _gaq.push([&#039;_trackPageview&#039;]);
+
+     (function() {
+       var ga = document.createElement(&#039;script&#039;); ga.type = &#039;text/javascript&#039;; ga.async = true;
+       ga.src = (&#039;https:&#039; == document.location.protocol ? &#039;https://ssl&#039; : &#039;http://www&#039;) + &#039;.google-analytics.com/ga.js&#039;;
+       var s = document.getElementsByTagName(&#039;script&#039;)[0]; s.parentNode.insertBefore(ga, s);
+     })();
+    // End GA
+&lt;/script&gt;
+</pre>
+			</section>
+			<section>
+				<h2>Click Tracking</h2>
+				<p>All <code>&lt;a&gt;</code> tags on the site are automatically tracked. There are some rules goverening how the tracking event parameters are calculated.</p>
+				<h3>Category</h3>
+				<p>By default the tracking code will use the content of the <code>&lt;title&gt;</code> tag as base category. You can override this for an entire page, or for just a specific section of markup, by setting the <code>data-ga-cateogry</code> attribute.</p>
+				<div class="row">
+					<div class="span4">
+						<a class="geui-button geui-button-responsive desaturated-blue" href="#">Default Category</a>
+						<div data-ga-category="Sub-category">
+							<a class="geui-button geui-button-responsive desaturated-green" href="#">Sub-category</a>
+							<a class="geui-button geui-button-responsive desaturated-red" data-ga-category="Link Cat" href="#">Link category</a>
+						</div>
+					</div>
+					<div class="span8">
+<pre class="prettyprint linenums">
+&lt;a class=&quot;geui-button&quot;&gt;Default Category&lt;/a&gt;
+&lt;div data-ga-category=&quot;Sub-category&quot;&gt;
+	&lt;a class=&quot;geui-button&quot;&gt;Sub-category&lt;/a&gt;
+	&lt;a class=&quot;geui-button&quot; data-ga-cateogry=&quot;Link Cat&quot;&gt;Link category&lt;/a&gt;
+&lt;/div&gt;
+</pre>
+					</div>
+				</div>
+				<h3>Actions</h3>
+				<p>We provide a few sensible default actions, and allow developers to override these with their own custom actions.</p>
+				<div class="row" id="action-links">
+					<div class="span4">
+						<a class="geui-button geui-button-responsive desaturated-blue" href="http://google.com/" data-ga-stopprop>External</a>
+						<a class="geui-button geui-button-responsive desaturated-blue" href="/" data-ga-stopprop>Internal</a>
+						<div data-ga-category="Sub-category">
+							<a class="geui-button geui-button-responsive desaturated-green" href="#">Sub-category</a>
+							<a class="geui-button geui-button-responsive desaturated-red" data-ga-category="Link Cat" href="#">Link category</a>
+						</div>
+					</div>
+					<div class="span8">
+<pre class="prettyprint linenums">
+&lt;a class=&quot;geui-button&quot;&gt;Default Category&lt;/a&gt;
+&lt;div data-ga-category=&quot;Sub-category&quot;&gt;
+	&lt;a class=&quot;geui-button&quot;&gt;Sub-category&lt;/a&gt;
+	&lt;a class=&quot;geui-button&quot; data-ga-cateogry=&quot;Link Cat&quot;&gt;Link category&lt;/a&gt;
+&lt;/div&gt;
+</pre>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h2>Video Tracking</h2>
+				<p>Videos embeded with the UI kit embed methods are automatically tracked. You don't have to do anything special other than following the guideliness for embedding videos the GE UI Kit way.</p>
+			</section>
+			<section>
+				<h2>Form Tracking</h2>
+				<p>Form submissions are automatically tracked, but in order for the correct category to be applied, an ID attribute or a data-ga-category attribute must be applied to the form element itself.</p>
+			</section>
+		</div>
+		
+{/content}

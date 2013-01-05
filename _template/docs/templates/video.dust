@@ -1,0 +1,52 @@
+{^xhr}
+  {>"docs/templates/shared/layout.dust"/}
+{:else}
+  {+content/}
+{/xhr}
+{<content}
+		<div class="container">
+			<h1>Video</h1>
+			<p>All video is handled with youtube, with fallbacks provided by brightcove.</p>
+			<p class="alert alert-info"><span class="label label-info">Heads up!</span> All of this assumes you have included the proper youtube and brightcove javascript libraries. If these libraries are not included on your page, none of the following will work.</p>
+			<hr>
+			<!-- COLOR DOC -->
+			<section id="grid">
+				<h2>Embeded Video</h2>
+				<hr>
+				<p>We use a special formatting to embed videos.</p>
+				<div class="row">
+					<div class="span4">
+						<div class="geui-video" data-video-yt="sb8mk2HSJUc" data-video-bc="1750846609001" data-video-width="442" data-video-height="248">
+						</div>
+					</div>
+					<div class="span8">
+<pre class="prettyprint linenums">
+&lt;div class=&quot;geui-video&quot; data-video-yt=&quot;sb8mk2HSJUc&quot; data-video-bc=&quot;1750846609001&quot;&gt;
+	&lt;!-- Fallback content can be placed here --&gt; 
+&lt;/div&gt;
+</pre>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h2>Popup Videos</h2>
+				<p>Through a simple data attribute you can turn any normal link or button into a popup video link.</p>
+				<div class="row">
+					<div class="span4">
+						<a href="#" data-video-yt></a>
+						<a href="#" class="geui-button geui-videoplayer geui-button-responsive desaturated-green" data-video-yt="sb8mk2HSJUc" data-video-bc="1750846609001" data-video-width="1000" data-video-height="">
+							<i class="geui-icon geui-icon-white geui-icon-video-play"></i> Play the Video
+						</a>
+					</div>
+					<div class="span8">
+<pre class="prettyprint linenums">
+&lt;a href=&quot;#&quot; class=&quot;geui-button geui-videoplayer geui-button-responsive desaturated-green&quot; data-video-yt=&quot;sb8mk2HSJUc&quot; data-video-bc=&quot;1750846609001&quot; data-video-width=&quot;1000&quot; data-video-height=&quot;&quot;&gt;
+	&lt;i class=&quot;geui-icon geui-icon-white geui-icon-video-play&quot;&gt;&lt;/i&gt; Play the Video
+&lt;/a&gt;
+</pre>
+					</div>
+				</div>
+			</section>
+		</div>
+		
+{/content}

@@ -1,0 +1,72 @@
+// Styles for the videoplayer 
+
+.geui-video {
+	
+	position: relative;
+	padding-bottom: 56.25%; /* 16/9 ratio */
+	padding-top: 30px; /* IE6 workaround*/
+	height: 0;
+	overflow: hidden;
+
+	object,
+	iframe,
+	embed {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+/* Overlay */
+.geui-videoplayer-overlay {
+
+	background-color: transparent;
+	background-color: rgba(0,0,0,0.7);
+	height: 100%;
+	left:0;
+	position:fixed;
+	top:0;
+	width: 100%;
+	z-index :1110; 
+}
+
+/* Container */
+.geui-videoplayer-container {
+	background-color: #FFFFFF;
+	position:fixed;
+	top:50%;
+	z-index :1111; 
+
+	.geui-videoplayer-close{
+		.rounded(20px); 
+		font-family: @gefont;
+		font-weight: 700;
+		background-color: @blue;
+		border:4px solid #FFFFFF;
+		color:#FFFFFF;
+		padding: 5px;
+		position: absolute;
+		right:-15px;
+		text-align: center;
+		top:-15px;
+		width: 14px;
+
+	}
+
+	.geui-videoplayer-player {
+		background-color: @blue;
+		height: 478px;
+		margin:15px;
+	}
+}
+
+@media (max-width: 767px){
+	.geui-videoplayer-container{
+		.geui-videoplayer-close {
+			right:0;
+			top:0;
+		}
+	}
+}
