@@ -2,3 +2,6 @@ _dev/
 _dropbox/
 _template/
 .DS_Store
+
+node_modules
+npm-debug.log

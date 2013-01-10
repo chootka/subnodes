@@ -1,0 +1,24 @@
+!!!
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/style.css')
+	body
+
+		div.navbar.navbar-fixed-top
+			div.navbar-inner
+				div.container-fluid
+					ul.nav.pull-left
+						.brand Node.js & Socket.IO Chat Server
+						li
+							a(href="/") Subnod.es
+						li
+							a(href="/subchat") Subchat
+						li
+							a(href="/hotprobs") Hot Probs
+					ul.nav.pull-right
+						li
+							a(href='#')#connected
+
+		block content

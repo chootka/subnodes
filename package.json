@@ -1,27 +1,27 @@
 {
-  "author": "Sarah Grant <info@subnod.es> (http://subnod.es/)",
-  "name": "subnod.es",
-  "description": "Wireless, meshing devices and social apps",
-  "version": "0.1",
-  "homepage": "http://github.com/chootka/subnodes",
+  "name": "subnodes",
+  "version": "0.0.1",
+  "description": "Subnodes is an open source project that enables people to easily set up portable access points for serving content.",
+  "author": {
+    "name": "Sarah Grant",
+    "email": "info@subnod.es"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/chootka/subnodes.git"
   },
-  "dependencies": {
-    "underscore": ">0.0.0",
-    "grunt-css": ">0.0.0",
-    "grunt-contrib": ">0.0.0",
-    "grunt-bump": ">0.0.0",
-    "grunt-shell": ">0.0.0",
-    "consolidate": "git://github.com/adammiller/consolidate.js.git#master",
-    "grunt-templater": "git://github.com/rockwood/grunt-templater.git#master",
-    "dustjs-linkedin": "git://github.com/linkedin/dustjs.git#master",
-    "imagemagick": ">0.0.0"
+  "private": true,
+  "scripts": {
+    "start": "node subnode"
   },
-  "devDependencies": {},
-  "optionalDependencies": {},
+  "dependencies": {
+    "express": "3.0.6",
+    "stylus": ">= 0.0.1",
+    "jade": ">= 0.0.1",
+    "socket.io": ">= 0.9.6"  
+  },
   "engines": {
-    "node": "*"
+      "node": "0.6.17",
+      "npm":  "1.0.x"
   }
 }
