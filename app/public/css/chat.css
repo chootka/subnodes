@@ -1,7 +1,8 @@
 @font-face{font-family:phaisarn;font-style:normal;src:url("/fonts/phaisarn.ttf")}
+@font-face{font-family:jai;font-style:normal;src:url("/fonts/jai.ttf")}
 body{margin:0;padding:0;height:100%;background:#000;font-family:phaisarn}
 p{color:#eee;text-align:center}
-#header{margin:35px;color:#ff07a5;font-size:36px;text-align:center}
+#header{margin:35px;color:#ff07a5;font-family:jai;font-size:36px;letter-spacing:.08em;text-align:center}
 [contenteditable="true"].single-line white-space nowrap{width:200px;overflow:hidden}
 [contenteditable="true"].single-line br{display:none}
 [contenteditable="true"].single-line *{display:inline;white-space:nowrap}
