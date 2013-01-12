@@ -1,0 +1,15 @@
+extends layout
+
+block content
+
+	#chat
+		#messages.span8
+			#incoming
+		#send-message.span8
+			textarea(rows='2', name="msg", id='msg').span8
+			button#btn-send.btn.btn-primary.span8
+				i.icon-pencil.icon-white
+				| Send it !
+
+	script(src='/socket.io/socket.io.js')
+	script(src='/js/chat.js')

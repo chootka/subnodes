@@ -22,9 +22,8 @@ global.io.set('log level', 1); // reduce logging
 // finally create this application, our root server //
 require('./app/config')(app, express);
 require('./app/server/router')(app);
-//require(./app/server/db)
-require('./app/server/modules/subchat');
-//require('./app/server/modules/sublog');
+require('./app/server/db')
+require('./app/server/modules/chat');
 
 server.listen(8080, function() {
   console.log("Express server listening on port %d in %s mode", server.address().port, app.settings.env);

@@ -4,7 +4,7 @@ module.exports = function() {
 	var connections = { };
 
 	global.io
-		.of('/subchat')
+		.of('/chat')
 		.on('connection', function(socket) {
 
 			// give each connected user a random color so it's easier to tell them apart in the chat log //

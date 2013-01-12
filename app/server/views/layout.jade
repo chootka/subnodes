@@ -1,24 +1,15 @@
 !!!
 html
 	head
-		title= title
+		title = title
 		link(rel='stylesheet', href='/vendor/bootstrap.min.css')
-		link(rel='stylesheet', href='/css/style.css')
+		link(rel='stylesheet', href='/css/chat.css')
 	body
 
-		div.navbar.navbar-fixed-top
-			div.navbar-inner
-				div.container-fluid
-					ul.nav.pull-left
-						.brand Node.js & Socket.IO Chat Server
-						li
-							a(href="/") Subnod.es
-						li
-							a(href="/subchat") Subchat
-						li
-							a(href="/hotprobs") Hot Probs
-					ul.nav.pull-right
-						li
-							a(href='#')#connected
+		div.container-fluid
 
+		div(id='header')
+			|HOT PROBS
+
+		script(src='/vendor/jquery-1.8.3.min.js')
 		block content

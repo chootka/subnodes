@@ -5,32 +5,16 @@ module.exports = function(app) {
 	 */
 
 	app.get('/', function(req, res){
-		res.render('index', {title: 'Subnod.es'});
+		res.render('index', {'title': 'HOT PROBS'});
 	});	
 
 	/*
 	 * GET chat.
 	 */
 
-	app.get('/subchat', function(req, res){
-		res.render('subchat', {title: 'Subnod.es :: subchat'});
-	});	
-
-	/*
-	 * GET hotprobs.
-	 */
-
-	app.get('/hotprobs', function(req, res){
-		res.render('hotprobs', {title: 'Subnod.es :: hotprobs'});
-	});	
-
-	/*
-	 * GET guestbook.
-	 */
-
-	app.get('/guestbook', function(req, res){
-		res.render('guestbook', {title: 'Subnod.es :: Sign the guestbook'});
-	});	
+	app.get('/chat', function(req, res){
+		res.render('chat');
+	});
 
 	/*
 	 * GET 404.
