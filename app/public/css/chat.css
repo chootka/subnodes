@@ -14,5 +14,5 @@ button{position:relative;padding:6px 10px;margin-top:-5px;border:0;background:#0
 #incoming{height:450px;margin:0;padding:10px;font-size:13px;line-height:18px;overflow:auto;color:#eee;background-color:#2b292a;border-top:1px solid #434243}
 textarea{resize:none;border:0;margin-top:20px;padding:7px;font-family:phaisarn;font-size:13px;line-height:18px;color:#eee;background-color:#2b292a;border-top:1px solid #434243;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0}
 #send-message button{float:right}
-button i{padding-left:8px}
+button{color:#e539ff}
 #ntfd{margin:20px}
