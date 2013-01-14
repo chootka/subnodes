@@ -14,6 +14,8 @@
 			#sudo /etc/init.d/dnsmasq restart
 		       #sudo /etc/init.d/hostapd restart
 			sudo hostapd -B /etc/hostapd/hostapd.conf
+			cd www
+			NODE_ENV=production nodemon subnode.js
 			;;
 		stop)
 			echo "shutting down subnode…"

@@ -12,18 +12,33 @@
 var express     = require('express'),
 	app         = express(),
     http		= require('http'),
-    server 		= http.createServer(app);
+    server 		= http.createServer(app),
+    io			= require('socket.io').listen(server);
 
 app.root    	= __dirname;
-global.io		= require('socket.io').listen(server);
 
-global.io.set('log level', 1); // reduce logging
+io.configure('production', function(){
+  io.enable('browser client etag');
+  io.set('log level', 1);
+
+  io.set('transports', [
+    'websocket'
+  , 'flashsocket'
+  , 'htmlfile'
+  , 'xhr-polling'
+  , 'jsonp-polling'
+  ]);
+});
+
+io.configure('development', function(){
+  io.set('transports', ['websocket']);
+});
 
 // finally create this application, our root server //
 require('./app/config')(app, express);
 require('./app/server/router')(app);
 require('./app/server/db')
-require('./app/server/modules/chat');
+require('./app/server/modules/chat')(io);
 
 server.listen(8080, function() {
   console.log("Express server listening on port %d in %s mode", server.address().port, app.settings.env);

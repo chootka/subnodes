@@ -5,7 +5,7 @@ module.exports = function(app) {
 	 */
 
 	app.get('/', function(req, res){
-		res.render('index', {'title': 'HOT PROBS'});
+		res.render( 'index' );
 	});	
 
 	/*
@@ -13,7 +13,7 @@ module.exports = function(app) {
 	 */
 
 	app.get('/chat', function(req, res){
-		res.render('chat');
+		res.render( 'chat' );
 	});
 
 	/*
@@ -21,7 +21,7 @@ module.exports = function(app) {
 	 */
 	 
 	app.get('*', function(req, res){
-		res.render('404', {title: 'Page Not Found'});
+		res.render( '404', {title: 'Page Not Found'} );
 	});
 
 	/*app.post('/create', function(req, res){

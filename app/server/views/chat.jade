@@ -5,10 +5,9 @@ block content
 	#chat
 		#messages.span8
 			#incoming
-		#send-message.span8
+		#sendMessage.span8
 			textarea(rows='2', name="msg", id='msg').span8
-			button#btn-send.span2
-				| send message
 
+block scripts
 	script(src='/socket.io/socket.io.js')
 	script(src='/js/chat.js')

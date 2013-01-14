@@ -1,21 +1,51 @@
-$(document).ready(function() {
-	var $name = $('#name');
-	$name.focus();
-	$name.keypress( function(e){ 
-		if (e.keyCode === 13) { 
-			joinChat(); 
-			return false; 
-		} 
-	});
-	$('#join-button').click( function() { 
-		joinChat();
-	});
+// HOT PROBS landing page
+;(function($, window) {
 
-	var joinChat = function() {
-		if( $name.text() == '' || $name.text() == 'enter a name!' ) {
-			$name.text( 'enter a name!' );
-			return;
+	var index = {
+		'cfg': {
+			'$screenname': null,
+			'$joinButton': null,
+			'screenname': null
+		},
+		'evt': {
+			'ready': function() {
+				index.fn.init();
+			}
+		},
+		'fn': {
+			'init': function() {
+				// set up DOM elements
+				index.cfg.$screenname = $( '#screenname' );
+				index.cfg.$joinButton = $( '#joinButton' );
+				index.cfg.$screenname.keypress( function( e ) {
+					if( e.which == 13 ) {
+						index.fn.joinChat();
+						return false;
+					}
+				});
+				index.cfg.$joinButton.click( function() {
+					index.fn.joinChat();
+				});
+			},
+			'joinChat': function() {
+				// validate that screenname isn't blank before proceeding
+				index.cfg.screenname = index.cfg.$screenname.text();
+				var valid = index.fn.validateName();
+				if( valid ) {
+					// pass the screenname onto the chat page
+					window.location = "/chat?screenname="+index.cfg.screenname;
+				}
+			},
+			'validateName': function() {
+				if( index.cfg.screenname == '' || index.cfg.screenname == 'enter a name!' ) {
+					index.cfg.$screenname.text( 'enter a name!' );
+					return false;
+				}
+				return true;
+			}
 		}
-		window.location = "/chat?handle="+$name.text();
 	}
-});
+
+	index.evt.ready();
+	
+}(jQuery, window));

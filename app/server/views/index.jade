@@ -3,11 +3,12 @@ extends layout
 block content
 	div(id='login')
 		p pick a screen name
-		div(id='name', class='single-line', contenteditable='true', spellcheck='false')
-		div(id='button-wrapper')
-			button(id='join-button') JOIN CHAT
+		div(id='screenname', class='singleLine', contenteditable='true', spellcheck='false')
+		div(id='buttonWrapper')
+			button(id='joinButton') JOIN CHAT
 
 	div(id='about')
 		p HOT PROBS is a free and anonymous network. Log on to get easy answers to hot problems. Share your burning issues and secrets with others on the HOT PROBS network, or ask a dedicated advisor in the live chat room (where available). Visit the online version at http://www.hotprobs.com.<br/><br/>HOT PROBS is built on top of Subnodes (http://subnod.es), an open source project that enables people to easily set up portable local area networks for anonymous, local communication.
 
+block scripts
 	script(src='/js/index.js')

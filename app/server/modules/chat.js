@@ -1,40 +1,43 @@
-module.exports = function() {
+module.exports = function(io) {
 
 	var colors = ['#AE331F', '#D68434', '#116A9F', '#360B95', '#5F209E'];
 	var connections = { };
 
-	global.io
+	io
 		.of('/chat')
 		.on('connection', function(socket) {
 
-			// give each connected user a random color so it's easier to tell them apart in the chat log //
-			socket.on('user-ready', function(data) {
+			// give each connected user a random color so it's easier to tell them apart in the chat log
+			socket.on('userReady', function(data) {
 				socket.name = data.name;
 				socket.color = data.color = colors[Math.floor(Math.random() * colors.length)];
-				broadcastMessage('user-ready', data);
+				broadcastMessage('userReady', data);
 			});
 
-			socket.on('user-message', function(data) {
+			socket.on('userMessage', function(data) {
 				data.color = socket.color;
-				broadcastMessage('user-message', data);
+				broadcastMessage('userMessage', data);
 			});
 
 			function dispatchStatus() {
 				broadcastMessage('status', connections);
 			}
 
-			function broadcastMessage(message, data) {
-			// remove socket.emit if you don't want the sender to receive their own message //
+			function broadcastMessage( message, data ) {
+				// remove socket.emit if you don't want the sender to receive their own message
 				socket.emit(message, data);
 				socket.broadcast.emit(message, data);
 			}
 
-			// handle connections & disconnections //	
-			connections[socket.id] = {}; dispatchStatus();
+			// handle connections & disconnections
+			connections[socket.id] = {};
+			dispatchStatus();
 			socket.on('disconnect', function() {
-				delete connections[socket.id]; dispatchStatus();
-				broadcastMessage('user-disconnected', { name : socket.name, color : socket.color });
+				delete connections[socket.id];
+				dispatchStatus();
+				broadcastMessage('userDisconnected', { name : socket.name, color : socket.color });
 			});
 
 	});
-}();
+
+};
