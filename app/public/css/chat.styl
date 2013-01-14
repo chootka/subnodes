@@ -10,7 +10,7 @@ border-radius()
   -webkit-border-radius arguments
   -moz-border-radius arguments
   border-radius arguments
-body 
+body
 	margin  0
 	padding  0
 	background rgb(0,0,0)
@@ -18,83 +18,93 @@ body
 p
 	color #eee
 	text-align center
+	font-size .9em
+	line-height 1.25em
 #header
-	margin 3px
+	margin-top 3px
 	color #ff07a5
 	font-family jai
 	font-size 2em
 	letter-spacing .08em
 	text-align center
-[contenteditable="true"].singleLine
-	white-space nowrap
-    width 200px
-    overflow hidden
-[contenteditable="true"].singleLine br
-	display none
-[contenteditable="true"].singleLine *
-	display inline
-	white-space nowrap
 #login
+	margin-top 13px
 	text-align center
-#screenname
-	margin 10px auto
-	width 200px
-	height 20px
-	font-size 13px
-	color #ff07a5
-	background-color #2b292a
-	border 0
-	border-top 1px solid #434243
-	border-radius 0
-	text-align center
-#screenname:focus
-	outline 0px solid transparent
-#buttonWrapper
-	text-align center
-button
-	position relative
-	padding 6px 10px
-	margin-top -5px
-	border 0
-	background rgb(0,0,0)
-	font-family phaisarn
-	font-size 13px
-	color #eee
-	text-decoration none
-	text-align center
-	cursor pointer
+	p
+		padding 0
+		margin 0
+	#screenname
+		margin 10px auto
+		width 200px
+		height 20px
+		font-size 13px
+		color #ff07a5
+		background-color #2b292a
+		border 0
+		border-top 1px solid #434243
+		border-radius 0
+		text-align center
+	#screenname:focus
+		outline 0px solid transparent
+		[contenteditable="true"].singleLine
+			white-space nowrap
+		    width 200px
+		    overflow hidden
+		[contenteditable="true"].singleLine br
+			display none
+		[contenteditable="true"].singleLine *
+			display inline
+			white-space nowrap
+	#buttonWrapper
+		text-align center
+		margin 5px 0
+		button
+			position relative
+			padding 7px 10px
+			border 0
+			background rgb(20,20,20)
+			border-top 1px solid #434243
+			font-family phaisarn
+			font-size 13px
+			font-weight bold
+			color #ff07a5
+			text-decoration none
+			text-align center
+			cursor pointer
 #about
-	margin 25px auto
-	width 100%
+	margin 15px auto
+	width 93%
 #chat
-	margin auto
-	width 100%
-	margin-top 40px
-#incoming
-	height 200px
 	margin 0
-	padding 10px
-	font-size 13px
-	line-height 18px
-	overflow auto
-	color #eee
-	background-color #2b292a
-	border-top 1px solid #434243
-textarea
-	resize none
-	border 0
-	margin-top 20px
-	padding 7px
-	font-family phaisarn
-	font-size 13px
-	line-height 18px
-	color #eee
-	background-color #2b292a
-	border-top 1px solid #434243
-	border-radius 0
-#sendMessage button
-	float right
-button
-	color #e539ff
-#ntfd
-	margin 20px
+	padding 0
+	width 100%
+	margin-top 10px
+	#conversation
+		position relative
+		margin 0
+		padding 10px
+		height 300px
+		color #eee
+		background-color #2b292a
+		border-top 1px solid #434243
+		overflow-y auto
+		#incoming
+			position absolute
+			bottom 0
+			width 100%
+			max-height 100%
+			font-size 13px
+			line-height 18px
+	textarea
+		resize none
+		border 0
+		margin-top 10px
+		padding 7px
+		width 100%
+		font-family phaisarn
+		font-size 13px
+		line-height 18px
+		color #eee
+		background-color #2b292a
+		border-top 1px solid #434243
+		border-radius 0

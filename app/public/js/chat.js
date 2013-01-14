@@ -28,7 +28,7 @@
 					}
 				});
 				// setting the blur callback for iOS devices
-				// hitting the 'done' button takes focus off the textfield
+				// captures hitting the 'done' button (takes focus off $msg textfield)
 				chatClient.cfg.$msg.blur( chatClient.fn.sendMessage );
 				// set socket connection to listen on the 'chat' namespace
 				chatClient.cfg.socket = io.connect('/chat');
@@ -40,7 +40,7 @@
 				chatClient.cfg.socket.emit('userReady', {name : chatClient.cfg.screenname });				
 			},
 			'autoscroll': function() {
-				var incoming = document.getElementById('incoming');
+				var incoming = document.getElementById( 'conversation' );
 					incoming.scrollTop = incoming.scrollHeight;
 			},
 			'sendMessage': function() {
@@ -63,19 +63,32 @@
 				//$('#connected').html( 'There ' + str + ' current connected' );
 			},
 			'userReady': function( data ) {
-				chatClient.cfg.$incoming
-					.append( '<span style="color:'+data.color+'">'+data.name+' > connected</span></br>');
-				chatClient.fn.autoscroll();
+				if( data.name ) {
+					chatClient.cfg.$incoming
+						.append( '<div style="color:#00ff24;font-style:italic"> > '+data.name+' connected</div>');
+					chatClient.fn.autoscroll();
+				}
 			},
 			'userMessage': function( data ) {
-				chatClient.cfg.$incoming
-					.append( '<span style="color:'+data.color+'">'+data.name+' > '+data.message+'</span></br>');
-				chatClient.fn.autoscroll();
+				if( data.name ) {
+					chatClient.cfg.$incoming
+						.append( '<div style="color:'+data.color+'">'+data.name+' > '+data.message+'</div>');
+					chatClient.fn.autoscroll();
+				}
 			},
 			'userDisconnected': function( data ) {
-				chatClient.cfg.$incoming
-					.append('<span style="color:'+data.color+'">'+data.name +' > disconnected</span><br>');
-				chatClient.fn.autoscroll();
+				if( data.name ) {
+					chatClient.cfg.$incoming
+						.append('<span style="color:#009a16;font-style:italic;"> > '+data.name +' disconnected</span><br>');
+					chatClient.fn.autoscroll();
+				}
+			},
+			'announcement': function( data ) {
+				if( data.name ) {
+					chatClient.cfg.$incoming
+						.append('<span style="width:100%;margin:auto;text-align:center;color:'+data.color+'">'+data.name +'</span> > <span style="color:#8a00ff">disconnected</span><br>');
+					chatClient.fn.autoscroll();
+				}
 			}
 		}
 	};

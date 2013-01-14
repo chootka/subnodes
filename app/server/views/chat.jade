@@ -1,12 +1,11 @@
 extends layout
 
 block content
-
 	#chat
-		#messages.span8
+		#conversation
 			#incoming
-		#sendMessage.span8
-			textarea(rows='2', name="msg", id='msg').span8
+		#sendMessage
+			textarea(rows='1', name='msg', id='msg')
 
 block scripts
 	script(src='/socket.io/socket.io.js')

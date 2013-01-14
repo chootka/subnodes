@@ -2,8 +2,8 @@ extends layout
 
 block content
 	div(id='login')
-		p pick a screen name
-		div(id='screenname', class='singleLine', contenteditable='true', spellcheck='false')
+		p enter a screen name:
+		div(id='screenname', class='singleLine', contenteditable='true', spellcheck='false', required='true')
 		div(id='buttonWrapper')
 			button(id='joinButton') JOIN CHAT
 
