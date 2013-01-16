@@ -64,29 +64,33 @@
 			},
 			'userReady': function( data ) {
 				if( data.name ) {
+					var decoded = decodeURIComponent( data.name );
 					chatClient.cfg.$incoming
-						.append( '<div style="color:#00ff24;font-style:italic"> > '+data.name+' connected</div>');
+						.append( '<div style="color:#00ff24;font-style:italic"> > '+decoded+' connected</div>');
 					chatClient.fn.autoscroll();
 				}
 			},
 			'userMessage': function( data ) {
 				if( data.name ) {
+					var decoded = decodeURIComponent( data.name );
 					chatClient.cfg.$incoming
-						.append( '<div style="color:'+data.color+'">'+data.name+' > '+data.message+'</div>');
+						.append( '<div style="color:'+data.color+'">'+decoded+' > '+data.message+'</div>');
 					chatClient.fn.autoscroll();
 				}
 			},
 			'userDisconnected': function( data ) {
 				if( data.name ) {
+					var decoded = decodeURIComponent( data.name );
 					chatClient.cfg.$incoming
-						.append('<span style="color:#009a16;font-style:italic;"> > '+data.name +' disconnected</span><br>');
+						.append('<span style="color:#009a16;font-style:italic;"> > '+decoded+' disconnected</span><br>');
 					chatClient.fn.autoscroll();
 				}
 			},
 			'announcement': function( data ) {
 				if( data.name ) {
+					var decoded = decodeURIComponent( data.name );
 					chatClient.cfg.$incoming
-						.append('<span style="width:100%;margin:auto;text-align:center;color:'+data.color+'">'+data.name +'</span> > <span style="color:#8a00ff">disconnected</span><br>');
+						.append('<span style="width:100%;margin:auto;text-align:center;color:'+data.color+'">'+decoded+'</span> > <span style="color:#8a00ff">disconnected</span><br>');
 					chatClient.fn.autoscroll();
 				}
 			}
