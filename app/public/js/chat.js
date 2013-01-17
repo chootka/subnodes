@@ -66,6 +66,9 @@
 					chatClient.cfg.$incoming
 						.append( '<div style="color:#00ff24;font-style:italic"> > '+decoded+' connected</div>');
 					chatClient.fn.autoscroll();
+					chatClient.cfg.$incoming
+						.append( '<div style="color:#ff07a5;font-style:italic"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>');
+					chatClient.fn.autoscroll();
 				}
 			},
 			'userMessage': function( data ) {
