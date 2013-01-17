@@ -19,11 +19,8 @@ module.exports = function(io) {
 				broadcastMessage( 'userMessage', data );
 			});
 
-			function dispatchStatus() {
-				broadcastMessage( 'status', connections );
-			}
-
 			function broadcastMessage( message, data ) {
+				data.connections = connections;
 				// remove socket.emit if you don't want the sender to receive their own message
 				socket.emit( message, data );
 				socket.broadcast.emit( message, data );
@@ -31,10 +28,8 @@ module.exports = function(io) {
 
 			// handle connections & disconnections
 			connections[socket.id] = {};
-			dispatchStatus();
 			socket.on('disconnect', function() {
 				delete connections[socket.id];
-				dispatchStatus();
 				broadcastMessage('userDisconnected', { name : socket.name, color : socket.color });
 			});
 

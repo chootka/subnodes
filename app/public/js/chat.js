@@ -5,6 +5,7 @@
 		'cfg': {
 			// grab screenname from end of URL
 			'screenname': window.location.search.substring(1).split("=")[1],
+			'countStr': null,
 			'socket': null,
 			'$msg': null,
 			'$incoming': null,
@@ -62,12 +63,20 @@
 			},
 			'userReady': function( data ) {
 				if( data.name ) {
+					// get how many people are currently connected
+					var i = 0;
+					for (var p in data.connections) i++;
+					var str = i > 1 ? ' are ' + i + ' people ' : ' is ' + i + ' person ';
+					chatClient.cfg.countStr = 'There ' + str + ' currently connected';
+					
+					// broadcast a message to users
 					var decoded = decodeURIComponent( data.name );
 					chatClient.cfg.$incoming
 						.append( '<div style="color:#00ff24;font-style:italic"> > '+decoded+' connected</div>');
 					chatClient.fn.autoscroll();
 					chatClient.cfg.$incoming
-						.append( '<div style="color:#ff07a5;font-style:italic"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>');
+						.append( '<div style="color:#ff07a5;font-style:italic"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>')
+						.append( '<div style="color:#ff07a5;font-style:italic"> > ***  '+chatClient.cfg.countStr+' ***</div>');
 					chatClient.fn.autoscroll();
 				}
 			},
