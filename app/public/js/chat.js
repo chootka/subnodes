@@ -7,7 +7,8 @@
 			'screenname': window.location.search.substring(1).split("=")[1],
 			'socket': null,
 			'$msg': null,
-			'$incoming': null
+			'$incoming': null,
+			'$header': null
 		},
 		'evt': {
 			'ready': function() {
@@ -19,6 +20,7 @@
 				// set up DOM elements
 				chatClient.cfg.$msg = $('#msg');
 				chatClient.cfg.$incoming = $('#incoming');
+				chatClient.cfg.$header = $('#header');
 				// bind events
 				chatClient.cfg.$msg.focus();
 				chatClient.cfg.$msg.keypress( function( e ) {
@@ -27,12 +29,14 @@
 						return false;
 					}
 				});
+				chatClient.cfg.$header.click(function() {
+					window.location = '/';
+				})
 				// setting the blur callback for iOS devices
 				// captures hitting the 'done' button (takes focus off $msg textfield)
 				chatClient.cfg.$msg.blur( chatClient.fn.sendMessage );
 				// set socket connection to listen on the 'chat' namespace
 				chatClient.cfg.socket = io.connect('/chat');
-				chatClient.cfg.socket.on( 'status', chatClient.fn.onStatus );
 				chatClient.cfg.socket.on( 'userReady', chatClient.fn.userReady );
 				chatClient.cfg.socket.on( 'userMessage', chatClient.fn.userMessage );
 				chatClient.cfg.socket.on( 'userDisconnected', chatClient.fn.userDisconnected );
@@ -56,12 +60,6 @@
 				// set message field to blank after sending
 				chatClient.cfg.$msg.val('');
 			},
-			'status': function( connections ) {
-				//var i = 0;
-				//for (var p in connections) i++;
-				//var str = i > 1 ? ' are ' + i + ' people ' : ' is ' + i + ' person ';
-				//$('#connected').html( 'There ' + str + ' current connected' );
-			},
 			'userReady': function( data ) {
 				if( data.name ) {
 					var decoded = decodeURIComponent( data.name );
@@ -83,14 +81,6 @@
 					var decoded = decodeURIComponent( data.name );
 					chatClient.cfg.$incoming
 						.append('<span style="color:#009a16;font-style:italic;"> > '+decoded+' disconnected</span><br>');
-					chatClient.fn.autoscroll();
-				}
-			},
-			'announcement': function( data ) {
-				if( data.name ) {
-					var decoded = decodeURIComponent( data.name );
-					chatClient.cfg.$incoming
-						.append('<span style="width:100%;margin:auto;text-align:center;color:'+data.color+'">'+decoded+'</span> > <span style="color:#8a00ff">disconnected</span><br>');
 					chatClient.fn.autoscroll();
 				}
 			}
