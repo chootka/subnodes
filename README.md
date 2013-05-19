@@ -8,7 +8,8 @@ its own local area network, and does not connect with the internet. This is key 
 where people can communicate anonymously and freely, as well as maximizing the portability of the network
 (no dependibility on an internet connection means the device can be taken and remain active anywhere). Future plans
 include enabling mesh networking so that devices within proximity to each other becomes a node in a greater local
-network, extending range and making it possible to exchange information with each other.
+network, extending range and making it possible to exchange information with each other. Support for Subnodes has
+been provided by Eyebeam.
 
 
 example applications
