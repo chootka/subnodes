@@ -1,4 +1,5 @@
 module.exports = function() {
+	// TO-DO: get DB functioning
 	var mongoose = require('mongoose');
 	mongoose.connect('mongodb://localhost/test');
 

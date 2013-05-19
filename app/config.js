@@ -33,7 +33,7 @@ module.exports = function(app, exp) {
 		  // if an error occurs Connect will pass it down
 		  // through these "error-handling" middleware
 		  // allowing you to respond however you like
-		  res.send(500, { error: 'Sorry something bad happened! ' + err });
+		  res.send(500, { error: 'A vague server error has occurred: ' + err + '. Bad connection, perhaps?'});
 		})
 	});
 

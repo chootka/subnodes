@@ -5,7 +5,6 @@
  * Github : http://github.com/chootka/subnodes
  */
 
-
 /**
  * Module dependencies.
  */
@@ -34,12 +33,13 @@ io.configure('development', function(){
   io.set('transports', ['websocket']);
 });
 
-// finally create this application, our root server //
+// create the application
 require('./app/config')(app, express);
 require('./app/server/router')(app);
 require('./app/server/db')
 require('./app/server/modules/chat')(io);
 
+// fire up the server
 server.listen(80, function() {
   console.log("Express server listening on port %d in %s mode", server.address().port, app.settings.env);
 });
