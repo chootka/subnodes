@@ -1,6 +1,6 @@
 _dev/
 .DS_Store
-final_instructions
+final_instructions.rtf
 node_modules
 npm-debug.log
 scripts/awkwardChatBot.js
