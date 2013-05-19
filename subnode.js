@@ -8,11 +8,11 @@
 /**
  * Module dependencies.
  */
-var express     = require('express'),
+var express   = require('express'),
 	app         = express(),
-    http		= require('http'),
-    server 		= http.createServer(app),
-    io			= require('socket.io').listen(server);
+  http        = require('http'),
+  server      = http.createServer(app),
+  io          = require('socket.io').listen(server);
 
 app.root    	= __dirname;
 
@@ -36,7 +36,7 @@ io.configure('development', function(){
 // create the application
 require('./app/config')(app, express);
 require('./app/server/router')(app);
-require('./app/server/db')
+//require('./app/server/db')
 require('./app/server/modules/chat')(io);
 
 // fire up the server

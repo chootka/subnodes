@@ -5,6 +5,7 @@
 		'cfg': {
 			'$screenname': null,
 			'$joinButton': null,
+			'$luckyButton': null,
 			'screenname': null
 		},
 		'evt': {
@@ -17,6 +18,7 @@
 				// set up DOM elements
 				index.cfg.$screenname = $( '#screenname' );
 				index.cfg.$joinButton = $( '#joinButton' );
+				index.cfg.$luckyButton = $( '#luckyButton' );
 				index.cfg.$screenname.keypress( function( e ) {
 					if( e.which == 13 ) {
 						index.fn.joinChat();
@@ -24,16 +26,19 @@
 					}
 				});
 				index.cfg.$joinButton.click( function() {
-					index.fn.joinChat();
+					index.fn.joinChat( false );
+				});
+				index.cfg.$luckyButton.click( function() {
+					index.fn.joinChat( true );
 				});
 			},
-			'joinChat': function() {
+			'joinChat': function( lucky ) {
 				// validate that screenname isn't blank before proceeding
 				index.cfg.screenname = index.cfg.$screenname.text();
 				var valid = index.fn.validateName();
 				if( valid ) {
 					// pass the screenname onto the chat page
-					window.location = "/chat?screenname="+index.cfg.screenname;
+					window.location = "/chat?screenname="+index.cfg.screenname+"&lucky="+lucky;
 				}
 			},
 			'validateName': function() {

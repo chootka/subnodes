@@ -5,6 +5,7 @@
 		'cfg': {
 			// grab screenname from end of URL
 			'screenname': window.location.search.substring(1).split("=")[1],
+			'lucky': window.location.search.substring(1).split("=")[2],
 			'countStr': null,
 			'socket': null,
 			'$msg': null,
@@ -41,8 +42,11 @@
 				chatClient.cfg.socket.on( 'userReady', chatClient.fn.userReady );
 				chatClient.cfg.socket.on( 'userMessage', chatClient.fn.userMessage );
 				chatClient.cfg.socket.on( 'userDisconnected', chatClient.fn.userDisconnected );
+				chatClient.cfg.socket.on( 'joinedRoom', chatClient.fn.onJoinedRoom );
+				chatClient.cfg.socket.on( 'gotPartner', chatClient.fn.onGotPartner );
+
 				// register the user's name with the socket connection on the server
-				chatClient.cfg.socket.emit('userReady', {name : chatClient.cfg.screenname });				
+				chatClient.cfg.socket.emit('userReady', {name : chatClient.cfg.screenname, lucky: chatClient.cfg.lucky });				
 			},
 			'autoscroll': function() {
 				var incoming = document.getElementById( 'conversation' );
@@ -52,6 +56,7 @@
 				// broadcast userMessage event with user's screenname + message
 				// if message is not blank
 				if(chatClient.cfg.$msg.val() != '') {
+
 					chatClient.cfg.socket.emit( 'userMessage', 
 											{ 
 												name: chatClient.cfg.screenname, 
@@ -62,7 +67,24 @@
 				chatClient.cfg.$msg.val('');
 			},
 			'userReady': function( data ) {
-				if( data.name ) {
+				if( data.lucky ) {
+					// get how many people are currently connected
+					var i = 0;
+					for (var p in data.connections) i++;
+					var str = i > 1 ? ' are ' + i + ' people ' : ' is ' + i + ' person ';
+					chatClient.cfg.countStr = 'There ' + str + ' currently connected';
+					
+					// broadcast a message to users
+					var decoded = decodeURIComponent( data.name );
+					chatClient.cfg.$incoming
+						.append( '<div class="green"> > '+decoded+' connected</div>');
+					chatClient.fn.autoscroll();
+					chatClient.cfg.$incoming
+						.append( '<div class="hot-pink"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>')
+						.append( '<div class="hot-pink"> > ***  '+chatClient.cfg.countStr+' ***</div>');
+					chatClient.fn.autoscroll();
+				}
+				else {
 					// get how many people are currently connected
 					var i = 0;
 					for (var p in data.connections) i++;
