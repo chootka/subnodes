@@ -9,3 +9,14 @@ where people can communicate anonymously and freely, as well as maximizing the p
 (no dependibility on an internet connection means the device can be taken and remain active anywhere). Future plans
 include enabling mesh networking so that devices within proximity to each other becomes a node in a greater local
 network, extending range and making it possible to exchange information with each other.
+
+
+example applications
+--------------------
+* [hotprobes](http://www.hotprobs.com/)
+
+references
+----------
+* [subnodes website](http://subnod.es/)
+* [Raspberry Pi](http://www.raspberrypi.org/)
+* [eyebeam](http://eyebeam.org/)
