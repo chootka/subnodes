@@ -41,6 +41,6 @@ require('./app/server/modules/chat')(io);
 require('./app/server/modules/pchat')(io);
 
 // fire up the server
-server.listen(8080, function() {
+server.listen(80, function() {
   console.log("Express server listening on port %d in %s mode", server.address().port, app.settings.env);
 });
