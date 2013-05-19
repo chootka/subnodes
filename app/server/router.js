@@ -9,6 +9,14 @@ module.exports = function(app) {
 	});	
 
 	/*
+	 * GET private chat.
+	 */
+
+	app.get('/pchat', function(req, res){
+		res.render( 'pchat' );
+	});
+
+	/*
 	 * GET chat.
 	 */
 

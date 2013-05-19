@@ -38,6 +38,7 @@ require('./app/config')(app, express);
 require('./app/server/router')(app);
 //require('./app/server/db')
 require('./app/server/modules/chat')(io);
+require('./app/server/modules/pchat')(io);
 
 // fire up the server
 server.listen(8080, function() {
