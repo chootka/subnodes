@@ -6,7 +6,7 @@
 			// grab screenname from end of URL
 			'screenname': window.location.search.substring(1).split("=")[1],
 			'lucky': window.location.search.substring(1).split("=")[2],
-			'countStr': null,
+			'socket_id': null,
 			'socket': null,
 			'$msg': null,
 			'$incoming': null,
@@ -32,6 +32,8 @@
 					}
 				});
 				chatClient.cfg.$header.click(function() {
+					chatClient.cfg.lucky = "false";
+					chatClient.cfg.screenname = "";
 					window.location = '/';
 				})
 				// setting the blur callback for iOS devices
@@ -67,12 +69,31 @@
 				chatClient.cfg.$msg.val('');
 			},
 			'userReady': function( data ) {
-				if( data.lucky ) {
+				chatClient.cfg.socket_id = data.id;
+
+				if( data.lucky == "true" ) {
+					console.log("client side: userReady and lucky");
 					// get how many people are currently connected
 					var i = 0;
 					for (var p in data.connections) i++;
-					var str = i > 1 ? ' are ' + i + ' people ' : ' is ' + i + ' person ';
-					chatClient.cfg.countStr = 'There ' + str + ' currently connected';
+					var intro_str;
+					if ( i == 1 ) {
+						intro_str = 'No one is here yet... give it a few seconds?';
+					}
+					else {
+						var you = data.connections[chatClient.cfg.socket_id].name;
+						var them;
+
+						for (var p in data.connections) {
+							if( p == chatClient.cfg.socket_id ) {
+								you = data.connections[p].name;
+							}
+							else {
+								them = data.connections[p].name;
+							}
+						}
+						intro_str = you + ', meet ' + them;
+					}
 					
 					// broadcast a message to users
 					var decoded = decodeURIComponent( data.name );
@@ -81,15 +102,16 @@
 					chatClient.fn.autoscroll();
 					chatClient.cfg.$incoming
 						.append( '<div class="hot-pink"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>')
-						.append( '<div class="hot-pink"> > ***  '+chatClient.cfg.countStr+' ***</div>');
+						.append( '<div class="hot-pink"> > ***  '+intro_str+' ***</div>');
 					chatClient.fn.autoscroll();
 				}
 				else {
+					console.log("client side: userReady and NOT lucky");
 					// get how many people are currently connected
 					var i = 0;
 					for (var p in data.connections) i++;
 					var str = i > 1 ? ' are ' + i + ' people ' : ' is ' + i + ' person ';
-					chatClient.cfg.countStr = 'There ' + str + ' currently connected';
+					var countStr = 'There ' + str + ' currently connected';
 					
 					// broadcast a message to users
 					var decoded = decodeURIComponent( data.name );
@@ -98,7 +120,7 @@
 					chatClient.fn.autoscroll();
 					chatClient.cfg.$incoming
 						.append( '<div class="hot-pink"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>')
-						.append( '<div class="hot-pink"> > ***  '+chatClient.cfg.countStr+' ***</div>');
+						.append( '<div class="hot-pink"> > ***  '+countStr+' ***</div>');
 					chatClient.fn.autoscroll();
 				}
 			},

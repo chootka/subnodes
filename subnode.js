@@ -40,6 +40,6 @@ require('./app/server/router')(app);
 require('./app/server/modules/chat')(io);
 
 // fire up the server
-server.listen(80, function() {
+server.listen(8080, function() {
   console.log("Express server listening on port %d in %s mode", server.address().port, app.settings.env);
 });

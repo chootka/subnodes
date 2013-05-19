@@ -2,6 +2,11 @@
 @font-face{font-family:jai;font-style:normal;src:url("/fonts/jai.ttf")}
 body{margin:0;padding:0;background:#000;font-family:phaisarn}
 p{color:#eee;text-align:center;font-size:.9em;line-height:1.25em}
+.green{color:#00ff24;font-style:italic}
+.hot-pink{color:#ff07a5;font-style:italic}
+.fourohfour{margin:0 auto;width:320px;}
+.fourohfour a{color:#00ff24;text-align:center;text-decoration:none;width:320px}
+.fourohfour img{position:absolute;bottom:0;left:0;width:320px}
 #header{margin-top:3px;color:#ff07a5;font-family:jai;font-size:2em;letter-spacing:.08em;text-align:center;cursor:pointer}
 #login{margin-top:13px;text-align:center;}
 #login p{padding:0;margin:0}
