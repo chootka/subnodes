@@ -72,11 +72,11 @@
 					// broadcast a message to users
 					var decoded = decodeURIComponent( data.name );
 					chatClient.cfg.$incoming
-						.append( '<div style="color:#00ff24;font-style:italic"> > '+decoded+' connected</div>');
+						.append( '<div class="green"> > '+decoded+' connected</div>');
 					chatClient.fn.autoscroll();
 					chatClient.cfg.$incoming
-						.append( '<div style="color:#ff07a5;font-style:italic"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>')
-						.append( '<div style="color:#ff07a5;font-style:italic"> > ***  '+chatClient.cfg.countStr+' ***</div>');
+						.append( '<div class="hot-pink"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>')
+						.append( '<div class="hot-pink"> > ***  '+chatClient.cfg.countStr+' ***</div>');
 					chatClient.fn.autoscroll();
 				}
 			},
