@@ -1,7 +1,9 @@
 _dev/
-_dropbox/
-_template/
 .DS_Store
-
+final_instructions
 node_modules
 npm-debug.log
+scripts/awkwardChatBot.js
+scripts/content.js
+scripts/haproxy.cfg
+scripts/node_install.sh

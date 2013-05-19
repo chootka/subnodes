@@ -1,6 +1,6 @@
 module.exports = function(io) {
 
-	var colors = ['#AE331F', '#D68434', '#116A9F', '#360B95', '#5F209E'];
+	var colors = ['#dfe937', '#ff9b39', '#2fa9f0', '#946af1', '#39f0c3'];
 	var connections = {};
 
 	io
