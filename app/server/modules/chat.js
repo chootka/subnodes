@@ -85,7 +85,7 @@ module.exports = function(io) {
 						}
 
 					});
-				}
+				});
 			});
 
 			socket.on('disconnect', function() {
