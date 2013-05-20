@@ -9,7 +9,7 @@ where people can communicate anonymously and freely, as well as maximizing the p
 (no dependibility on an internet connection means the device can be taken and remain active anywhere). Future plans
 include enabling mesh networking so that devices within proximity to each other becomes a node in a greater local
 network, extending range and making it possible to exchange information with each other. Support for Subnodes has
-been provided by Eyebeam.
+been provided by Eyebeam. This code is published under the [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html).
 
 
 example applications
