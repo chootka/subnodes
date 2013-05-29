@@ -7,3 +7,4 @@ scripts/awkwardChatBot.js
 scripts/content.js
 scripts/haproxy.cfg
 scripts/node_install.sh
+scripts/__notused
