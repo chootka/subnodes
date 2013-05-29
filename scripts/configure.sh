@@ -1,6 +1,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SOFTWARE INSTALL
 #
+
 # update the packages (may take a long time)
 sudo apt-get update && sudo apt-get -y upgrade
 
@@ -8,12 +9,12 @@ sudo apt-get update && sudo apt-get -y upgrade
 sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
 
 # install node.js binary and put it in /usr/local
-wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
 cd /usr/local
-sudo tar xzvf /home/pi/node-v0.9.9-linux-arm-pi.tar.gz --strip=1
+wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
+sudo tar xzvf node-v0.9.9-linux-arm-pi.tar.gz --strip=1
 
 # create directory where web apps will live
-cd /home/pi/
+cd /home/pi
 mkdir www
 # install subnodes chat room
 #cd www
