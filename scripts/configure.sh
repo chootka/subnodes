@@ -10,10 +10,10 @@ sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
 # install node.js binary and put it in /usr/local
 wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
 cd /usr/local
-sudo tar xzvf ~/node-v0.9.9-linux-arm-pi.tar.gz --strip=1
+sudo tar xzvf /home/pi/node-v0.9.9-linux-arm-pi.tar.gz --strip=1
 
 # create directory where web apps will live
-cd ~
+cd /home/pi/
 mkdir www
 # install subnodes chat room
 #cd www
