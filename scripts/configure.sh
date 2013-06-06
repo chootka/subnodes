@@ -10,19 +10,45 @@ sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# INSTALL NODE
+#
+# install node.js binary and put it in /usr/local
+cd /usr/local
+wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
+sudo tar xzvf node-v0.9.9-linux-arm-pi.tar.gz --strip=1
+
+# go back to our scripts directory
+cd /home/pi/www/subnodes/
+
+# download subnodes app dependencies and start chat application
+sudo npm install
+sudo npm install -g nodemon
+sudo NODE_ENV=production nodemon subnode.js
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# CREATE STARTUP SCRIPT
+#
+# starts access point, mesh point, and chat application on boot
+sudo cp scripts/subnodes.sh /etc/init.d/subnodes
+sudo chmod 755 /etc/init.d/subnodes
+sudo update-rc.d /etc/init.d/subnodes defaults
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # NETWORK CONFIGURATION
 #
 # modify the network interface config file
-sudo python configure_network_interfaces.py
+sudo python scripts/configure_network_interfaces.py
 
 # copy in our hostapd configuration file
-sudo cp conf/hostapd.conf /etc/hostapd/hostapd.conf
+sudo cp scripts/conf/hostapd.conf /etc/hostapd/hostapd.conf
 
 # copy in our hostapd init script
-sudo cp conf/hostapd /etc/default/hostapd
+sudo cp scripts/conf/hostapd /etc/default/hostapd
 
 # copy in our dnsmasq configuration file
-sudo cp conf/dnsmasq.conf /etc/dnsmasq.conf
+sudo cp scripts/conf/dnsmasq.conf /etc/dnsmasq.conf
 
 # delete default interfaces
 sudo ifconfig wlan0 down
@@ -46,29 +72,6 @@ sudo iw phy phy1 interface add ap0 type __ap
 sudo brctl addbr br0
 sudo brctl addif br0 ap0
 sudo brctl addif br0 bat0
-
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# INSTALL NODE
-#
-# install node.js binary and put it in /usr/local
-cd /usr/local
-wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
-sudo tar xzvf node-v0.9.9-linux-arm-pi.tar.gz --strip=1
-
-# create directory where web apps will live
-cd /home/pi/www/subnodes
-
-# download subnodes app dependencies and start chat application
-sudo npm install
-sudo npm install -g nodemon
-sudo NODE_ENV=production nodemon subnode.js
-
-# create startup script; 
-# starts access point, mesh point, and chat application on boot
-sudo cp scripts/subnodes.sh /etc/init.d/subnodes
-sudo chmod 755 /etc/init.d/subnodes
-sudo update-rc.d /etc/init.d/subnodes defaults
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
