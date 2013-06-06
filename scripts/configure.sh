@@ -3,7 +3,8 @@
 #
 
 # update the packages (may take a long time)
-sudo apt-get update && sudo apt-get -y upgrade
+sudo apt-get update
+#&& sudo apt-get -y upgrade
 
 # install prerequisite software
 sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
