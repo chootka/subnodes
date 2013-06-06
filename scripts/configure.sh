@@ -58,23 +58,21 @@ sudo tar xzvf node-v0.9.9-linux-arm-pi.tar.gz --strip=1
 
 # create directory where web apps will live
 cd /home/pi/www/subnodes
-#mkdir www
-# install subnodes chat room
-#cd www
-#git clone https://github.com/chootka/subnodes.git
-#cd subnodes
+
+# download subnodes app dependencies and start chat application
 sudo npm install
 sudo npm install -g nodemon
 sudo NODE_ENV=production nodemon subnode.js
 
-# create startup script; starts node app and hostapd on boot
-#sudo cp scripts/subnodes.sh /etc/init.d/subnodes
-#sudo chmod 755 /etc/init.d/subnodes
-#sudo update-rc.d /etc/init.d/subnodes defaults
+# create startup script; 
+# starts access point, mesh point, and chat application on boot
+sudo cp scripts/subnodes.sh /etc/init.d/subnodes
+sudo chmod 755 /etc/init.d/subnodes
+sudo update-rc.d /etc/init.d/subnodes defaults
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# BRING UP THE MESH NETWORK AND WIRELESS ACCESS POINT!
+# BRING UP THE MESH NETWORK AND WIRELESS ACCESS POINT
 #
 # bring up the BATMAN adv interface
 sudo ifconfig mesh0 up
