@@ -30,7 +30,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 			# create the ap0 and mesh0 interfaces
 			$DAEMON iw phy phy0 interface add ap0 type __ap
-			$DAEMON iw phy phy0 interface add mesh0 type adhoc
+			$DAEMON iw phy phy1 interface add mesh0 type adhoc
 			$DAEMON ifconfig mesh0 mtu 1528
 			$DAEMON iwconfig mesh0 mode ad-hoc essid meshnet ap 02:12:34:56:78:90 channel 3
 			$DAEMON ifconfig mesh0 down
