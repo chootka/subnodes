@@ -45,6 +45,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 			$DAEMON ifconfig bat0 up
 
 			# bring up the AP interface and give ap0 a static IP
+			# not sure if ap0 needs an IP anymore, since it is part of the bridge
 			$DAEMON ifconfig ap0 10.0.0.1 netmask 255.255.255.0 up
 
 			# bring up the brdige and assign it a static IP
