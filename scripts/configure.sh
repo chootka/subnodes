@@ -9,7 +9,7 @@ sudo apt-get update
 sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
 
 # add the batman-adv module to be started on boot
-sudo sed -e "\$abatman-adv"
+sudo sed -i '$a batman-adv' /etc/modules
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
