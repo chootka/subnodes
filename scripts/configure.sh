@@ -56,20 +56,21 @@ sudo iw dev wlan0 del
 sudo ifconfig wlan1 down
 sudo iw dev wlan1 del
 
-# set up BATMAN Adv (mesh networking)
+# enable the BATMAN Adv module
 sudo modprobe batman-adv
-sudo iw phy phy0 interface add mesh0 type adhoc
+
+# create the ap0 and mesh0 interfaces
+sudo iw phy phy0 interface add ap0 type __ap
+sudo iw phy phy1 interface add mesh0 type adhoc
 sudo ifconfig mesh0 mtu 1528
 sudo iwconfig mesh0 mode ad-hoc essid meshnet ap 02:12:34:56:78:90 channel 3
 sudo ifconfig mesh0 down
+
+# add the interface to batman
 sudo batctl if add mesh0
+sudo batctl ap_isolation 1
 
-# set up the AP
-batctl ap_isolation 1
-sudo iw phy phy1 interface add ap0 type __ap
-
-# set up the bridge
-sudo brctl addbr br0
+# add the interfaces to the bridge
 sudo brctl addif br0 ap0
 sudo brctl addif br0 bat0
 

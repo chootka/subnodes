@@ -21,11 +21,19 @@ lines_to_comment_out = [
 ]
 
 # certain lines need inserting
-ap0_lines = [
+if_lines = [
     "",
     "iface ap0 inet static",
     "  address 10.0.0.1",
     "  netmask 255.255.255.0",
+    "",
+    "auto br0",
+    "iface br0 inet static",
+    "  bridge_ports none",
+    "  bridge_stp off",
+    "  address 192.168.3.1",
+    "  netmask 255.255.255.0",
+    "",
 ]
 
 editing_wlan0 = False
@@ -48,8 +56,8 @@ for line in interface_lines:
     if line is not None:
         output_lines.append(line.rstrip())
 
-# stick the ap0 spec onto the end of the output list
-output_lines += ap0_lines
+# stick the ap0 + br0 spec onto the end of the output list
+output_lines += if_lines
 
 # join, and remove double rows of empty lines
 output = "\n".join(output_lines).replace("\n\n\n", "\n\n")
