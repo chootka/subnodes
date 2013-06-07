@@ -8,6 +8,9 @@ sudo apt-get update
 # install prerequisite software
 sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
 
+# enable the BATMAN Adv module
+sudo modprobe batman-adv
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # INSTALL NODE
@@ -17,22 +20,12 @@ cd /usr/local
 wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
 sudo tar xzvf node-v0.9.9-linux-arm-pi.tar.gz --strip=1
 
-# go back to our scripts directory
+# go back to our subnodes directory
 cd /home/pi/www/subnodes/
 
-# download subnodes app dependencies and start chat application
+# download subnodes app dependencies
 sudo npm install
 sudo npm install -g nodemon
-sudo NODE_ENV=production nodemon subnode.js
-
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# CREATE STARTUP SCRIPT
-#
-# starts access point, mesh point, and chat application on boot
-sudo cp scripts/subnodes.sh /etc/init.d/subnodes
-sudo chmod 755 /etc/init.d/subnodes
-sudo update-rc.d /etc/init.d/subnodes defaults
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -56,9 +49,6 @@ sudo iw dev wlan0 del
 sudo ifconfig wlan1 down
 sudo iw dev wlan1 del
 
-# enable the BATMAN Adv module
-sudo modprobe batman-adv
-
 # create the ap0 and mesh0 interfaces
 sudo iw phy phy0 interface add ap0 type __ap
 sudo iw phy phy1 interface add mesh0 type adhoc
@@ -70,7 +60,7 @@ sudo ifconfig mesh0 down
 sudo batctl if add mesh0
 sudo batctl ap_isolation 1
 
-# add the interfaces to the bridge
+# add the interfaces to the bridge (created in /etc/network/interfaces)
 sudo brctl addif br0 ap0
 sudo brctl addif br0 bat0
 
@@ -95,3 +85,16 @@ sudo service dnsmasq start
 # set the hostapd and dnsmasq services to autostart on boot up
 sudo update-rc.d hostapd enable
 sudo update-rc.d dnsmasq enable
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# CREATE STARTUP SCRIPT
+#
+# copy startup script to init.d
+# subnodes script starts access point, mesh point, and chat application on boot
+sudo cp scripts/subnodes.sh /etc/init.d/subnodes
+sudo chmod 755 /etc/init.d/subnodes
+sudo update-rc.d subnodes defaults
+
+# start chat application
+# sudo NODE_ENV=production nodemon subnode.js
+sudo /etc/init.d/subnodes restart
