@@ -19,6 +19,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 		start)
 			echo "Starting $NAME access point and mesh point..."
 			# $DAEMON hostapd -B /etc/hostapd/hostapd.conf
+			# activate batman adv module
+			$DAEMON modprobe batman-adv
 
 			# delete default interfaces
 			$DAEMON ifconfig wlan0 down
@@ -26,8 +28,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 			$DAEMON ifconfig wlan1 down
 			$DAEMON iw dev wlan1 del
 
-			# set up BATMAN Adv (mesh networking)
-			$DAEMON modprobe batman-adv
+			# create the ap0 and mesh0 interfaces
+			$DAEMON iw phy phy0 interface add ap0 type __ap
 			$DAEMON iw phy phy0 interface add mesh0 type adhoc
 			$DAEMON ifconfig mesh0 mtu 1528
 			$DAEMON iwconfig mesh0 mode ad-hoc essid meshnet ap 02:12:34:56:78:90 channel 3
@@ -37,10 +39,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 			$DAEMON batctl if add mesh0
 			$DAEMON batctl ap_isolation 1
 
-			# set up the AP
-			$DAEMON iw phy phy1 interface add ap0 type __ap
-
 			# add interfaces to the bridge
+			$DAEMON brctl addbr br0
 			$DAEMON brctl addif br0 ap0
 			$DAEMON brctl addif br0 bat0
 

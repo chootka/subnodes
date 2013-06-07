@@ -8,9 +8,6 @@ sudo apt-get update
 # install prerequisite software
 sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
 
-# enable the BATMAN Adv module
-sudo modprobe batman-adv
-
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # INSTALL NODE
@@ -43,57 +40,18 @@ sudo cp scripts/conf/hostapd /etc/default/hostapd
 # copy in our dnsmasq configuration file
 sudo cp scripts/conf/dnsmasq.conf /etc/dnsmasq.conf
 
-# delete default interfaces
-sudo ifconfig wlan0 down
-sudo iw dev wlan0 del
-sudo ifconfig wlan1 down
-sudo iw dev wlan1 del
-
-# create the ap0 and mesh0 interfaces
-sudo iw phy phy0 interface add ap0 type __ap
-sudo iw phy phy1 interface add mesh0 type adhoc
-sudo ifconfig mesh0 mtu 1528
-sudo iwconfig mesh0 mode ad-hoc essid meshnet ap 02:12:34:56:78:90 channel 3
-sudo ifconfig mesh0 down
-
-# add the interface to batman
-sudo batctl if add mesh0
-sudo batctl ap_isolation 1
-
-# add the interfaces to the bridge (created in /etc/network/interfaces)
-sudo brctl addif br0 ap0
-sudo brctl addif br0 bat0
-
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# BRING UP THE MESH NETWORK AND WIRELESS ACCESS POINT
-#
-# bring up the BATMAN adv interface
-sudo ifconfig mesh0 up
-sudo ifconfig bat0 up
-
-# bring up the AP interface and give ap0 a static IP
-sudo ifconfig ap0 10.0.0.1 netmask 255.255.255.0 up
-
-# bring up the brdige and assign it a static IP
-sudo ifconfig br0 192.168.3.1 netmask 255.255.255.0 up
-
-# start the hostapd and dnsmasq services
-sudo service hostapd start
-sudo service dnsmasq start
-
-# set the hostapd and dnsmasq services to autostart on boot up
-sudo update-rc.d hostapd enable
-sudo update-rc.d dnsmasq enable
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CREATE STARTUP SCRIPT
 #
 # copy startup script to init.d
-# subnodes script starts access point, mesh point, and chat application on boot
+# subnodes script configures and starts access point, mesh point, and chat application on boot
 sudo cp scripts/subnodes.sh /etc/init.d/subnodes
 sudo chmod 755 /etc/init.d/subnodes
 sudo update-rc.d subnodes defaults
+
+# set the hostapd and dnsmasq services to autostart on boot up
+sudo update-rc.d hostapd enable
+sudo update-rc.d dnsmasq enable
 
 # start chat application
 # sudo NODE_ENV=production nodemon subnode.js
