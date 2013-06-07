@@ -8,6 +8,9 @@ sudo apt-get update
 # install prerequisite software
 sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
 
+# add the batman-adv module to be started on boot
+sudo sed -e "\$abatman-adv"
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # INSTALL NODE

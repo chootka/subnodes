@@ -18,10 +18,6 @@ SCRIPTNAME=/etc/init.d/$NAME
 	case "$1" in
 		start)
 			echo "Starting $NAME access point and mesh point..."
-			# $DAEMON hostapd -B /etc/hostapd/hostapd.conf
-			# activate batman adv module
-			$DAEMON modprobe batman-adv
-
 			# delete default interfaces
 			$DAEMON ifconfig wlan0 down
 			$DAEMON iw dev wlan0 del
