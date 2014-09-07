@@ -6,7 +6,7 @@ sudo apt-get update
 #&& sudo apt-get -y upgrade
 
 # install prerequisite software
-sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq git-core
+sudo apt-get install -y batctl bridge-utils iw hostapd dnsmasq
 
 # add the batman-adv module to be started on boot
 sudo sed -i '$a batman-adv' /etc/modules
@@ -22,7 +22,7 @@ wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
 sudo tar xzvf node-v0.9.9-linux-arm-pi.tar.gz --strip=1
 
 # go back to our subnodes directory
-cd /home/pi/www/subnodes/
+cd ~/www/subnodes/
 
 # download subnodes app dependencies
 sudo npm install
