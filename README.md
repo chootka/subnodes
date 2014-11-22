@@ -22,7 +22,7 @@ sudo raspi-config
 * update apt-get
 sudo apt-get update
 
-* make a directory for your web apps (optional, but suggested)
+* make a directory for your web apps
 mkdir www
 cd www
 
