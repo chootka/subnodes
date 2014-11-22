@@ -17,24 +17,30 @@ how to install
 Assuming you are starting with a fresh Rasbian install on your SD card, these are the steps for installing subnodes on your Raspberry Pi. It is also assumed that you have two wireless USB adapters attached to your RPi. They both must be running the nl80211 driver.
 
 * set up your Raspberry Pi with a basic configuration
-sudo raspi-config
+
+        sudo raspi-config
 
 * update apt-get
-sudo apt-get update
+
+        sudo apt-get update
 
 * make a directory for your web apps (optional, but suggested)
-mkdir www
-cd www
+
+        mkdir www
+        cd www
 
 * install git
-sudo apt-get install git-core
+
+        sudo apt-get install git-core
 
 * clone the repository into your www folder
-git clone https://github.com/chootka/subnodes.git
+
+        git clone https://github.com/chootka/subnodes.git
 
 * run the installation script
-cd subnodes/scripts
-sudo ./configure.sh
+
+        cd subnodes/scripts
+        sudo ./configure.sh
 
 The installation process takes about 15 minutes. After it has completed, you will have a running BATMAN Advanced mesh node and will be broadcasting a wireless local area network named `subnodes`. Connecting to the network and navigating to a browser page will redirect you to http://www.hotprobs.com, where a node.js chat client will be running. 
 
