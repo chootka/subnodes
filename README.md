@@ -24,9 +24,9 @@ Assuming you are starting with a fresh Rasbian install on your SD card, these ar
 
         sudo apt-get update
 
-* make a directory for your web apps (optional, but suggested)
-
-        mkdir www && cd www
+* make a directory for your web apps
+mkdir www
+cd www
 
 * install git
 
