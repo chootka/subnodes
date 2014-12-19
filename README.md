@@ -14,7 +14,7 @@ been provided by Eyebeam. This code is published under the [AGPLv3](http://www.g
 
 how to install
 --------------
-Assuming you are starting with a fresh Rasbian install on your SD card, these are the steps for installing subnodes on your Raspberry Pi. It is also assumed that you have two wireless USB adapters attached to your RPi. They both must be running the nl80211 driver.
+Assuming you are starting with a fresh Rasbian (Version September 2014) install on your SD card, these are the steps for installing subnodes on your Raspberry Pi. It is also assumed that you have two wireless USB adapters attached to your RPi. They both must be running the nl80211 driver.
 
 * set up your Raspberry Pi with a basic configuration
 
@@ -27,10 +27,6 @@ Assuming you are starting with a fresh Rasbian install on your SD card, these ar
 * make a directory for your web apps
 mkdir www
 cd www
-
-* install git
-
-        sudo apt-get install git-core
 
 * clone the repository into your www folder
 
