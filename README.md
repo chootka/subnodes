@@ -1,6 +1,8 @@
 subnodes
 ========
 
+![](https://david-dm.org/chootka/subnodes.svg)
+
 Subnodes is an open source project that enables people to easily set up a mesh node and wireless access point for serving content.
 This project is an initiative focused on streamlining the process of setting up a Raspberry Pi as a wireless access
 point for distributing content, media, and shared digital experiences. The device behaves as a web server, creating
