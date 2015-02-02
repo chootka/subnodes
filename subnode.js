@@ -16,7 +16,7 @@ var express   = require('express'),
 
 app.root    	= __dirname;
 
-io.configure('production', function(){
+/*io.configure('production', function(){
   io.enable('browser client etag');
   io.set('log level', 1);
 
@@ -28,10 +28,12 @@ io.configure('production', function(){
   , 'jsonp-polling'
   ]);
 });
+*/
 
 io.configure('development', function(){
   io.set('transports', ['websocket']);
 });
+
 
 // create the application
 require('./app/config')(app, express);
