@@ -5,13 +5,13 @@
 # starts up node app
 
 #TODO move app to /usr/bin/
-DAEMON_PATH="/home/pi/www/subnodes"
+DAEMON_PATH="/home/pi/subnodes"
 
 DAEMON=sudo
 DAEMONOPTS="NODE_ENV=production nodemon subnode.js"
 
 NAME=subnodes
-DESC="Runs /home/pi/www/subnodes/subnode.js in production mode with nodemon"
+DESC="Runs /home/pi/subnodes/subnode.js in production mode with nodemon"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
@@ -27,7 +27,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 			# create the ap0 and mesh0 interfaces
 			$DAEMON iw phy phy0 interface add ap0 type __ap
 			$DAEMON iw phy phy1 interface add mesh0 type adhoc
-			$DAEMON ifconfig mesh0 mtu 1528
+			$DAEMON ifconfig mesh0 mtu 1532
 			$DAEMON iwconfig mesh0 mode ad-hoc essid meshnet ap 02:12:34:56:78:90 channel 3
 			$DAEMON ifconfig mesh0 down
 

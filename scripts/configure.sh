@@ -33,23 +33,23 @@ sudo npm install -g nodemon
 # NETWORK CONFIGURATION
 #
 # modify the network interface config file
-sudo python scripts/configure_network_interfaces.py
+sudo python /home/pi/subnodes/scripts/configure_network_interfaces.py
 
 # copy in our hostapd configuration file
-sudo cp scripts/conf/hostapd.conf /etc/hostapd/hostapd.conf
+sudo cp /home/pi/subnodes/scripts/conf/hostapd.conf /etc/hostapd/hostapd.conf
 
 # copy in our hostapd init script
-sudo cp scripts/conf/hostapd /etc/default/hostapd
+sudo cp /home/pi/subnodes/scripts/conf/hostapd /etc/default/hostapd
 
 # copy in our dnsmasq configuration file
-sudo cp scripts/conf/dnsmasq.conf /etc/dnsmasq.conf
+sudo cp /home/pi/subnodes/scripts/conf/dnsmasq.conf /etc/dnsmasq.conf
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CREATE STARTUP SCRIPT
 #
 # copy startup script to init.d
 # subnodes script configures and starts access point, mesh point, and chat application on boot
-sudo cp scripts/subnodes.sh /etc/init.d/subnodes
+sudo cp /home/pi/subnodes/scripts/subnodes.sh /etc/init.d/subnodes
 sudo chmod 755 /etc/init.d/subnodes
 sudo update-rc.d subnodes defaults
 
