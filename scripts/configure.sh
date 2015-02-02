@@ -22,7 +22,7 @@ wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
 sudo tar xzvf node-v0.9.9-linux-arm-pi.tar.gz --strip=1
 
 # go back to our subnodes directory
-cd ~/www/subnodes/
+cd /home/pi/subnodes/
 
 # download subnodes app dependencies
 sudo npm install
