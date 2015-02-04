@@ -200,6 +200,7 @@ EOF
 				netmask $BRIDGE_NETMASK
 			allow-hotplug eth0
 			iface eth0 inet dhcp
+			auto ap0
 			iface ap0 inet static
 				address 10.0.0.1
 				netmask 255.255.255.0
