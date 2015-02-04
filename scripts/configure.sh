@@ -129,7 +129,7 @@ case $yn in
 		echo -en "Creating default hostapd file... 							"
 		cat <<EOF > /etc/default/hostapd
 			DAEMON_CONF="/etc/hostapd/hostapd.conf"
-		EOF
+EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
 				echo -en "[FAIL]\n"
@@ -159,7 +159,7 @@ case $yn in
 			macaddr_acl=0
 			wmm_enabled=1
 			ap_isolate=1
-		EOF
+EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
 				echo -en "[FAIL]\n"
@@ -200,7 +200,7 @@ case $yn in
 			iface ap0 inet static
 				address 10.0.0.1
 				netmask 255.255.255.0
-		EOF
+EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
     			echo -en "[FAIL]\n"
@@ -219,7 +219,7 @@ case $yn in
 			address=/#/$BRIDGE_IP
 			address=/apple.com/0.0.0.0
 			dhcp-range=$DHCP_START,$DHCP_END,$DHCP_NETMASK,$DHCP_LEASE
-		EOF
+EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
     			echo -en "[FAIL]\n"
