@@ -95,6 +95,7 @@ case $yn in
 		# install required packages
 		echo -en "Installing bridge-utils, hostapd and dnsmasq...
 		apt-get install -y bridge-utils hostapd dnsmasq
+		echo -en "[OK]\n"
 
 		# ask how they want to configure their access point
 		read -p "Wifi Country [$AP_COUNTRY]: " -e t1
@@ -167,6 +168,7 @@ case $yn in
 				echo -en "[OK]\n"
 			fi
 		
+		echo ""
 		# backup the existing interfaces file
 		echo -en "Creating backup of original network interfaces configuration file...
 		cp /etc/network/interfaces /etc/network/interfaces.bak
@@ -179,7 +181,7 @@ case $yn in
 			echo -en "[OK]\n"
 		fi
 
-		echo -en "Done.\n"
+		echo "Done.\n"
 		echo ""
 
 		# CONFIGURE /etc/network/interfaces
@@ -206,10 +208,10 @@ case $yn in
 		else
 			echo -en "[OK]\n"
 		fi
-		echo -en "Done.\n"
+		echo "Done.\n"
+		echo ""
 
 		# CONFIGURE dnsmasq
-		echo ""
 		echo -en "Creating dnsmasq configuration file...
 		cat <<EOF > /etc/dnsmasq.conf
 		interface=br0
@@ -225,7 +227,8 @@ case $yn in
 		else
 			echo -en "[OK]\n"
 		fi
-		echo -en "Done.\n"
+		echo "Done.\n"
+		echo ""
 		
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# CREATE THE ACCESS POINT START UP SCRIPT
