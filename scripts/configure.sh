@@ -127,7 +127,7 @@ case $yn in
 		
 		# create hostapd init file
 		echo -en "Creating default hostapd file... 							"
-		cat << EOF > /etc/default/hostapd
+		cat <<EOF > /etc/default/hostapd
 			DAEMON_CONF="/etc/hostapd/hostapd.conf"
 		EOF
 			rc=$?
@@ -143,7 +143,7 @@ case $yn in
 
 		# create hostapd configuration with user's settings
 		echo -en "Creating hostapd.conf file... 							"
-		cat << EOF > /etc/hostapd/hostapd.conf
+		cat <<EOF > /etc/hostapd/hostapd.conf
 			interface=ap0
 			brdige=br0
 			driver=$RADIO_DRIVER
@@ -187,7 +187,7 @@ case $yn in
 
 		# CONFIGURE /etc/network/interfaces
 		echo -en "Creating new network interfaces configuration file with your settings... 							"
-		cat << EOF > /etc/network/interfaces
+		cat <<EOF > /etc/network/interfaces
 			auto lo
 			auto br0
 			iface br0 inet static
@@ -214,7 +214,7 @@ case $yn in
 
 		# CONFIGURE dnsmasq
 		echo -en "Creating dnsmasq configuration file... 							"
-		cat << EOF > /etc/dnsmasq.conf
+		cat <<EOF > /etc/dnsmasq.conf
 			interface=br0
 			address=/#/$BRIDGE_IP
 			address=/apple.com/0.0.0.0
