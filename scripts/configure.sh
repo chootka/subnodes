@@ -301,7 +301,4 @@ esac
 	#/etc/init.d/subnodes_ap restart
 
 # exit script; config complete
-else
-	echo "exiting..."
-fi
 exit 0
