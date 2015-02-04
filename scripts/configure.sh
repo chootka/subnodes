@@ -60,16 +60,18 @@ apt-get install -y iw
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CAPTURE USER INPUT
 #
+echo "//////////////////////////////////"
 echo "Welcome to Subnodes!"
-echo "/ / / / / / / / / / / / / /"
+echo "//////////////////////////////////"
 echo ""
 echo ""
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?
 #
+echo "//////////////////////////////////"
 echo "Access Point Settings"
-echo "/ / / / / / / / / / / / / /"
+echo "//////////////////////////////////"
 echo "Please answer the following question."
 echo "Hitting return will continue with the default 'No' option"
 echo ""
@@ -248,8 +250,9 @@ esac
 #
 	echo ""
 	echo ""
+	echo "//////////////////////////////////"
 	echo "Mesh Point Settings"
-	echo "/ / / / / / / / / / / / / /"
+	echo "//////////////////////////////////"
 
 read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? " yn
 case $yn in
@@ -285,6 +288,7 @@ esac
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # RESTART ALL THE SERVICES
 #
+	echo "/////////////////////////////////////"
 	echo "****** CONFIGURATION COMPLETE ******"
 	# set the hostapd and dnsmasq services to autostart on boot up
 	update-rc.d hostapd enable
