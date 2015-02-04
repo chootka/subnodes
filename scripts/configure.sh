@@ -151,7 +151,7 @@ EOF
 			brdige=br0
 			driver=$RADIO_DRIVER
 			country_code=$AP_COUNTRY
-			ctrl_interface=/var/run/hostapd
+			ctrl_interface=ap0
 			ctrl_interface_group=0
 			ssid=$AP_SSID
 			hw_mode=g
