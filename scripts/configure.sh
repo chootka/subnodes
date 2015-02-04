@@ -80,7 +80,7 @@ case $yn in
 		echo ""
 		
 		#check that iw list fails with 'nl80211 not found'
-		echo -en "iw list check
+		echo -en "iw list check 							"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
@@ -93,7 +93,7 @@ case $yn in
 		fi
 
 		# install required packages
-		echo -en "Installing bridge-utils, hostapd and dnsmasq...
+		echo -en "Installing bridge-utils, hostapd and dnsmasq... 							"
 		apt-get install -y bridge-utils hostapd dnsmasq
 		echo -en "[OK]\n"
 
@@ -126,7 +126,7 @@ case $yn in
 		if [ -n "$t1" ]; then DHCP_LEASE="$t1";fi
 		
 		# create hostapd init file
-		echo -en "Creating default hostapd file...
+		echo -en "Creating default hostapd file... 							"
 		cat <<EOF > /etc/default/hostapd
 		DAEMON_CONF="/etc/hostapd/hostapd.conf"
 		EOF
@@ -140,8 +140,9 @@ case $yn in
 			fi
 		echo "Done."
 		echo ""
+
 		# create hostapd configuration with user's settings
-		echo -en "Creating hostapd.conf file...
+		echo -en "Creating hostapd.conf file... 							"
 		cat <<EOF > /etc/hostapd/hostapd.conf
 		interface=ap0
 		brdige=br0
@@ -170,7 +171,7 @@ case $yn in
 		
 		echo ""
 		# backup the existing interfaces file
-		echo -en "Creating backup of original network interfaces configuration file...
+		echo -en "Creating backup of original network interfaces configuration file... 							"
 		cp /etc/network/interfaces /etc/network/interfaces.bak
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -185,7 +186,7 @@ case $yn in
 		echo ""
 
 		# CONFIGURE /etc/network/interfaces
-		echo -en "Creating new network interfaces configuration file with your settings...
+		echo -en "Creating new network interfaces configuration file with your settings... 							"
 		cat <<EOF > /etc/network/interfaces
 		auto lo
 		auto br0
@@ -212,7 +213,7 @@ case $yn in
 		echo ""
 
 		# CONFIGURE dnsmasq
-		echo -en "Creating dnsmasq configuration file...
+		echo -en "Creating dnsmasq configuration file... 							"
 		cat <<EOF > /etc/dnsmasq.conf
 		interface=br0
 		address=/#/$BRIDGE_IP
