@@ -127,8 +127,8 @@ case $yn in
 		
 		# create hostapd init file
 		echo -en "Creating default hostapd file... 							"
-		cat <<EOF > /etc/default/hostapd
-		DAEMON_CONF="/etc/hostapd/hostapd.conf"
+		cat << EOF > /etc/default/hostapd
+			DAEMON_CONF="/etc/hostapd/hostapd.conf"
 		EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
@@ -143,22 +143,22 @@ case $yn in
 
 		# create hostapd configuration with user's settings
 		echo -en "Creating hostapd.conf file... 							"
-		cat <<EOF > /etc/hostapd/hostapd.conf
-		interface=ap0
-		brdige=br0
-		driver=$RADIO_DRIVER
-		country_code=$AP_COUNTRY
-		ctrl_interface=/var/run/hostapd
-		ctrl_interface_group=0
-		ssid=$AP_SSID
-		hw_mode=g
-		channel=$AP_CHAN
-		beacon_int=100
-		auth_algs=1
-		wpa=0
-		macaddr_acl=0
-		wmm_enabled=1
-		ap_isolate=1
+		cat << EOF > /etc/hostapd/hostapd.conf
+			interface=ap0
+			brdige=br0
+			driver=$RADIO_DRIVER
+			country_code=$AP_COUNTRY
+			ctrl_interface=/var/run/hostapd
+			ctrl_interface_group=0
+			ssid=$AP_SSID
+			hw_mode=g
+			channel=$AP_CHAN
+			beacon_int=100
+			auth_algs=1
+			wpa=0
+			macaddr_acl=0
+			wmm_enabled=1
+			ap_isolate=1
 		EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
@@ -187,19 +187,19 @@ case $yn in
 
 		# CONFIGURE /etc/network/interfaces
 		echo -en "Creating new network interfaces configuration file with your settings... 							"
-		cat <<EOF > /etc/network/interfaces
-		auto lo
-		auto br0
-		iface br0 inet static
-			bridge_ports none
-			bridge_stp off
-			address $BRIDGE_IP
-			netmask $BRIDGE_NETMASK
-		allow-hotplug eth0
-		iface eth0 inet dhcp
-		iface ap0 inet static
-			address 10.0.0.1
-			netmask 255.255.255.0
+		cat << EOF > /etc/network/interfaces
+			auto lo
+			auto br0
+			iface br0 inet static
+				bridge_ports none
+				bridge_stp off
+				address $BRIDGE_IP
+				netmask $BRIDGE_NETMASK
+			allow-hotplug eth0
+			iface eth0 inet dhcp
+			iface ap0 inet static
+				address 10.0.0.1
+				netmask 255.255.255.0
 		EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -214,11 +214,11 @@ case $yn in
 
 		# CONFIGURE dnsmasq
 		echo -en "Creating dnsmasq configuration file... 							"
-		cat <<EOF > /etc/dnsmasq.conf
-		interface=br0
-		address=/#/$BRIDGE_IP
-		address=/apple.com/0.0.0.0
-		dhcp-range=$DHCP_START,$DHCP_END,$DHCP_NETMASK,$DHCP_LEASE
+		cat << EOF > /etc/dnsmasq.conf
+			interface=br0
+			address=/#/$BRIDGE_IP
+			address=/apple.com/0.0.0.0
+			dhcp-range=$DHCP_START,$DHCP_END,$DHCP_NETMASK,$DHCP_LEASE
 		EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
