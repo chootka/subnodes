@@ -72,7 +72,7 @@ echo "/ / / / / / / / / / / / / /"
 echo "Please answer the following question."
 echo "Hitting return will continue with the default 'No' option"
 echo ""
-read -p "Do you wish to continue and set up your Raspberry Pi as an Access Point?" yn
+read -p "Do you wish to continue and set up your Raspberry Pi as an Access Point? " yn
 case $yn in
 	[Yy]* )
 		clear
@@ -80,11 +80,12 @@ case $yn in
 		echo ""
 		
 		#check that iw list fails with 'nl80211 not found'
-		echo -en "iw list check"
+		echo -en "iw list check
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
 			echo -en "[FAIL]\n"
+			echo ""
 			echo "Make sure you are using a wifi radio that runs off the rt1871xdrv driver."
 			exit $rc
 		else
@@ -92,7 +93,7 @@ case $yn in
 		fi
 
 		# install required packages
-		echo -en "Installing bridge-utils, hostapd and dnsmasq..."
+		echo -en "Installing bridge-utils, hostapd and dnsmasq...
 		apt-get install -y bridge-utils hostapd dnsmasq
 
 		# ask how they want to configure their access point
@@ -124,9 +125,9 @@ case $yn in
 		if [ -n "$t1" ]; then DHCP_LEASE="$t1";fi
 		
 		# create hostapd init file
-		echo -en "Creating default hostapd file..."
+		echo -en "Creating default hostapd file...
 		cat <<EOF > /etc/default/hostapd
-		DAEMON_CONF='/etc/hostapd/hostapd.conf'
+		DAEMON_CONF="/etc/hostapd/hostapd.conf"
 		EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
@@ -139,7 +140,7 @@ case $yn in
 		echo "Done."
 		echo ""
 		# create hostapd configuration with user's settings
-		echo -en "Creating hostapd.conf file..."
+		echo -en "Creating hostapd.conf file...
 		cat <<EOF > /etc/hostapd/hostapd.conf
 		interface=ap0
 		brdige=br0
@@ -167,7 +168,7 @@ case $yn in
 			fi
 		
 		# backup the existing interfaces file
-		echo -en "Creating backup of original network interfaces configuration file..."
+		echo -en "Creating backup of original network interfaces configuration file...
 		cp /etc/network/interfaces /etc/network/interfaces.bak
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -182,7 +183,7 @@ case $yn in
 		echo ""
 
 		# CONFIGURE /etc/network/interfaces
-		echo -en "Creating new network interfaces configuration file with your settings..."
+		echo -en "Creating new network interfaces configuration file with your settings...
 		cat <<EOF > /etc/network/interfaces
 		auto lo
 		auto br0
@@ -209,7 +210,7 @@ case $yn in
 
 		# CONFIGURE dnsmasq
 		echo ""
-		echo -en "Creating dnsmasq configuration file..."
+		echo -en "Creating dnsmasq configuration file...
 		cat <<EOF > /etc/dnsmasq.conf
 		interface=br0
 		address=/#/$BRIDGE_IP
@@ -245,7 +246,7 @@ esac
 	echo "Mesh Point Settings"
 	echo "/ / / / / / / / / / / / / /"
 
-read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point?" yn
+read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? " yn
 case $yn in
 	[Yy]* )
 		clear
@@ -287,7 +288,7 @@ esac
 	read -p "Press [Enter] key to restart services..."
 	/etc/init.d/networking restart
 	/etc/init.d/hostapd restart
-	/etc/init.d/ restart
+	#/etc/init.d/ restart
 
 	# subnodes_ap script configures and starts access point on boot
 	#cp scripts/subnodes.sh /etc/init.d/subnodes_ap
