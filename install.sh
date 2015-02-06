@@ -82,7 +82,7 @@ case $yn in
 		echo -en "iw list check...								"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
-		if [[ $rc = 1 ]] ; then
+		if [[ $rc = 0 ]] ; then
 			echo -en "[FAIL]\n"
 			echo ""
 			echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
