@@ -1,0 +1,19 @@
+{
+    "isDev": true,
+    "isSecure": false,
+    "session": {
+        "host": "localhost",
+        "port": 6379,
+        "db": 1,
+        "secret": "hotprobs",
+        "secure": false
+    },
+    "http": {
+        "listen": "localhost",
+        "port": 8080
+    },
+    "client": {
+        "apiUrl": "http://localhost:8080",
+        "debugMode": true
+    }
+}
