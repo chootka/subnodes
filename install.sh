@@ -188,18 +188,19 @@ EOF
 		echo -en "Creating new network interfaces configuration file with your settings... 	"
 		cat <<EOF > /etc/network/interfaces
 			auto lo
-			auto br0
-			iface br0 inet static
-				bridge_ports none
-				bridge_stp off
-				address $BRIDGE_IP
-				netmask $BRIDGE_NETMASK
+			iface lo inet loopback
 			allow-hotplug eth0
 			iface eth0 inet dhcp
 			auto ap0
 			iface ap0 inet static
 				address 10.0.0.1
 				netmask 255.255.255.0
+			auto br0
+			iface br0 inet static
+				bridge_ports none
+				bridge_stp off
+				address $BRIDGE_IP
+				netmask $BRIDGE_NETMASK
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
