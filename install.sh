@@ -51,7 +51,7 @@ echo "Updating apt-get and installing iw package for network interface configura
 # SOFTWARE INSTALL
 #
 # update the packages (may take a long time if upgrade is uncommented)
-apt-get update && install -y iw
+apt-get update && apt-get install -y iw
 #&& sudo apt-get -y upgrade
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -61,6 +61,11 @@ echo "//////////////////////////////////"
 echo "// Welcome to Subnodes!"
 echo "// ~~~~~~~~~~~~~~~~~~~~"
 echo ""
+
+echo "Installing Node.js..."
+wget http://node-arm.herokuapp.com/node_latest_armhf.deb
+sudo dpkg -i node_latest_armhf.deb
+echo "Done!"
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?

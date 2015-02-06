@@ -3,8 +3,6 @@
 # starts up ap0 interface
 # starts up hostapd => broadcasting wireless network subnodes
 
-DAEMON_PATH="/home/pi/subnodes"
-
 NAME=subnodes_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
 PIDFILE=/var/run/$NAME.pid
@@ -13,12 +11,6 @@ SCRIPTNAME=/etc/init.d/$NAME
 	case "$1" in
 		start)
 			echo "Starting $NAME access point and mesh point..."
-			# delete default interfaces
-			# ifconfig wlan0 down
-			# iw dev wlan0 del
-			# ifconfig wlan1 down
-			# iw dev wlan1 del
-
 			# associate the ap0 interface to a physical devices
 			# how can i grab the next avail phy device instead of hardcoding it?
 			iw phy phy0 interface add ap0 type __ap
