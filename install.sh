@@ -233,8 +233,16 @@ EOF
 		echo ""
 		
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-		# CREATE THE ACCESS POINT START UP SCRIPT
+		# COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 		#
+		update-rc.d hostapd enable
+		update-rc.d dnsmasq enable
+		cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
+		chmod 755 /etc/init.d/subnodes_ap
+		update-rc.d subnodes_ap defaults
+
+		echo "The services will now be restarted to activate the changes"
+		/etc/init.d/subnodes_ap restart
 
 	break;;
 
@@ -274,8 +282,14 @@ case $yn in
 		if [ -n "$t1" ]; then MESH_SSID="$t1";fi
 
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-		# CREATE THE MESH POINT START UP SCRIPT
+		# COPY OVER THE MESH POINT START UP SCRIPT
 		#
+		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
+		chmod 755 /etc/init.d/subnodes_mesh
+		update-rc.d subnodes_mesh defaults
+
+		echo "The services will now be restarted to activate the changes"
+		/etc/init.d/subnodes_mesh restart
 	break;;
 
 	[Nn]* ) break;;
@@ -283,24 +297,4 @@ case $yn in
 	* ) echo "Please answer Yes or No";;
 esac
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# RESTART ALL THE SERVICES
-#
-	echo "****** CONFIGURATION COMPLETE ******"
-	# set the hostapd and dnsmasq services to autostart on boot up
-	update-rc.d hostapd enable
-	update-rc.d dnsmasq enable
-	echo "The services will now be restarted to activate the changes"
-	read -p "Press [Enter] key to restart services..."
-	/etc/init.d/networking restart
-	/etc/init.d/hostapd restart
-	#/etc/init.d/ restart
-
-	# subnodes_ap script configures and starts access point on boot
-	#cp scripts/subnodes.sh /etc/init.d/subnodes_ap
-	#chmod 755 /etc/init.d/subnodes_ap
-	#update-rc.d subnodes_ap defaults
-	#/etc/init.d/subnodes_ap restart
-
-# exit script; config complete
 exit 0

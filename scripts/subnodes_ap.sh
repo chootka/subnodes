@@ -5,8 +5,6 @@
 
 DAEMON_PATH="/home/pi/subnodes"
 
-DAEMON=sudo
-
 NAME=subnodes_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
 PIDFILE=/var/run/$NAME.pid
@@ -16,29 +14,30 @@ SCRIPTNAME=/etc/init.d/$NAME
 		start)
 			echo "Starting $NAME access point and mesh point..."
 			# delete default interfaces
-			$DAEMON ifconfig wlan0 down
-			$DAEMON iw dev wlan0 del
-			$DAEMON ifconfig wlan1 down
-			$DAEMON iw dev wlan1 del
+			# ifconfig wlan0 down
+			# iw dev wlan0 del
+			# ifconfig wlan1 down
+			# iw dev wlan1 del
 
-			# create the ap0 interface
-			$DAEMON iw phy phy0 interface add ap0 type __ap
+			# associate the ap0 interface to a physical devices
+			# how can i grab the next avail phy device instead of hardcoding it?
+			iw phy phy0 interface add ap0 type __ap
 
 			# add interfaces to the bridge
-			$DAEMON brctl addbr br0
-			$DAEMON brctl addif br0 ap0
-			$DAEMON brctl addif br0 bat0
+			brctl addbr br0
+			brctl addif br0 ap0
+			brctl addif br0 bat0
 
 			# bring up the AP interface and give ap0 a static IP
 			# not sure if ap0 needs an IP anymore, since it is part of the bridge
-			$DAEMON ifconfig ap0 10.0.0.1 netmask 255.255.255.0 up
+			ifconfig ap0 10.0.0.1 netmask 255.255.255.0 up
 
 			# bring up the brdige and assign it a static IP
-			$DAEMON ifconfig br0 192.168.3.1 netmask 255.255.255.0 up
+			ifconfig br0 192.168.3.1 netmask 255.255.255.0 up
 
 			# start the hostapd and dnsmasq services
-			$DAEMON service hostapd start
-			$DAEMON service dnsmasq start
+			service hostapd start
+			service dnsmasq start
 			;;
 		status)
 		;;
