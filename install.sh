@@ -192,20 +192,42 @@ EOF
 		# CONFIGURE /etc/network/interfaces
 		echo -en "Creating new network interfaces configuration file with your settings... 	"
 		cat <<EOF > /etc/network/interfaces
-			auto lo
-			iface lo inet loopback
-			allow-hotplug eth0
-			iface eth0 inet dhcp
-			auto ap0
-			iface ap0 inet static
-				address 10.0.0.1
-				netmask 255.255.255.0
-			auto br0
-			iface br0 inet static
-				bridge_ports none
-				bridge_stp off
-				address $BRIDGE_IP
-				netmask $BRIDGE_NETMASK
+auto lo
+iface lo inet loopback
+allow-hotplug eth0
+iface eth0 inet dhcp
+
+# create access point
+auto ap0
+  iface ap0 inet static
+  address 10.0.0.1
+  netmask 255.255.255.0
+
+# create bridge
+auto br0
+iface br0 inet static
+  bridge_ports none
+  bridge_stp off
+  address $BRIDGE_IP
+  netmask $BRIDGE_NETMASK
+
+# create mesh
+auto mesh0
+  iface mesh0 inet static
+  ifconfig mesh0 down
+
+# add the mesh interface to batman
+batctl if add mesh0
+batctl ap_isolation 1
+
+# bring up the BATMAN adv interface
+ifconfig mesh0 up
+ifconfig bat0 up
+
+# add interfaces to bridge
+brctl addbr br0
+brctl addif br0 ap0
+brctl addif br0 bat0
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
