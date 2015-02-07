@@ -51,7 +51,7 @@ echo "Updating apt-get and installing iw package for network interface configura
 # SOFTWARE INSTALL
 #
 # update the packages (may take a long time if upgrade is uncommented)
-apt-get update && apt-get install -y iw
+apt-get update && apt-get install -y iw batctl
 #&& sudo apt-get -y upgrade
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -66,6 +66,35 @@ echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
 echo "Done!"
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# CONFIGURE A MESH POINT?
+#
+echo ""
+echo ""
+clear
+echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
+echo ""
+echo "Enabling the batman-adv kernel..."
+		
+# add the batman-adv module to be started on boot
+sed -i '$a batman-adv' /etc/modules
+modprobe batman-adv;
+
+# ask how they want to configure their mesh point
+read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
+if [ -n "$t1" ]; then MESH_SSID="$t1";fi
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# COPY OVER THE MESH POINT START UP SCRIPT
+#
+cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
+chmod 755 /etc/init.d/subnodes_mesh
+update-rc.d subnodes_mesh defaults
+
+echo "The services will now be restarted to activate the changes"
+/etc/init.d/subnodes_mesh restart
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?
@@ -148,21 +177,21 @@ EOF
 		# create hostapd configuration with user's settings
 		echo -en "Creating hostapd.conf file... 											"
 		cat <<EOF > /etc/hostapd/hostapd.conf
-			interface=ap0
-			brdige=br0
-			driver=$RADIO_DRIVER
-			country_code=$AP_COUNTRY
-			ctrl_interface=ap0
-			ctrl_interface_group=0
-			ssid=$AP_SSID
-			hw_mode=g
-			channel=$AP_CHAN
-			beacon_int=100
-			auth_algs=1
-			wpa=0
-			macaddr_acl=0
-			wmm_enabled=1
-			ap_isolate=1
+interface=ap0
+brdige=br0
+driver=$RADIO_DRIVER
+country_code=$AP_COUNTRY
+ctrl_interface=ap0
+ctrl_interface_group=0
+ssid=$AP_SSID
+hw_mode=g
+channel=$AP_CHAN
+beacon_int=100
+auth_algs=1
+wpa=0
+macaddr_acl=0
+wmm_enabled=1
+ap_isolate=1
 EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
@@ -213,7 +242,8 @@ iface br0 inet static
 
 # create mesh
 auto mesh0
-  iface mesh0 inet static
+  iface mesh0 inet adhoc
+  ifconfig mesh0 mtu 1532
   ifconfig mesh0 down
 
 # add the mesh interface to batman
@@ -271,52 +301,6 @@ EOF
 		echo "The services will now be restarted to activate the changes"
 		/etc/init.d/subnodes_ap restart
 
-	break;;
-
-	[Nn]* ) break;;
-
-	* ) echo "Please answer Yes or No";;
-esac
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# CONFIGURE A MESH POINT?
-#
-	echo ""
-	echo ""
-	echo "//////////////////////////////////"
-	echo "// Mesh Point Settings"
-	echo "// ~~~~~~~~~~~~~~~~~~~"
-
-read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? " yn
-case $yn in
-	[Yy]* )
-		clear
-		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
-		echo ""
-		echo "Enabling the batman-adv kernel..."
-		
-		# add the batman-adv module to be started on boot
-		sed -i '$a batman-adv' /etc/modules
-		modprobe batman-adv;
-
-		echo "Installing batctl, iw packages..."
-
-		# install batman-adv control interface
-		apt-get install -y batctl
-
-		# ask how they want to configure their mesh point
-		read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
-		if [ -n "$t1" ]; then MESH_SSID="$t1";fi
-
-		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-		# COPY OVER THE MESH POINT START UP SCRIPT
-		#
-		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
-		chmod 755 /etc/init.d/subnodes_mesh
-		update-rc.d subnodes_mesh defaults
-
-		echo "The services will now be restarted to activate the changes"
-		/etc/init.d/subnodes_mesh restart
 	break;;
 
 	[Nn]* ) break;;
