@@ -13,7 +13,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 			# associate the mesh0 interface to a physical device
 			# how can i grab the next avail phy device instead of hardcoding it?
-			iw phy phy1 interface add mesh0 type adhoc
+			iw phy phy0 interface add mesh0 type adhoc
 			ifconfig mesh0 mtu 1532
 			iwconfig mesh0 mode ad-hoc essid schmaoMesh ap 02:12:34:56:78:90 channel 3
 			ifconfig mesh0 down

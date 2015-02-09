@@ -77,7 +77,7 @@ clear
 echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
 echo ""
 echo "Enabling the batman-adv kernel..."
-		
+
 # add the batman-adv module to be started on boot
 sed -i '$a batman-adv' /etc/modules
 modprobe batman-adv;
@@ -93,8 +93,8 @@ cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
 chmod 755 /etc/init.d/subnodes_mesh
 update-rc.d subnodes_mesh defaults
 
-echo "The services will now be restarted to activate the changes"
-/etc/init.d/subnodes_mesh restart
+#echo "The services will now be restarted to activate the changes"
+#/etc/init.d/subnodes_mesh restart
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?
@@ -111,7 +111,7 @@ case $yn in
 		clear
 		echo "Configuring Raspberry Pi as Access Point..."
 		echo ""
-		
+
 		# check that iw list does not fail with 'nl80211 not found'
 		echo -en "iw list check...								"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
@@ -157,11 +157,11 @@ case $yn in
 
 		read -p "DHCP length of lease [$DHCP_LEASE]: " -e t1
 		if [ -n "$t1" ]; then DHCP_LEASE="$t1";fi
-		
+
 		# create hostapd init file
 		echo -en "Creating default hostapd file...											"
 		cat <<EOF > /etc/default/hostapd
-			DAEMON_CONF="/etc/hostapd/hostapd.conf"
+DAEMON_CONF="/etc/hostapd/hostapd.conf"
 EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
@@ -178,7 +178,7 @@ EOF
 		echo -en "Creating hostapd.conf file... 											"
 		cat <<EOF > /etc/hostapd/hostapd.conf
 interface=ap0
-brdige=br0
+bridge=br0
 driver=$RADIO_DRIVER
 country_code=$AP_COUNTRY
 ctrl_interface=ap0
@@ -201,7 +201,7 @@ EOF
 			else
 				echo -en "[OK]\n"
 			fi
-		
+
 		echo ""
 		# backup the existing interfaces file
 		echo -en "Creating backup of network interfaces configuration file... 				"
@@ -244,20 +244,20 @@ iface br0 inet static
 auto mesh0
   iface mesh0 inet adhoc
   ifconfig mesh0 mtu 1532
-  ifconfig mesh0 down
+  #ifconfig mesh0 down
 
 # add the mesh interface to batman
-batctl if add mesh0
-batctl ap_isolation 1
+#batctl if add mesh0
+#batctl ap_isolation 1
 
 # bring up the BATMAN adv interface
-ifconfig mesh0 up
-ifconfig bat0 up
+#ifconfig mesh0 up
+#ifconfig bat0 up
 
 # add interfaces to bridge
-brctl addbr br0
-brctl addif br0 ap0
-brctl addif br0 bat0
+# brctl addbr br0
+#brctl addif br0 ap0
+#brctl addif br0 bat0
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -273,10 +273,10 @@ EOF
 		# CONFIGURE dnsmasq
 		echo -en "Creating dnsmasq configuration file... 									"
 		cat <<EOF > /etc/dnsmasq.conf
-			interface=br0
-			address=/#/$BRIDGE_IP
-			address=/apple.com/0.0.0.0
-			dhcp-range=$DHCP_START,$DHCP_END,$DHCP_NETMASK,$DHCP_LEASE
+interface=br0
+address=/#/$BRIDGE_IP
+address=/apple.com/0.0.0.0
+dhcp-range=$DHCP_START,$DHCP_END,$DHCP_NETMASK,$DHCP_LEASE
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -288,7 +288,7 @@ EOF
 		fi
 		echo "Done.\n"
 		echo ""
-		
+
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 		#
@@ -299,6 +299,8 @@ EOF
 		update-rc.d subnodes_ap defaults
 
 		echo "The services will now be restarted to activate the changes"
+		#/etc/init.d/subnodes_ap restart
+		/etc/init.d/subnodes_mesh restart
 		/etc/init.d/subnodes_ap restart
 
 	break;;
