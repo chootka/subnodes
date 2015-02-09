@@ -227,13 +227,13 @@ allow-hotplug eth0
 iface eth0 inet dhcp
 
 # create access point
-auto ap0
+#auto ap0
   iface ap0 inet static
   address 10.0.0.1
   netmask 255.255.255.0
 
 # create bridge
-auto br0
+#auto br0
 iface br0 inet static
   bridge_ports none
   bridge_stp off
@@ -241,8 +241,8 @@ iface br0 inet static
   netmask $BRIDGE_NETMASK
 
 # create mesh
-auto mesh0
-  iface mesh0 inet adhoc
+#auto mesh0
+iface mesh0 inet adhoc
   ifconfig mesh0 mtu 1532
   #ifconfig mesh0 down
 
