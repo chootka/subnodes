@@ -258,6 +258,8 @@ iface mesh0 inet adhoc
 # brctl addbr br0
 #brctl addif br0 ap0
 #brctl addif br0 bat0
+
+iface default inet dhcp
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
