@@ -86,6 +86,11 @@ modprobe batman-adv;
 read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
 if [ -n "$t1" ]; then MESH_SSID="$t1";fi
 
+# pass the selected mesh ssid into mesh startup script
+sed 's/$SSID/$MESH_SSID/' scripts/subnodes_mesh.sh
+
+echo scripts/subnodes_mesh.sh
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # COPY OVER THE MESH POINT START UP SCRIPT
 #
