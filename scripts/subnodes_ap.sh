@@ -13,6 +13,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 			echo "Starting $NAME access point and mesh point..."
 			# associate the ap0 interface to a physical devices
 			# how can i grab the next avail phy device instead of hardcoding it?
+			ifconfig wlan1 down
+			iw wlan1 del
 			iw phy phy1 interface add ap0 type __ap
 
 			# add interfaces to the bridge

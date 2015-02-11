@@ -228,7 +228,6 @@ EOF
 		cat <<EOF > /etc/network/interfaces
 auto lo
 iface lo inet loopback
-allow-hotplug eth0
 iface eth0 inet dhcp
 
 # create access point
