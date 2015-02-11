@@ -89,7 +89,7 @@ if [ -n "$t1" ]; then MESH_SSID="$t1";fi
 echo $MESH_SSID
 
 # pass the selected mesh ssid into mesh startup script
-sed -e "s/$SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
+sed -i "s/$SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
 
 echo scripts/subnodes_mesh.sh
 
