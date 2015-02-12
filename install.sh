@@ -84,21 +84,35 @@ echo "Enabling the batman-adv kernel..."
 sed -i '$a batman-adv' /etc/modules
 modprobe batman-adv;
 
+## Check if configuration exists, ask for overwriting
+if [ -e /etc/subnode_mesh.config ] ; then
+        read -p "Overwrite configuration files (y/n) (no: default)" -e $q
+        if [ "$q" == "y" ] ; then
+                echo ".. overwriting"
+                copy_ok="yes"
+        else
+                echo ".. not overwriting. ReReading configuration file.."
+                . /etc/subnode_mesh.config
+        fi
+else
+        copy_ok="yes"
+fi
+
+[ "$copy_ok" == "yes" ] &&  cp  subnode_mesh.config  /etc
+
+
 # ask how they want to configure their mesh point
 read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
 if [ -n "$t1" ]; then MESH_SSID_NEW="$t1";fi
 
 # pass the selected mesh ssid into mesh startup script
-sed -i "s|MESH_SSID=\"$MESH_SSID\"|MESH_SSID=\"$MESH_SSID_NEW\"|"   ./subnode_mesh.config 
+sed -i "s|MESH_SSID=\"$MESH_SSID\"|MESH_SSID=\"$MESH_SSID_NEW\"|"  /etc/subnode_mesh.config 
 
 #echo scripts/subnodes_mesh.sh
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # COPY OVER THE MESH POINT START UP SCRIPT
 #
-## Copy always our local file
-cp  subnode_mesh.config  /etc
-
 cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
 chmod 755 /etc/init.d/subnodes_mesh
 update-rc.d subnodes_mesh defaults
