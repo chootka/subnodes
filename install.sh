@@ -28,7 +28,9 @@ DHCP_NETMASK=255.255.255.0
 DHCP_LEASE=12h
 
 # MESH POINT
-MESH_SSID=meshnode
+#  READ Mesh configuration file
+. ./subnode_mesh.config
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CHECK USER PRIVILEGES
@@ -84,16 +86,19 @@ modprobe batman-adv;
 
 # ask how they want to configure their mesh point
 read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
-if [ -n "$t1" ]; then MESH_SSID="$t1";fi
+if [ -n "$t1" ]; then MESH_SSID_NEW="$t1";fi
 
 # pass the selected mesh ssid into mesh startup script
-sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
+sed -i "s|MESH_SSID=\"$MESH_SSID\"|MESH_SSID=\"$MESH_SSID_NEW\"|"   ./subnode_mesh.config 
 
-echo scripts/subnodes_mesh.sh
+#echo scripts/subnodes_mesh.sh
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # COPY OVER THE MESH POINT START UP SCRIPT
 #
+## Copy always our local file
+cp  subnode_mesh.config  /etc
+
 cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
 chmod 755 /etc/init.d/subnodes_mesh
 update-rc.d subnodes_mesh defaults
