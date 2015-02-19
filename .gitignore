@@ -1,4 +1,5 @@
 _dev/
+node_latest_armhf.deb
 .DS_Store
 final_instructions.rtf
 node_modules
