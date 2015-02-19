@@ -10,6 +10,11 @@
     "type": "git",
     "url": "https://github.com/chootka/subnodes.git"
   },
+  "private": false,
+  "main": "./dashboard/server/server.js",
+  "scripts": {
+    "start": "node ./dashboard/server/server"
+  },
   "keywords": [
     "wlan",
     "mesh",

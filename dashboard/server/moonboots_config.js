@@ -22,13 +22,13 @@ var MoonbootsCfg = function(options) {
         	moonboots: {
                 jsFileName: 'app',
                 cssFileName: 'app',
-                main: fixPath('app/public/js/app.js'),
+                main: fixPath('dashboard/public/js/dashboard.js'),
                 developmentMode: self.config.isDev,
                 libraries: [
                 ],
                 stylesheets: [
-                    fixPath('app/public/css/bootstrap.css'),
-                    fixPath('app/public/css/app.css')
+                    fixPath('dashboard/public/css/bootstrap.css'),
+                    fixPath('dashboard/public/css/dashboard.css')
                 ],
                 browserify: {
                     debug: false
@@ -38,7 +38,7 @@ var MoonbootsCfg = function(options) {
                     // js file is requested. Which means you can seamlessly change jade and
                     // refresh in your browser to get new templates.
                     if (self.config.isDev) {
-                        templatizer(fixPath('app/server/templates'), fixPath('app/public/js/templates.js'));
+                        templatizer(fixPath('dashboard/server/templates'), fixPath('dashboard/public/js/templates.js'));
                     }
                 },
                 beforeBuildCSS: function (done) {
@@ -47,8 +47,8 @@ var MoonbootsCfg = function(options) {
                     // and see new styles on refresh.
                     if (self.config.isDev) {
                         stylizer({
-                            infile: fixPath('app/public/css/app.styl'),
-                            outfile: fixPath('app/public/css/app.css'),
+                            infile: fixPath('dashboard/public/css/dashboard.styl'),
+                            outfile: fixPath('dashboard/public/css/dashboard.css'),
                             development: true
                         }, done);
                     } else {

@@ -7,8 +7,6 @@ var path = require('path')
     ,cookieParser = require('cookie-parser')
     ,bodyParser = require('body-parser')
     ,http = require('http').createServer(app)
-    ,server = require('socket.io')(http)
-    ,SocketServer = require('./socket_server')
     ,MoonbootsCfg = require('./moonboots_config');
 
 
@@ -45,9 +43,3 @@ new MoonbootsCfg({ app: app, config: config }).init();
 // ----------------------
 http.listen(config.http.port);
 console.log('Hot Probs is running at: http://localhost:' + config.http.port + '.');
-
-
-// ---------------------------------------------------
-// Set up socket.io listeners for our application
-// ---------------------------------------------------
-new SocketServer({ io: server }).init();
