@@ -230,7 +230,6 @@ auto lo
 iface lo inet loopback
 
 auto eth0
-allow-hotplug eth0
 iface eth0 inet dhcp
 
 # create access point
