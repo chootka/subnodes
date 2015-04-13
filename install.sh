@@ -55,7 +55,9 @@ echo "Updating apt-get and installing iw package for network interface configura
 # SOFTWARE INSTALL
 #
 # update the packages
-apt-get update && apt-get install -y iw
+# BTW batctl is installed here regardless so the bat0 interface is avaiable for the bridge, 
+# should the user decide to set up an AP. TO-DO: Remove this dependency
+apt-get update && apt-get install -y iw batctl
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CAPTURE USER INPUT
@@ -94,10 +96,6 @@ case $yn in
 			echo -en "[OK]\n"
 		fi
 
-		# install required packages
-		echo -en "Installing batctl... 							"
-		apt-get install -y batctl
-		echo -en "[OK]\n"
 		echo ""
 		clear
 		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
