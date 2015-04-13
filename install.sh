@@ -5,10 +5,14 @@
 # took guidance from a script by Paul Miller : https://dl.dropboxusercontent.com/u/1663660/scripts/install-rtl8188cus.sh
 # Updated 3 Feb 2015
 #
+# TO-DO
+# - allow a selectio of radio drivers
+# - fix addressing to avoid collisions below (peek at pirate box)
+#
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# DEFAULT VALUES
+# SOME DEFAULT VALUES
 #
 # BRIDGE
 BRIDGE_IP=192.168.3.1
@@ -50,9 +54,8 @@ echo "Updating apt-get and installing iw package for network interface configura
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SOFTWARE INSTALL
 #
-# update the packages (may take a long time if upgrade is uncommented)
-apt-get update && apt-get install -y iw batctl
-#&& sudo apt-get -y upgrade
+# update the packages
+apt-get update && apt-get install -y iw
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CAPTURE USER INPUT
@@ -71,35 +74,61 @@ echo "Done!"
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE A MESH POINT?
 #
-echo ""
-echo ""
-clear
-echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
-echo ""
-echo "Enabling the batman-adv kernel..."
+read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? " yn
+case $yn in
+	[Yy]* )
+		clear
+		echo "Configuring Raspberry Pi as Mesh Point..."
+		echo ""
 
-# add the batman-adv module to be started on boot
-sed -i '$a batman-adv' /etc/modules
-modprobe batman-adv;
+		# check that iw list does not fail with 'nl80211 not found'
+		echo -en "iw list check...								"
+		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
+		rc=$?
+		if [[ $rc = 0 ]] ; then
+			echo -en "[FAIL]\n"
+			echo ""
+			echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
 
-# ask how they want to configure their mesh point
-read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
-if [ -n "$t1" ]; then MESH_SSID="$t1";fi
+		# install required packages
+		echo -en "Installing batctl... 							"
+		apt-get install -y batctl
+		echo -en "[OK]\n"
+		echo ""
+		clear
+		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
+		echo ""
+		echo "Enabling the batman-adv kernel..."
 
-# pass the selected mesh ssid into mesh startup script
-sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
+		# add the batman-adv module to be started on boot
+		sed -i '$a batman-adv' /etc/modules
+		modprobe batman-adv;
 
-echo scripts/subnodes_mesh.sh
+		# ask how they want to configure their mesh point
+		read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
+		if [ -n "$t1" ]; then MESH_SSID="$t1";fi
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# COPY OVER THE MESH POINT START UP SCRIPT
-#
-cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
-chmod 755 /etc/init.d/subnodes_mesh
-update-rc.d subnodes_mesh defaults
+		# pass the selected mesh ssid into mesh startup script
+		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
 
-#echo "The services will now be restarted to activate the changes"
-#/etc/init.d/subnodes_mesh restart
+		echo scripts/subnodes_mesh.sh
+
+		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+		# COPY OVER THE MESH POINT START UP SCRIPT
+		#
+		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
+		chmod 755 /etc/init.d/subnodes_mesh
+		update-rc.d subnodes_mesh defaults
+
+	break;;
+
+	[Nn]* ) break;;
+
+esac
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?
@@ -233,13 +262,11 @@ auto eth0
 iface eth0 inet dhcp
 
 # create access point
-#auto ap0
   iface ap0 inet static
   address 10.0.0.1
   netmask 255.255.255.0
 
 # create bridge
-#auto br0
 iface br0 inet static
   bridge_ports none
   bridge_stp off
@@ -247,23 +274,8 @@ iface br0 inet static
   netmask $BRIDGE_NETMASK
 
 # create mesh
-#auto mesh0
 iface mesh0 inet adhoc
   ifconfig mesh0 mtu 1532
-  #ifconfig mesh0 down
-
-# add the mesh interface to batman
-#batctl if add mesh0
-#batctl ap_isolation 1
-
-# bring up the BATMAN adv interface
-#ifconfig mesh0 up
-#ifconfig bat0 up
-
-# add interfaces to bridge
-# brctl addbr br0
-#brctl addif br0 ap0
-#brctl addif br0 bat0
 
 iface default inet dhcp
 EOF
@@ -297,6 +309,16 @@ EOF
 		echo "Done.\n"
 		echo ""
 
+		# INSTALLING node.js chat room
+		echo "Installing chat room..."
+		# go back to our subnodes directory
+		cd /home/pi/subnodes/
+
+		# download subnodes app dependencies
+		sudo npm install
+		sudo npm install -g nodemon
+		echo "Done!"
+
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 		#
@@ -307,7 +329,6 @@ EOF
 		update-rc.d subnodes_ap defaults
 
 		echo "The services will now be restarted to activate the changes"
-		#/etc/init.d/subnodes_ap restart
 		/etc/init.d/subnodes_mesh restart
 		/etc/init.d/subnodes_ap restart
 
@@ -315,7 +336,7 @@ EOF
 
 	[Nn]* ) break;;
 
-	* ) echo "Please answer Yes or No";;
+	#* ) echo "Please answer Yes or No";;
 esac
 
 exit 0
