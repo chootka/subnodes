@@ -22,11 +22,10 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 			# add interfaces to the bridge
 			brctl addbr br0
-			brctl addif br0 ap0
 			brctl addif br0 bat0
+			brctl addif br0 ap0
 
 			# bring up the AP interface and give ap0 a static IP
-			# not sure if ap0 needs an IP anymore, since it is part of the bridge
 			ifconfig ap0 10.0.0.1 netmask 255.255.255.0 up
 
 			# bring up the brdige and assign it a static IP
@@ -71,8 +70,14 @@ SCRIPTNAME=/etc/init.d/$NAME
 			else
 				printf "%s\n" "pidfile not found"
 			fi
-			ifconfig ap0 down
+			brctl delif br0 bat0
+			brctl delif br0 ap0
+			brctl delbr br0
+
 			ifconfig br0 down
+			ifconfig bat0 down
+			ifconfig ap0 down
+
 			service hostapd stop
             service dnsmasq stop
 		;;

@@ -5,10 +5,14 @@
 # took guidance from a script by Paul Miller : https://dl.dropboxusercontent.com/u/1663660/scripts/install-rtl8188cus.sh
 # Updated 3 Feb 2015
 #
+# TO-DO
+# - allow a selectio of radio drivers
+# - fix addressing to avoid collisions below (peek at pirate box)
+#
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# DEFAULT VALUES
+# SOME DEFAULT VALUES
 #
 # BRIDGE
 BRIDGE_IP=192.168.3.1
@@ -228,16 +232,17 @@ EOF
 		cat <<EOF > /etc/network/interfaces
 auto lo
 iface lo inet loopback
+
+auto eth0
+allow-hotplug eth0
 iface eth0 inet dhcp
 
 # create access point
-#auto ap0
   iface ap0 inet static
   address 10.0.0.1
   netmask 255.255.255.0
 
 # create bridge
-#auto br0
 iface br0 inet static
   bridge_ports none
   bridge_stp off
@@ -245,23 +250,8 @@ iface br0 inet static
   netmask $BRIDGE_NETMASK
 
 # create mesh
-#auto mesh0
 iface mesh0 inet adhoc
   ifconfig mesh0 mtu 1532
-  #ifconfig mesh0 down
-
-# add the mesh interface to batman
-#batctl if add mesh0
-#batctl ap_isolation 1
-
-# bring up the BATMAN adv interface
-#ifconfig mesh0 up
-#ifconfig bat0 up
-
-# add interfaces to bridge
-# brctl addbr br0
-#brctl addif br0 ap0
-#brctl addif br0 bat0
 
 iface default inet dhcp
 EOF
@@ -315,7 +305,6 @@ EOF
 		update-rc.d subnodes_ap defaults
 
 		echo "The services will now be restarted to activate the changes"
-		#/etc/init.d/subnodes_ap restart
 		/etc/init.d/subnodes_mesh restart
 		/etc/init.d/subnodes_ap restart
 
