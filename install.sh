@@ -54,9 +54,8 @@ echo "Updating apt-get and installing iw package for network interface configura
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SOFTWARE INSTALL
 #
-# update the packages (may take a long time if upgrade is uncommented)
-apt-get update && apt-get install -y iw batctl
-#&& sudo apt-get -y upgrade
+# update the packages
+apt-get update && apt-get install -y iw
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CAPTURE USER INPUT
@@ -75,35 +74,61 @@ echo "Done!"
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE A MESH POINT?
 #
-echo ""
-echo ""
-clear
-echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
-echo ""
-echo "Enabling the batman-adv kernel..."
+read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? " yn
+case $yn in
+	[Yy]* )
+		clear
+		echo "Configuring Raspberry Pi as Mesh Point..."
+		echo ""
 
-# add the batman-adv module to be started on boot
-sed -i '$a batman-adv' /etc/modules
-modprobe batman-adv;
+		# check that iw list does not fail with 'nl80211 not found'
+		echo -en "iw list check...								"
+		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
+		rc=$?
+		if [[ $rc = 0 ]] ; then
+			echo -en "[FAIL]\n"
+			echo ""
+			echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
 
-# ask how they want to configure their mesh point
-read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
-if [ -n "$t1" ]; then MESH_SSID="$t1";fi
+		# install required packages
+		echo -en "Installing batctl... 							"
+		apt-get install -y batctl
+		echo -en "[OK]\n"
+		echo ""
+		clear
+		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
+		echo ""
+		echo "Enabling the batman-adv kernel..."
 
-# pass the selected mesh ssid into mesh startup script
-sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
+		# add the batman-adv module to be started on boot
+		sed -i '$a batman-adv' /etc/modules
+		modprobe batman-adv;
 
-echo scripts/subnodes_mesh.sh
+		# ask how they want to configure their mesh point
+		read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
+		if [ -n "$t1" ]; then MESH_SSID="$t1";fi
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# COPY OVER THE MESH POINT START UP SCRIPT
-#
-cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
-chmod 755 /etc/init.d/subnodes_mesh
-update-rc.d subnodes_mesh defaults
+		# pass the selected mesh ssid into mesh startup script
+		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
 
-#echo "The services will now be restarted to activate the changes"
-#/etc/init.d/subnodes_mesh restart
+		echo scripts/subnodes_mesh.sh
+
+		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+		# COPY OVER THE MESH POINT START UP SCRIPT
+		#
+		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
+		chmod 755 /etc/init.d/subnodes_mesh
+		update-rc.d subnodes_mesh defaults
+
+	break;;
+
+	[Nn]* ) break;;
+
+esac
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?
@@ -311,7 +336,7 @@ EOF
 
 	[Nn]* ) break;;
 
-	* ) echo "Please answer Yes or No";;
+	#* ) echo "Please answer Yes or No";;
 esac
 
 exit 0
