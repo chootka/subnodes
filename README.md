@@ -10,13 +10,13 @@ its own local area network, and does not connect with the internet. This is key 
 where people can communicate anonymously and freely, as well as maximizing the portability of the network
 (no dependibility on an internet connection means the device can be taken and remain active anywhere). 
 
-The device will also be a BATMAN Advanced mesh node, enabling it to join with other nearby BATMAN nodes into a greater mesh
+The device can also be enabled as a BATMAN Advanced mesh node, enabling it to join with other nearby BATMAN nodes into a greater mesh
 network, extending range and making it possible to exchange information with each other. Support for Subnodes has
 been provided by Eyebeam. This code is published under the [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html).
 
 how to install
 --------------
-Assuming you are starting with a fresh [Raspbian](http://www.raspberrypi.org/downloads/) (Version September 2014) install on your SD card, these are the steps for installing subnodes on your Raspberry Pi. It is also assumed that you have two wireless USB adapters attached to your RPi. They both must be running the nl80211 driver.
+Assuming you are starting with a fresh [Raspbian](http://www.raspberrypi.org/downloads/) (Version January 2015) install on your SD card, these are the steps for installing subnodes on your Raspberry Pi. It is also assumed that you have two wireless USB adapters attached to your RPi. They both must be running the nl80211 driver.
 
 * set up your Raspberry Pi with a basic configuration
 
@@ -26,20 +26,16 @@ Assuming you are starting with a fresh [Raspbian](http://www.raspberrypi.org/dow
 
         sudo apt-get update
 
-* make a directory for your web apps
-mkdir www
-cd www
-
-* clone the repository into your www folder
+* clone the repository into your home folder (assuming /home/pi)
 
         git clone https://github.com/chootka/subnodes.git
 
 * run the installation script
 
-        cd subnodes/scripts
-        sudo ./configure.sh
+        cd subnodes
+        sudo ./install.sh
 
-The installation process takes about 15 minutes. After it has completed, you will have a running BATMAN Advanced mesh node and will be broadcasting a wireless local area network named `subnodes`. Connecting to the network and navigating to a browser page will redirect you to http://www.hotprobs.com, where a node.js chat client will be running. 
+The installation process takes about 15 minutes. You will be prompted to name your mesh network and the option to name and install a wireless access point. After it has completed, you will have a running BATMAN Advanced mesh node and will be broadcasting a wireless access point. Connecting to the network and navigating to a browser page will redirect you to http://www.hotprobs.com, where a node.js chat client will be running. 
 
 From here, fork, build, share your ideas, and have fun!
 
