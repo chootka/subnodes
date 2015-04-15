@@ -243,7 +243,6 @@ EOF
 				echo -en "[OK]\n"
 			fi
 
-		echo ""
 		# backup the existing interfaces file
 		echo -en "Creating backup of network interfaces configuration file... 				"
 		cp /etc/network/interfaces /etc/network/interfaces.bak
@@ -254,9 +253,6 @@ EOF
 		else
 			echo -en "[OK]\n"
 		fi
-
-		echo "Done.\n"
-		echo ""
 
 		# CONFIGURE /etc/network/interfaces
 		echo -en "Creating new network interfaces configuration file with your settings... 	"
@@ -293,8 +289,6 @@ EOF
 		else
 			echo -en "[OK]\n"
 		fi
-		echo "Done.\n"
-		echo ""
 
 		# CONFIGURE dnsmasq
 		echo -en "Creating dnsmasq configuration file... 									"
@@ -312,8 +306,6 @@ EOF
 		else
 			echo -en "[OK]\n"
 		fi
-		echo "Done.\n"
-		echo ""
 
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
