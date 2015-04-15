@@ -40,7 +40,7 @@ MESH_SSID=meshnode
 (( `id -u` )) && echo "This script *must* be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# CAPTURE USER INPUT
+# BEGIN INSTALLATION PROCESS
 #
 echo "////////////////////////"
 echo "// Welcome to Subnodes!"
@@ -49,6 +49,7 @@ echo ""
 
 read -p "This installation script will install the node.js dashboard and will give you the options of configuring either a wireless access point, a BATMAN-ADV mesh point, or both. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding. Press any key to continue..."
 echo ""
+#
 # CHECK USB WIFI HARDWARE IS FOUND
 # also, i will need to check for one device per network config for a total of two devices
 if [[ -n $(lsusb | grep RT5370) ]]; then
@@ -57,9 +58,6 @@ else
     echo "The RT5370 device has not been located, check it is inserted and run script again when done."
     exit 1
 fi
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-echo "Updating apt-get and installing iw package for network interface configuration..."
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -68,13 +66,12 @@ echo "Updating apt-get and installing iw package for network interface configura
 # update the packages
 # BTW batctl is installed here regardless so the bat0 interface is avaiable for the bridge, 
 # should the user decide to set up an AP. TO-DO: Remove this dependency
+echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw batctl
 echo ""
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
-echo ""
-echo "Done!"
 echo ""
 # INSTALLING node.js dashboard
 echo "Installing the dashboard..."
@@ -83,11 +80,13 @@ cd /home/pi/subnodes/
 # download subnodes app dependencies
 sudo npm install
 sudo npm install -g nodemon
+echo ""
 echo "Done!"
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE A MESH POINT?
 #
+clear
 echo "//////////////////////////////////////////"
 echo "// Access Point and Mesh Point Settings"
 echo "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -102,22 +101,18 @@ case $yn in
 		clear
 		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
 		echo ""
-
 		echo "Enabling the batman-adv kernel..."
-
 		# add the batman-adv module to be started on boot
 		sed -i '$a batman-adv' /etc/modules
 		modprobe batman-adv;
-
-		clear
-
+		echo ""
 		# check that iw list does not fail with 'nl80211 not found'
 		echo -en "checking that nl80211 USB wifi radio is plugged in...								"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
-			echo -en "[FAIL]\n"
 			echo ""
+			echo -en "[FAIL]\n"
 			echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
 			exit $rc
 		else
@@ -136,6 +131,7 @@ case $yn in
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE MESH POINT START UP SCRIPT
 		#
+		echo ""
 		echo "Adding startup script for mesh point..."
 		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
 		chmod 755 /etc/init.d/subnodes_mesh
@@ -148,6 +144,7 @@ esac
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?
 #
+clear
 echo "//////////////////////////////////"
 echo "// Access Point Settings"
 echo "// ~~~~~~~~~~~~~~~~~~~~~"
@@ -165,7 +162,6 @@ case $yn in
 		rc=$?
 		if [[ $rc = 0 ]] ; then
 			echo -en "[FAIL]\n"
-			echo ""
 			echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
 			exit $rc
 		else
@@ -218,8 +214,7 @@ EOF
 			else
 				echo -en "[OK]\n"
 			fi
-		echo "Done."
-		echo ""
+		echo "Done.\n"
 
 		# create hostapd configuration with user's settings
 		echo -en "Creating hostapd.conf file... 											"
@@ -243,7 +238,6 @@ EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
 				echo -en "[FAIL]\n"
-				echo ""
 				exit $rc
 			else
 				echo -en "[OK]\n"
@@ -256,7 +250,6 @@ EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
 			echo -en "[FAIL]\n"
-			echo ""
 			exit $rc
 		else
 			echo -en "[OK]\n"
@@ -325,6 +318,7 @@ EOF
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 		#
+		clear
 		update-rc.d hostapd enable
 		update-rc.d dnsmasq enable
 		cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
