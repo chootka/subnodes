@@ -122,9 +122,9 @@ case $yn in
 		chmod 755 /etc/init.d/subnodes_mesh
 		update-rc.d subnodes_mesh defaults
 
-	break;;
+	;;
 
-	[Nn]* ) break;;
+	[Nn]* ) ;;
 
 esac
 
@@ -328,10 +328,10 @@ EOF
 		echo "The services will now be restarted to activate the changes"
 		/etc/init.d/subnodes_mesh restart
 		/etc/init.d/subnodes_ap restart
+	;;
 
-	break;;
 
-	[Nn]* ) break;;
+	[Nn]* ) ;;
 
 	#* ) echo "Please answer Yes or No";;
 esac
