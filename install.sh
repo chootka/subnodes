@@ -17,6 +17,7 @@
 # BRIDGE
 BRIDGE_IP=192.168.3.1
 BRIDGE_NETMASK=255.255.255.0
+
 # WIRELESS RADIO DRIVER
 RADIO_DRIVER=nl80211
 
@@ -36,8 +37,18 @@ MESH_SSID=meshnode
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CHECK USER PRIVILEGES
-(( `id -u` )) && echo "This script MUST be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
+(( `id -u` )) && echo "This script *must* be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# CAPTURE USER INPUT
+#
+echo "////////////////////////"
+echo "// Welcome to Subnodes!"
+echo "// ~~~~~~~~~~~~~~~~~~~~~"
+echo ""
+
+read -p "This installation script will install the node.js dashboard and will give you the options of configuring either a wireless access point, a BATMAN-ADV mesh point, or both. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding. Press any key to continue..."
+echo ""
 # CHECK USB WIFI HARDWARE IS FOUND
 # also, i will need to check for one device per network config for a total of two devices
 if [[ -n $(lsusb | grep RT5370) ]]; then
@@ -58,33 +69,50 @@ echo "Updating apt-get and installing iw package for network interface configura
 # BTW batctl is installed here regardless so the bat0 interface is avaiable for the bridge, 
 # should the user decide to set up an AP. TO-DO: Remove this dependency
 apt-get update && apt-get install -y iw batctl
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# CAPTURE USER INPUT
-#
-echo "//////////////////////////////////"
-echo "// Welcome to Subnodes!"
-echo "// ~~~~~~~~~~~~~~~~~~~~"
 echo ""
-
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
+echo ""
 echo "Done!"
-
+echo ""
+# INSTALLING node.js dashboard
+echo "Installing the dashboard..."
+# go back to our subnodes directory
+cd /home/pi/subnodes/
+# download subnodes app dependencies
+sudo npm install
+sudo npm install -g nodemon
+echo "Done!"
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE A MESH POINT?
 #
+echo "//////////////////////////////////////////"
+echo "// Access Point and Mesh Point Settings"
+echo "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo ""
+echo "Please answer the following questions."
+echo ""
+echo "Hitting return will continue with the default 'No' option"
+echo ""
 read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? " yn
 case $yn in
 	[Yy]* )
 		clear
-		echo "Configuring Raspberry Pi as Mesh Point..."
+		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
 		echo ""
 
+		echo "Enabling the batman-adv kernel..."
+
+		# add the batman-adv module to be started on boot
+		sed -i '$a batman-adv' /etc/modules
+		modprobe batman-adv;
+
+		clear
+
 		# check that iw list does not fail with 'nl80211 not found'
-		echo -en "iw list check...								"
+		echo -en "checking that nl80211 USB wifi radio is plugged in...								"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
@@ -96,16 +124,6 @@ case $yn in
 			echo -en "[OK]\n"
 		fi
 
-		echo ""
-		clear
-		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
-		echo ""
-		echo "Enabling the batman-adv kernel..."
-
-		# add the batman-adv module to be started on boot
-		sed -i '$a batman-adv' /etc/modules
-		modprobe batman-adv;
-
 		# ask how they want to configure their mesh point
 		read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
 		if [ -n "$t1" ]; then MESH_SSID="$t1";fi
@@ -113,19 +131,18 @@ case $yn in
 		# pass the selected mesh ssid into mesh startup script
 		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
 
-		echo scripts/subnodes_mesh.sh
+		#echo scripts/subnodes_mesh.sh
 
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE MESH POINT START UP SCRIPT
 		#
+		echo "Adding startup script for mesh point..."
 		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
 		chmod 755 /etc/init.d/subnodes_mesh
 		update-rc.d subnodes_mesh defaults
 
 	;;
-
 	[Nn]* ) ;;
-
 esac
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -134,8 +151,6 @@ esac
 echo "//////////////////////////////////"
 echo "// Access Point Settings"
 echo "// ~~~~~~~~~~~~~~~~~~~~~"
-echo "Please answer the following question."
-echo "Hitting return will continue with the default 'No' option"
 echo ""
 read -p "Do you wish to continue and set up your Raspberry Pi as an Access Point? " yn
 case $yn in
@@ -145,7 +160,7 @@ case $yn in
 		echo ""
 
 		# check that iw list does not fail with 'nl80211 not found'
-		echo -en "iw list check...								"
+		echo -en "checking that nl80211 USB wifi radio is plugged in...								"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
@@ -307,16 +322,6 @@ EOF
 		echo "Done.\n"
 		echo ""
 
-		# INSTALLING node.js dashboard
-		echo "Installing the dashboard..."
-		# go back to our subnodes directory
-		cd /home/pi/subnodes/
-
-		# download subnodes app dependencies
-		sudo npm install
-		sudo npm install -g nodemon
-		echo "Done!"
-
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 		#
@@ -333,8 +338,6 @@ EOF
 	;;
 
 	[Nn]* ) ;;
-
-	#* ) echo "Please answer Yes or No";;
 esac
 
 exit 0
