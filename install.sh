@@ -254,9 +254,8 @@ EOF
 		echo -en "Creating new network interfaces configuration file with your settings... 	"
 		cat <<EOF > /etc/network/interfaces
 auto lo
-iface lo inet loopback
 
-auto eth0
+iface lo inet loopback
 iface eth0 inet dhcp
 
 # create access point
