@@ -107,7 +107,7 @@ case $yn in
 		modprobe batman-adv;
 		echo ""
 		# check that iw list does not fail with 'nl80211 not found'
-		echo -en "checking that nl80211 USB wifi radio is plugged in...								"
+		echo -en "checking that nl80211 USB wifi radio is plugged in...				"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
@@ -136,7 +136,9 @@ case $yn in
 		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
 		chmod 755 /etc/init.d/subnodes_mesh
 		update-rc.d subnodes_mesh defaults
-
+		echo ""
+		echo "The services will now be restarted to activate the changes"
+		/etc/init.d/subnodes_mesh restart
 	;;
 	[Nn]* ) ;;
 esac
@@ -157,7 +159,7 @@ case $yn in
 		echo ""
 
 		# check that iw list does not fail with 'nl80211 not found'
-		echo -en "checking that nl80211 USB wifi radio is plugged in...								"
+		echo -en "checking that nl80211 USB wifi radio is plugged in...				"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
@@ -169,7 +171,7 @@ case $yn in
 		fi
 
 		# install required packages
-		echo -en "Installing bridge-utils, hostapd and dnsmasq... 							"
+		echo -en "Installing bridge-utils, hostapd and dnsmasq... 			"
 		apt-get install -y bridge-utils hostapd dnsmasq
 		echo -en "[OK]\n"
 
@@ -202,7 +204,7 @@ case $yn in
 		if [ -n "$t1" ]; then DHCP_LEASE="$t1";fi
 
 		# create hostapd init file
-		echo -en "Creating default hostapd file...											"
+		echo -en "Creating default hostapd file...			"
 		cat <<EOF > /etc/default/hostapd
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
 EOF
@@ -214,10 +216,9 @@ EOF
 			else
 				echo -en "[OK]\n"
 			fi
-		echo "Done.\n"
 
 		# create hostapd configuration with user's settings
-		echo -en "Creating hostapd.conf file... 											"
+		echo -en "Creating hostapd.conf file...				"
 		cat <<EOF > /etc/hostapd/hostapd.conf
 interface=ap0
 bridge=br0
@@ -244,7 +245,7 @@ EOF
 			fi
 
 		# backup the existing interfaces file
-		echo -en "Creating backup of network interfaces configuration file... 				"
+		echo -en "Creating backup of network interfaces configuration file... 			"
 		cp /etc/network/interfaces /etc/network/interfaces.bak
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -291,7 +292,7 @@ EOF
 		fi
 
 		# CONFIGURE dnsmasq
-		echo -en "Creating dnsmasq configuration file... 									"
+		echo -en "Creating dnsmasq configuration file... 			"
 		cat <<EOF > /etc/dnsmasq.conf
 interface=br0
 address=/#/$BRIDGE_IP
@@ -317,10 +318,8 @@ EOF
 		chmod 755 /etc/init.d/subnodes_ap
 		update-rc.d subnodes_ap defaults
 
-		echo "The services will now be restarted to activate the changes"
-		/etc/init.d/subnodes_mesh restart
+		echo "The access point services will now be restarted to activate the changes"
 		/etc/init.d/subnodes_ap restart
-
 	;;
 
 	[Nn]* ) ;;
