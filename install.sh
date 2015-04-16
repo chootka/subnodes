@@ -17,6 +17,7 @@
 # BRIDGE
 BRIDGE_IP=192.168.3.1
 BRIDGE_NETMASK=255.255.255.0
+
 # WIRELESS RADIO DRIVER
 RADIO_DRIVER=nl80211
 
@@ -36,8 +37,19 @@ MESH_SSID=meshnode
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CHECK USER PRIVILEGES
-(( `id -u` )) && echo "This script MUST be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
+(( `id -u` )) && echo "This script *must* be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# BEGIN INSTALLATION PROCESS
+#
+echo "////////////////////////"
+echo "// Welcome to Subnodes!"
+echo "// ~~~~~~~~~~~~~~~~~~~~~"
+echo ""
+
+read -p "This installation script will install a node.js chatroom and will give you the options of configuring either a wireless access point, a BATMAN-ADV mesh point, or both. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding. Press any key to continue..."
+echo ""
+#
 # CHECK USB WIFI HARDWARE IS FOUND
 # also, i will need to check for one device per network config for a total of two devices
 if [[ -n $(lsusb | grep RT5370) ]]; then
@@ -46,9 +58,6 @@ else
     echo "The RT5370 device has not been located, check it is inserted and run script again when done."
     exit 1
 fi
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-echo "Updating apt-get and installing iw package for network interface configuration..."
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -57,54 +66,49 @@ echo "Updating apt-get and installing iw package for network interface configura
 # update the packages
 # BTW batctl is installed here regardless so the bat0 interface is avaiable for the bridge, 
 # should the user decide to set up an AP. TO-DO: Remove this dependency
+echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw batctl
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# CAPTURE USER INPUT
-#
-echo "//////////////////////////////////"
-echo "// Welcome to Subnodes!"
-echo "// ~~~~~~~~~~~~~~~~~~~~"
 echo ""
-
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
-echo "Done!"
-
+echo ""
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE A MESH POINT?
 #
+clear
+echo "//////////////////////////////////////////"
+echo "// Access Point and Mesh Point Settings"
+echo "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo ""
+echo "Please answer the following questions."
+echo ""
+echo "Hitting return will continue with the default 'No' option"
+echo ""
 read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? " yn
 case $yn in
 	[Yy]* )
 		clear
-		echo "Configuring Raspberry Pi as Mesh Point..."
+		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
 		echo ""
-
+		echo "Enabling the batman-adv kernel..."
+		# add the batman-adv module to be started on boot
+		sed -i '$a batman-adv' /etc/modules
+		modprobe batman-adv;
+		echo ""
 		# check that iw list does not fail with 'nl80211 not found'
-		echo -en "iw list check...								"
+		echo -en "checking that nl80211 USB wifi radio is plugged in...				"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
-			echo -en "[FAIL]\n"
 			echo ""
+			echo -en "[FAIL]\n"
 			echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
 			exit $rc
 		else
 			echo -en "[OK]\n"
 		fi
-
-		echo ""
-		clear
-		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
-		echo ""
-		echo "Enabling the batman-adv kernel..."
-
-		# add the batman-adv module to be started on boot
-		sed -i '$a batman-adv' /etc/modules
-		modprobe batman-adv;
 
 		# ask how they want to configure their mesh point
 		read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
@@ -113,29 +117,30 @@ case $yn in
 		# pass the selected mesh ssid into mesh startup script
 		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
 
-		echo scripts/subnodes_mesh.sh
+		#echo scripts/subnodes_mesh.sh
 
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE MESH POINT START UP SCRIPT
 		#
+		echo ""
+		echo "Adding startup script for mesh point..."
 		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
 		chmod 755 /etc/init.d/subnodes_mesh
 		update-rc.d subnodes_mesh defaults
-
+		echo ""
+		echo "The services will now be restarted to activate the changes"
+		/etc/init.d/subnodes_mesh restart
 	;;
-
 	[Nn]* ) ;;
-
 esac
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?
 #
+clear
 echo "//////////////////////////////////"
 echo "// Access Point Settings"
 echo "// ~~~~~~~~~~~~~~~~~~~~~"
-echo "Please answer the following question."
-echo "Hitting return will continue with the default 'No' option"
 echo ""
 read -p "Do you wish to continue and set up your Raspberry Pi as an Access Point? " yn
 case $yn in
@@ -145,12 +150,11 @@ case $yn in
 		echo ""
 
 		# check that iw list does not fail with 'nl80211 not found'
-		echo -en "iw list check...								"
+		echo -en "checking that nl80211 USB wifi radio is plugged in...				"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 		rc=$?
 		if [[ $rc = 0 ]] ; then
 			echo -en "[FAIL]\n"
-			echo ""
 			echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
 			exit $rc
 		else
@@ -158,7 +162,8 @@ case $yn in
 		fi
 
 		# install required packages
-		echo -en "Installing bridge-utils, hostapd and dnsmasq... 							"
+		echo ""
+		echo -en "Installing bridge-utils, hostapd and dnsmasq... 			"
 		apt-get install -y bridge-utils hostapd dnsmasq
 		echo -en "[OK]\n"
 
@@ -191,7 +196,7 @@ case $yn in
 		if [ -n "$t1" ]; then DHCP_LEASE="$t1";fi
 
 		# create hostapd init file
-		echo -en "Creating default hostapd file...											"
+		echo -en "Creating default hostapd file...			"
 		cat <<EOF > /etc/default/hostapd
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
 EOF
@@ -203,11 +208,9 @@ EOF
 			else
 				echo -en "[OK]\n"
 			fi
-		echo "Done."
-		echo ""
 
 		# create hostapd configuration with user's settings
-		echo -en "Creating hostapd.conf file... 											"
+		echo -en "Creating hostapd.conf file...				"
 		cat <<EOF > /etc/hostapd/hostapd.conf
 interface=ap0
 bridge=br0
@@ -228,40 +231,30 @@ EOF
 			rc=$?
 			if [[ $rc != 0 ]] ; then
 				echo -en "[FAIL]\n"
-				echo ""
 				exit $rc
 			else
 				echo -en "[OK]\n"
 			fi
 
-		echo ""
 		# backup the existing interfaces file
-		echo -en "Creating backup of network interfaces configuration file... 				"
+		echo -en "Creating backup of network interfaces configuration file... 			"
 		cp /etc/network/interfaces /etc/network/interfaces.bak
 		rc=$?
 		if [[ $rc != 0 ]] ; then
 			echo -en "[FAIL]\n"
-			echo ""
 			exit $rc
 		else
 			echo -en "[OK]\n"
 		fi
 
-		echo "Done.\n"
-		echo ""
-
 		# CONFIGURE /etc/network/interfaces
 		echo -en "Creating new network interfaces configuration file with your settings... 	"
 		cat <<EOF > /etc/network/interfaces
 auto lo
-
 iface lo inet loopback
-iface eth0 inet dhcp
 
-# create access point
-  iface ap0 inet static
-  address 10.0.0.1
-  netmask 255.255.255.0
+auto eth0
+iface eth0 inet dhcp
 
 # create bridge
 iface br0 inet static
@@ -269,10 +262,6 @@ iface br0 inet static
   bridge_stp off
   address $BRIDGE_IP
   netmask $BRIDGE_NETMASK
-
-# create mesh
-iface mesh0 inet adhoc
-  ifconfig mesh0 mtu 1532
 
 iface default inet dhcp
 EOF
@@ -284,11 +273,9 @@ EOF
 		else
 			echo -en "[OK]\n"
 		fi
-		echo "Done.\n"
-		echo ""
 
 		# CONFIGURE dnsmasq
-		echo -en "Creating dnsmasq configuration file... 									"
+		echo -en "Creating dnsmasq configuration file... 			"
 		cat <<EOF > /etc/dnsmasq.conf
 interface=br0
 address=/#/$BRIDGE_IP
@@ -303,8 +290,6 @@ EOF
 		else
 			echo -en "[OK]\n"
 		fi
-		echo "Done.\n"
-		echo ""
 
 		# INSTALLING node.js chat room
 		echo "Installing chat room..."
@@ -319,21 +304,18 @@ EOF
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 		#
+		clear
 		update-rc.d hostapd enable
 		update-rc.d dnsmasq enable
 		cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
 		chmod 755 /etc/init.d/subnodes_ap
 		update-rc.d subnodes_ap defaults
 
-		echo "The services will now be restarted to activate the changes"
-		/etc/init.d/subnodes_mesh restart
+		echo "The access point services will now be restarted to activate the changes"
 		/etc/init.d/subnodes_ap restart
 	;;
 
-
 	[Nn]* ) ;;
-
-	#* ) echo "Please answer Yes or No";;
 esac
 
 exit 0
