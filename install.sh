@@ -75,6 +75,16 @@ wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
 echo ""
 
+# INSTALLING node.js chat room
+echo "Installing chat room..."
+# go back to our subnodes directory
+cd /home/pi/subnodes/
+
+# download subnodes app dependencies
+sudo npm install
+sudo npm install -g nodemon
+echo "Done!"
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE A MESH POINT?
 #
@@ -291,16 +301,6 @@ EOF
 		else
 			echo -en "[OK]\n"
 		fi
-
-		# INSTALLING node.js chat room
-		echo "Installing chat room..."
-		# go back to our subnodes directory
-		cd /home/pi/subnodes/
-
-		# download subnodes app dependencies
-		sudo npm install
-		sudo npm install -g nodemon
-		echo "Done!"
 
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
