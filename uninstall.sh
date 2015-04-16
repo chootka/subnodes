@@ -65,8 +65,14 @@ case $yn in
 		cd /home/pi/
 		rm -rf /home/pi/subnodes
 		echo -en "[OK]\n"
+		read -p "Do you wish to reboot now? Hitting return will continue with the default 'No' option and exit this script." yn
+		case $yn in
+			[Yy]* )
+				reboot
+			[Nn]* ) exit 0;;
+
 	;;
-	[Nn]* ) ;;
+	[Nn]* ) exit 0;;
 esac
 
 exit 0
