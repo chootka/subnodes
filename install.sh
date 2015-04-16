@@ -171,6 +171,7 @@ case $yn in
 		fi
 
 		# install required packages
+		echo ""
 		echo -en "Installing bridge-utils, hostapd and dnsmasq... 			"
 		apt-get install -y bridge-utils hostapd dnsmasq
 		echo -en "[OK]\n"
@@ -264,21 +265,12 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
-# create access point
-  iface ap0 inet static
-  address 10.0.0.1
-  netmask 255.255.255.0
-
 # create bridge
 iface br0 inet static
   bridge_ports none
   bridge_stp off
   address $BRIDGE_IP
   netmask $BRIDGE_NETMASK
-
-# create mesh
-iface mesh0 inet adhoc
-  ifconfig mesh0 mtu 1532
 
 iface default inet dhcp
 EOF
