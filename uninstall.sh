@@ -17,7 +17,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Uninstall Subnodes
 #
-read -p "Do you wish to uninstall subnodes from your Raspberry Pi? Hitting return will continue with the default 'No' option and exit this script. " yn
+read -p "Do you wish to uninstall subnodes from your Raspberry Pi? [N] " yn
 case $yn in
 	[Yy]* )
 		clear
@@ -65,7 +65,7 @@ case $yn in
 		cd /home/pi/
 		rm -rf /home/pi/subnodes
 		echo -en "[OK]\n"
-		read -p "Do you wish to reboot now? Hitting return will continue with the default 'No' option and exit this script. " yn
+		read -p "Do you wish to reboot now? [N] " yn
 		case $yn in
 			[Yy]* )
 				reboot;;

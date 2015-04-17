@@ -92,11 +92,9 @@ echo "//////////////////////////////////////////"
 echo "// Access Point and Mesh Point Settings"
 echo "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo ""
-echo "Please answer the following questions."
+echo "Please answer the following questions. Hitting return will continue with the default 'No' option"
 echo ""
-echo "Hitting return will continue with the default 'No' option"
-echo ""
-read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? " yn
+read -p "Do you wish to continue and set up your Raspberry Pi as a Mesh Point? [N] " yn
 case $yn in
 	[Yy]* )
 		clear
@@ -152,7 +150,7 @@ echo "//////////////////////////////////"
 echo "// Access Point Settings"
 echo "// ~~~~~~~~~~~~~~~~~~~~~"
 echo ""
-read -p "Do you wish to continue and set up your Raspberry Pi as an Access Point? " yn
+read -p "Do you wish to continue and set up your Raspberry Pi as an Access Point? [N] " yn
 case $yn in
 	[Yy]* )
 		clear
