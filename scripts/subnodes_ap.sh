@@ -10,15 +10,22 @@ DAEMONOPTS="sudo NODE_ENV=production nodemon subnode.js"
 
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
+WLAN=wlan0
+PHY=phy0
 
 	case "$1" in
 		start)
 			echo "Starting $NAME access point and mesh point..."
 			# associate the ap0 interface to a physical devices
-			# how can i grab the next avail phy device instead of hardcoding it?
-			ifconfig wlan0 down
-			iw wlan0 del
-			iw phy phy1 interface add ap0 type __ap
+			# check to see if wlan1 exists; use that radio, if so
+			FOUND=`grep "wlan1" /proc/net/dev`
+			if  [ -n "$FOUND" ] ; then
+			$WLAN=wlan1
+			$PHY=phy1
+			fi
+			ifconfig $WLAN down
+			iw $WLAN del
+			iw phy $PHY interface add ap0 type __ap
 
 			# add interfaces to the bridge
 			brctl addbr br0
