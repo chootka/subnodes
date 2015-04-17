@@ -2,7 +2,7 @@
 #
 # Subnodes uninstall script. Removes dnsmasq, hostapd, bridge-utils, batctl, iw. Does *not* yet remove Node.js. Deletes subnoes folder and files within.
 # Sarah Grant
-# Updated 16 April 2015
+# Updated 17 April 2015
 #
 # TO-DO
 # - Remove node.js
