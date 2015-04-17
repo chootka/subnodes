@@ -2,7 +2,7 @@
 #
 # Subnodes uninstall script. Removes dnsmasq, hostapd, bridge-utils, batctl, iw. Does *not* yet remove Node.js. Deletes subnoes folder and files within.
 # Sarah Grant
-# Updated 16 April 2015
+# Updated 17 April 2015
 #
 # TO-DO
 # - Remove node.js
@@ -17,7 +17,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Uninstall Subnodes
 #
-read -p "Do you wish to uninstall subnodes from your Raspberry Pi? Hitting return will continue with the default 'No' option and exit this script." yn
+read -p "Do you wish to uninstall subnodes from your Raspberry Pi? Hitting return will continue with the default 'No' option and exit this script. " yn
 case $yn in
 	[Yy]* )
 		clear
@@ -64,7 +64,16 @@ case $yn in
 		echo "Deleting subnodes folder			"
 		cd /home/pi/
 		rm -rf /home/pi/subnodes
-		echo -en "[OK]\n";
+		echo -en "[OK]\n"
+		read -p "Do you wish to reboot now? Hitting return will continue with the default 'No' option and exit this script. " yn
+		case $yn in
+			[Yy]* )
+				reboot;;
+			[Nn]* ) exit 0;;
+		esac
+
+	;;
+	[Nn]* ) exit 0;;
 esac
 
 exit 0
