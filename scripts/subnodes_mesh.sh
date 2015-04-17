@@ -6,13 +6,21 @@ NAME=subnodes_mesh
 DESC="Brings our BATMAN-ADV mesh point up."
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
+WLAN=wlan0
+PHY=phy0
 
 	case "$1" in
 		start)
 			echo "Starting $NAME access point and mesh point..."
 
 			# associate the mesh0 interface to a physical device
-			# how can i grab the next avail phy device instead of hardcoding it?
+			FOUND=`grep "wlan0" /proc/net/dev`
+			if  [ -n "$FOUND" ] ; then
+			$WLAN=wlan0
+			$PHY=phy0
+			else
+			exit 1
+			fi
 			ifconfig wlan0 down
 			iw wlan0 del
 			iw phy phy0 interface add mesh0 type adhoc
