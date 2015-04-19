@@ -21,9 +21,9 @@ PHY=phy0
 			else
 			exit 1
 			fi
-			ifconfig wlan0 down
-			iw wlan0 del
-			iw phy phy0 interface add mesh0 type adhoc
+			ifconfig $WLAN down
+			iw $WLAN del
+			iw phy $PHY interface add mesh0 type adhoc
 			ifconfig mesh0 mtu 1532
 			iwconfig mesh0 mode ad-hoc essid SSID ap 02:12:34:56:78:90 channel 3
 			ifconfig mesh0 down
