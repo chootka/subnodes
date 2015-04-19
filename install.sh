@@ -166,8 +166,8 @@ EOF
 		chmod 755 /etc/init.d/subnodes_mesh
 		update-rc.d subnodes_mesh defaults
 		echo ""
-		echo "The services will now be restarted to activate the changes"
-		/etc/init.d/subnodes_mesh restart
+		echo "The services will now be started to activate the changes"
+		/etc/init.d/subnodes_mesh start
 	;;
 	[Nn]* ) ;;
 esac
@@ -339,8 +339,8 @@ EOF
 		chmod 755 /etc/init.d/subnodes_ap
 		update-rc.d subnodes_ap defaults
 
-		echo "The access point services will now be restarted to activate the changes"
-		/etc/init.d/subnodes_ap restart
+		echo "The access point services will now be started to activate the changes"
+		/etc/init.d/subnodes_ap start
 	;;
 
 	[Nn]* ) ;;

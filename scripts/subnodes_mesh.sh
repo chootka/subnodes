@@ -6,8 +6,8 @@ NAME=subnodes_mesh
 DESC="Brings our BATMAN-ADV mesh point up."
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-WLAN=wlan0
-PHY=phy0
+WLAN="wlan0"
+PHY="phy0"
 
 	case "$1" in
 		start)
@@ -16,8 +16,8 @@ PHY=phy0
 			# associate the mesh0 interface to a physical device
 			FOUND=`grep "wlan0" /proc/net/dev`
 			if  [ -n "$FOUND" ] ; then
-			$WLAN=wlan0
-			$PHY=phy0
+				$WLAN="wlan0"
+				$PHY="phy0"
 			else
 			exit 1
 			fi
