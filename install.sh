@@ -122,10 +122,39 @@ case $yn in
 		read -p "Mesh Point SSID [$MESH_SSID]: " -e t1
 		if [ -n "$t1" ]; then MESH_SSID="$t1";fi
 
+		# backup the existing interfaces file
+		echo -en "Creating backup of network interfaces configuration file... 			"
+		cp /etc/network/interfaces /etc/network/interfaces.orig.bak
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+			echo -en "[FAIL]\n"
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
+
+		# CONFIGURE /etc/network/interfaces
+		echo -en "Creating new network interfaces configuration file with your settings... 	"
+		cat <<EOF > /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+iface default inet dhcp
+EOF
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+    			echo -en "[FAIL]\n"
+			echo ""
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
+
 		# pass the selected mesh ssid into mesh startup script
 		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
-
-		#echo scripts/subnodes_mesh.sh
 
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE MESH POINT START UP SCRIPT
