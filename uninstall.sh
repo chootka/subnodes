@@ -46,6 +46,7 @@ case $yn in
 		echo -en "Purging iw, batctl, bridge-utils, hostapd and dnsmasq... 			"
 		# how do i uninstall with apt-get
 		apt-get purge -y bridge-utils hostapd dnsmasq batctl iw
+		apt-get autoremove
 		echo -en "[OK]\n"
 
 		# restore the previous interfaces file
