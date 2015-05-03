@@ -16,8 +16,8 @@ PHY="phy0"
 			# associate the mesh0 interface to a physical device
 			FOUND=`grep "wlan0" /proc/net/dev`
 			if  [ -n "$FOUND" ] ; then
-				$WLAN="wlan0"
-				$PHY="phy0"
+				WLAN="wlan0"
+				PHY="phy0"
 			else
 			exit 1
 			fi

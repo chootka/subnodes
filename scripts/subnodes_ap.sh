@@ -20,13 +20,13 @@ PHY="phy0"
 			# check to see if wlan1 exists; use that radio, if so.
 			FOUND=`grep "wlan1" /proc/net/dev`
 			if  [ -n "$FOUND" ] ; then
-				$WLAN="wlan1"
-				$PHY="phy1"
+				WLAN="wlan1"
+				PHY="phy1"
 			else
 				FOUND=`grep "wlan0" /proc/net/dev`
 				if  [ -n "$FOUND" ] ; then
-				$WLAN="wlan0"
-				$PHY="phy0"
+				WLAN="wlan0"
+				PHY="phy0"
 				else
 				exit 1
 				fi
