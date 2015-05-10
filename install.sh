@@ -3,7 +3,7 @@
 # Raspberry Pi network configuration / AP, MESH install script
 # Sarah Grant
 # took guidance from a script by Paul Miller : https://dl.dropboxusercontent.com/u/1663660/scripts/install-rtl8188cus.sh
-# Updated 17 April 2015
+# Updated 10 May 2015
 #
 # TO-DO
 # - allow a selectio of radio drivers
@@ -341,16 +341,16 @@ EOF
 
 		#echo "The access point services will now be started to activate the changes"
 		#/etc/init.d/subnodes_ap start
-
-		read -p "Do you wish to reboot now? [N] " yn
-		case $yn in
-			[Yy]* )
-				reboot;;
-			[Nn]* ) exit 0;;
-		esac
 	;;
 
 	[Nn]* ) ;;
 esac
 
-exit 0
+#exit 0
+
+read -p "Do you wish to reboot now? [N] " yn
+	case $yn in
+		[Yy]* )
+			reboot;;
+		Nn]* ) exit 0;;
+	esac
