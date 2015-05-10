@@ -340,16 +340,16 @@ EOF
 
 		#echo "The access point services will now be restarted to activate the changes"
 		#/etc/init.d/subnodes_ap restart
-
-		read -p "Do you wish to reboot now? [N] " yn
-		case $yn in
-			[Yy]* )
-				reboot;;
-			[Nn]* ) exit 0;;
-		esac
 	;;
 
 	[Nn]* ) ;;
 esac
 
-exit 0
+#exit 0
+
+read -p "Do you wish to reboot now? [N] " yn
+	case $yn in
+		[Yy]* )
+			reboot;;
+		[Nn]* ) exit 0;;
+	esac
