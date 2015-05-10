@@ -15,21 +15,13 @@ PHY="phy0"
 
 	case "$1" in
 		start)
-			echo "Starting $NAME access point and mesh point..."
+			echo "Starting $NAME access point..."
 			# associate the ap0 interface to a physical devices
 			# check to see if wlan1 exists; use that radio, if so.
-			FOUND=`grep "wlan1" /proc/net/dev`
+			FOUND=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
 			if  [ -n "$FOUND" ] ; then
 				WLAN="wlan1"
 				PHY="phy1"
-			else
-				FOUND=`grep "wlan0" /proc/net/dev`
-				if  [ -n "$FOUND" ] ; then
-				WLAN="wlan0"
-				PHY="phy0"
-				else
-				exit 1
-				fi
 			fi
 			ifconfig $WLAN down
 			iw $WLAN del
