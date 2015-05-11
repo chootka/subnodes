@@ -52,7 +52,7 @@ case $yn in
 		# restore the previous interfaces file
 		echo -en "Restoring previous network interfaces configuration file... 			"
 		rm /etc/network/interfaces
-		mv /etc/network/interfaces.bak /etc/network/interfaces
+		mv /etc/network/interfaces.orig.bak /etc/network/interfaces
 		echo -en "[OK]\n"
 
 		# Remove startup scripts and delete
