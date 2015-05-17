@@ -6,7 +6,7 @@
 # Updated 10 May 2015
 #
 # TO-DO
-# - allow a selectio of radio drivers
+# - allow a selection of radio drivers
 # - fix addressing to avoid collisions below (peek at pirate box)
 # - remove dependency on batctl for bat0 interface. currently, bat0 interface is needed for the bridge, should the user decide to set up an AP.
 #
@@ -28,10 +28,10 @@ AP_SSID=subnodes
 AP_CHAN=1
 
 # DNSMASQ STUFF
-DHCP_START=192.168.3.2
+DHCP_START=192.168.3.101
 DHCP_END=192.168.3.254
 DHCP_NETMASK=255.255.255.0
-DHCP_LEASE=12h
+DHCP_LEASE=1h
 
 # MESH POINT
 MESH_SSID=meshnode
@@ -91,7 +91,7 @@ echo "Done!"
 clear
 echo "//////////////////////////////////////////"
 echo "// Access Point and Mesh Point Settings"
-echo "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo ""
 echo "Please answer the following questions. Hitting return will continue with the default 'No' option"
 echo ""
