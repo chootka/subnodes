@@ -3,10 +3,10 @@
 # Raspberry Pi network configuration / AP, MESH install script
 # Sarah Grant
 # took guidance from a script by Paul Miller : https://dl.dropboxusercontent.com/u/1663660/scripts/install-rtl8188cus.sh
-# Updated 9 May 2015
+# Updated 20 May 2015
 #
 # TO-DO
-# - allow a selectio of radio drivers
+# - allow a selection of radio drivers
 # - fix addressing to avoid collisions below (peek at pirate box)
 # - remove dependency on batctl for bat0 interface. currently, bat0 interface is needed for the bridge, should the user decide to set up an AP.
 #
@@ -28,10 +28,10 @@ AP_SSID=subnodes
 AP_CHAN=1
 
 # DNSMASQ STUFF
-DHCP_START=192.168.3.2
+DHCP_START=192.168.3.101
 DHCP_END=192.168.3.254
 DHCP_NETMASK=255.255.255.0
-DHCP_LEASE=12h
+DHCP_LEASE=1h
 
 # MESH POINT
 MESH_SSID=meshnode
@@ -48,7 +48,7 @@ echo "// Welcome to Subnodes!"
 echo "// ~~~~~~~~~~~~~~~~~~~~~"
 echo ""
 
-read -p "This installation script will install the node.js dashboard and will give you the options of configuring either a wireless access point, a BATMAN-ADV mesh point, or both. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding. Press any key to continue..."
+read -p "This installation script will install a node.js dashboard and will give you the options of configuring either a wireless access point, a BATMAN-ADV mesh point, or both. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding. Press any key to continue..."
 echo ""
 #
 # CHECK USB WIFI HARDWARE IS FOUND
@@ -66,7 +66,7 @@ fi
 #
 # update the packages
 # BTW batctl is installed here regardless so the bat0 interface is avaiable for the bridge, 
-# should the user decide to set up an AP.
+# should the user decide to set up an AP. TO-DO: Remove this dependency
 echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw batctl
 echo ""
@@ -74,14 +74,15 @@ echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
 echo ""
+
 # INSTALLING node.js dashboard
-echo "Installing the dashboard..."
+echo "Installing dashboard..."
 # go back to our subnodes directory
 cd /home/pi/subnodes/
+
 # download subnodes app dependencies
 sudo npm install
 sudo npm install -g nodemon
-echo ""
 echo "Done!"
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -90,7 +91,7 @@ echo "Done!"
 clear
 echo "//////////////////////////////////////////"
 echo "// Access Point and Mesh Point Settings"
-echo "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo ""
 echo "Please answer the following questions. Hitting return will continue with the default 'No' option"
 echo ""
@@ -165,8 +166,8 @@ EOF
 		chmod 755 /etc/init.d/subnodes_mesh
 		update-rc.d subnodes_mesh defaults
 		#echo ""
-		#echo "The services will now be restarted to activate the changes"
-		#/etc/init.d/subnodes_mesh restart
+		#echo "The services will now be started to activate the changes"
+		#/etc/init.d/subnodes_mesh start
 	;;
 	[Nn]* ) ;;
 esac
@@ -338,8 +339,8 @@ EOF
 		chmod 755 /etc/init.d/subnodes_ap
 		update-rc.d subnodes_ap defaults
 
-		#echo "The access point services will now be restarted to activate the changes"
-		#/etc/init.d/subnodes_ap restart
+		#echo "The access point services will now be started to activate the changes"
+		#/etc/init.d/subnodes_ap start
 	;;
 
 	[Nn]* ) ;;
@@ -351,5 +352,5 @@ read -p "Do you wish to reboot now? [N] " yn
 	case $yn in
 		[Yy]* )
 			reboot;;
-		[Nn]* ) exit 0;;
+		Nn]* ) exit 0;;
 	esac
