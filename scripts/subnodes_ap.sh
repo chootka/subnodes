@@ -36,7 +36,7 @@ PHY="phy0"
 			ifconfig ap0 10.0.0.1 netmask 255.255.255.0 up
 
 			# bring up the brdige and assign it a static IP
-			ifconfig br0 192.168.3.1 netmask 255.255.255.0 up
+			#ifconfig br0 192.168.3.1 netmask 255.255.255.0 up
 
 			# start the hostapd and dnsmasq services
 			service hostapd start
