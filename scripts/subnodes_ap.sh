@@ -1,16 +1,14 @@
 #!/bin/sh
 # /etc/init.d/subnodes_ap
-# starts up ap0 interface
-# starts up hostapd => broadcasting wireless network subnodes
+# starts up ap0 interface and hostapd for broadcasting a wireless network
 
 NAME=subnodes_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
 DAEMON_PATH="/home/pi/subnodes"
 DAEMONOPTS="sudo NODE_ENV=production nodemon subnode.js"
-
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-WLAN="wlan0"
+#WLAN="wlan0"
 PHY="phy0"
 
 	case "$1" in
@@ -18,13 +16,14 @@ PHY="phy0"
 			echo "Starting $NAME access point..."
 			# associate the ap0 interface to a physical devices
 			# check to see if wlan1 exists; use that radio, if so.
-			FOUND=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
+			#FOUND=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
+			FOUND=`iw dev | grep phy#1`
 			if  [ -n "$FOUND" ] ; then
-				WLAN="wlan1"
+				#WLAN="wlan1"
 				PHY="phy1"
 			fi
-			ifconfig $WLAN down
-			iw $WLAN del
+			#ifconfig $WLAN down
+			#iw $WLAN del
 			iw phy $PHY interface add ap0 type __ap
 
 			# add interfaces to the bridge
@@ -39,8 +38,8 @@ PHY="phy0"
 			#ifconfig br0 192.168.3.1 netmask 255.255.255.0 up
 
 			# start the hostapd and dnsmasq services
-			service hostapd start
-			service dnsmasq start
+			service hostapd restart
+			service dnsmasq restart
 
 			# start the node.js chat application
 			cd $DAEMON_PATH
