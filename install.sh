@@ -65,8 +65,6 @@ fi
 # SOFTWARE INSTALL
 #
 # update the packages
-# BTW batctl is installed here regardless so the bat0 interface is avaiable for the bridge, 
-# should the user decide to set up an AP. TO-DO: Remove this dependency
 echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw batctl
 echo ""
