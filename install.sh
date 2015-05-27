@@ -70,6 +70,11 @@ fi
 echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw batctl
 echo ""
+echo "Enabling the batman-adv kernel module..."
+# add the batman-adv module to be started on boot
+sed -i '$a batman-adv' /etc/modules
+modprobe batman-adv;
+echo ""
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
@@ -101,11 +106,6 @@ case $yn in
 		clear
 		echo "Configuring Raspberry Pi as a BATMAN-ADV Mesh Point..."
 		echo ""
-		echo "Enabling the batman-adv kernel..."
-		# add the batman-adv module to be started on boot
-		sed -i '$a batman-adv' /etc/modules
-		modprobe batman-adv;
-		echo ""
 		# check that iw list does not fail with 'nl80211 not found'
 		echo -en "checking that nl80211 USB wifi radio is plugged in...				"
 		iw list > /dev/null 2>&1 | grep 'nl80211 not found'
@@ -124,35 +124,35 @@ case $yn in
 		if [ -n "$t1" ]; then MESH_SSID="$t1";fi
 
 		# backup the existing interfaces file
-		echo -en "Creating backup of network interfaces configuration file... 			"
-		cp /etc/network/interfaces /etc/network/interfaces.orig.bak
-		rc=$?
-		if [[ $rc != 0 ]] ; then
-			echo -en "[FAIL]\n"
-			exit $rc
-		else
-			echo -en "[OK]\n"
-		fi
+		# echo -en "Creating backup of network interfaces configuration file... 			"
+		# cp /etc/network/interfaces /etc/network/interfaces.bak
+		# rc=$?
+		# if [[ $rc != 0 ]] ; then
+		# 	echo -en "[FAIL]\n"
+		# 	exit $rc
+		# else
+		# 	echo -en "[OK]\n"
+		# fi
 
 		# CONFIGURE /etc/network/interfaces
-		echo -en "Creating new network interfaces configuration file with your settings... 	"
-		cat <<EOF > /etc/network/interfaces
-auto lo
-iface lo inet loopback
+# 		echo -en "Creating new network interfaces configuration file with your settings... 	"
+# 		cat <<EOF > /etc/network/interfaces
+# auto lo
+# iface lo inet loopback
 
-auto eth0
-iface eth0 inet dhcp
+# auto eth0
+# iface eth0 inet dhcp
 
-iface default inet dhcp
-EOF
-		rc=$?
-		if [[ $rc != 0 ]] ; then
-    			echo -en "[FAIL]\n"
-			echo ""
-			exit $rc
-		else
-			echo -en "[OK]\n"
-		fi
+# iface default inet dhcp
+# EOF
+# 		rc=$?
+# 		if [[ $rc != 0 ]] ; then
+#     			echo -en "[FAIL]\n"
+# 			echo ""
+# 			exit $rc
+# 		else
+# 			echo -en "[OK]\n"
+# 		fi
 
 		# pass the selected mesh ssid into mesh startup script
 		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
@@ -230,6 +230,38 @@ case $yn in
 		read -p "DHCP length of lease [$DHCP_LEASE]: " -e t1
 		if [ -n "$t1" ]; then DHCP_LEASE="$t1";fi
 
+		
+		# CONFIGURE /etc/network/interfaces
+		echo -en "Creating new network interfaces configuration file with your settings... 	"
+		cat <<EOF > /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+iface ap0 inet static
+	address 10.0.0.1
+	netmask 255.255.255.0
+
+# create bridge
+iface br0 inet static
+  bridge_ports bat0 ap0
+  bridge_stp off
+  address $BRIDGE_IP
+  netmask $BRIDGE_NETMASK
+
+iface default inet dhcp
+EOF
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+    			echo -en "[FAIL]\n"
+			echo ""
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
+
 		# create hostapd init file
 		echo -en "Creating default hostapd file...			"
 		cat <<EOF > /etc/default/hostapd
@@ -277,37 +309,6 @@ EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
 			echo -en "[FAIL]\n"
-			exit $rc
-		else
-			echo -en "[OK]\n"
-		fi
-
-		# CONFIGURE /etc/network/interfaces
-		echo -en "Creating new network interfaces configuration file with your settings... 	"
-		cat <<EOF > /etc/network/interfaces
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet dhcp
-
-iface ap0 inet static
-	address 10.0.0.1
-	netmask 255.255.255.0
-
-# create bridge
-iface br0 inet static
-  bridge_ports bat0 ap0
-  bridge_stp off
-  address $BRIDGE_IP
-  netmask $BRIDGE_NETMASK
-
-iface default inet dhcp
-EOF
-		rc=$?
-		if [[ $rc != 0 ]] ; then
-    			echo -en "[FAIL]\n"
-			echo ""
 			exit $rc
 		else
 			echo -en "[OK]\n"
