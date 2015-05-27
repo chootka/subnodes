@@ -291,9 +291,13 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
+iface ap0 inet static
+	address 10.0.0.1
+	netmask 255.255.255.0
+
 # create bridge
 iface br0 inet static
-  bridge_ports none
+  bridge_ports bat0 ap0
   bridge_stp off
   address $BRIDGE_IP
   netmask $BRIDGE_NETMASK
