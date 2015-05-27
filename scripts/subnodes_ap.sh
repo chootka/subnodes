@@ -27,12 +27,12 @@ PHY="phy0"
 			iw phy $PHY interface add ap0 type __ap
 
 			# add interfaces to the bridge
-			brctl addbr br0
-			brctl addif br0 bat0
-			brctl addif br0 ap0
+			#brctl addbr br0
+			#brctl addif br0 bat0
+			#brctl addif br0 ap0
 
 			# bring up the AP interface and give ap0 a static IP
-			ifconfig ap0 10.0.0.1 netmask 255.255.255.0 up
+			#ifconfig ap0 10.0.0.1 netmask 255.255.255.0 up
 
 			# bring up the brdige and assign it a static IP
 			#ifconfig br0 192.168.3.1 netmask 255.255.255.0 up
@@ -66,7 +66,7 @@ PHY="phy0"
 			fi
 		;;
 		stop)
-			printf "%-50s" "Shutting down $NAME…"
+			printf "%-50s" "Shutting down $NAME..."
 				PID=`cat $PIDFILE`
 				cd $DAEMON_PATH
 			if [ -f $PIDFILE ]; then
