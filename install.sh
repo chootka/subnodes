@@ -260,6 +260,12 @@ EOF
 			echo -en "[OK]\n"
 		fi
 
+		# delete wlan0 and wlan1
+		ifconfig wlan0 down
+		ifconfig wlan1 down
+		iw wlan0 del
+		iw wlan1 del
+
 		# create hostapd init file
 		echo -en "Creating default hostapd file...			"
 		cat <<EOF > /etc/default/hostapd

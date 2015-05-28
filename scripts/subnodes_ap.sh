@@ -8,7 +8,6 @@ DAEMON_PATH="/home/pi/subnodes"
 DAEMONOPTS="sudo NODE_ENV=production nodemon subnode.js"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-#WLAN="wlan0"
 PHY="phy0"
 
 	case "$1" in
@@ -16,14 +15,12 @@ PHY="phy0"
 			echo "Starting $NAME access point..."
 			# associate the ap0 interface to a physical devices
 			# check to see if wlan1 exists; use that radio, if so.
-			#FOUND=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
 			FOUND=`iw dev | grep phy#1`
 			if  [ -n "$FOUND" ] ; then
-				#WLAN="wlan1"
 				PHY="phy1"
 			fi
-			#ifconfig $WLAN down
-			#iw $WLAN del
+
+			# assign ap0 to the hardware device found
 			iw phy $PHY interface add ap0 type __ap
 
 			# start the hostapd and dnsmasq services
