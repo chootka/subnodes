@@ -12,6 +12,19 @@ PHY="phy0"
 		start)
 			echo "Starting $NAME mesh point..."
 
+			# delete wlan0 and wlan1, if they exist
+			WLAN0=`iw dev | awk '/Interface/ { print $2}' | grep wlan0`
+			if [ -n "$WLAN0" ] ; then
+				ifconfig $WLAN0 down
+				iw $WLAN0 del
+			fi
+
+			WLAN1=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
+			if [ -n "$WLAN1" ] ; then
+				ifconfig $WLAN1 down
+				iw $WLAN1 del
+			fi
+
 			# associate the mesh0 interface to a physical device
 			iw phy $PHY interface add mesh0 type adhoc
 			ifconfig mesh0 mtu 1532
