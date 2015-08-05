@@ -1,0 +1,102 @@
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+body {
+	background-color:#000;
+}
+
+h2 {
+	color:#fefefe;
+	margin-left:40px;
+}
+
+h3 {
+	color:#fefefe;
+	margin-left: 40px;
+	padding-top: 30px;
+}
+
+p {
+	color:#eee;
+	font-size:16px;
+	line-height: 26px;
+	width:70%;
+	margin:40px;
+}
+
+ul {
+	list-style: none;
+	list-style-type: none;
+}
+
+li {
+	display: inline-block;
+	font-size: 24px;
+	list-style: none;
+	list-style-type: none;
+	padding: 0 40px 0 0;
+}
+
+li a {
+	color: #fefefe;
+}
+
+li.active {
+	color: #2795b6;
+}
+
+.b {
+	font-weight: bold;
+}
+
+.active {
+	color: #2795b6;
+}
+
+.email {
+	color:#bdffce;
+}
+
+.container {
+	padding: 0 20px 70px;
+}
+
+
+/* -----------------------------------------
+   INDEX
+----------------------------------------- */
+.about {
+	background-color: #222;
+	margin-bottom: 180px;
+	padding-bottom: 20px;
+}
+
+.about p {
+	margin: 20px 40px;
+}
+
+
+/* -----------------------------------------
+   TUTORIAL
+----------------------------------------- */
+.container p {
+	margin-left: 20px;
+}
+.step {
+	width: 600px;
+	margin-left: 20px;
+}
+
+.heading {
+	color: #fff;
+	font-size: 24px;
+	font-weight: bold;
+	margin: 20px 0;
+}
+
+.subheading {
+	color: #fff;
+	font-size: 16px;
+	line-height: 24px;
+	margin: 20px 0;
+}
