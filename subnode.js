@@ -12,8 +12,7 @@ var express   = require('express'),
 	app         = express(),
   http        = require('http'),
   server      = http.createServer(app),
-  io          = require('socket.io').listen(server),
-	newrelic = require('newrelic');
+  io          = require('socket.io').listen(server);
 
 app.root    	= __dirname;
 
