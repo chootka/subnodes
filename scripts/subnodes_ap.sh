@@ -16,6 +16,10 @@ PHY="phy0"
 	case "$1" in
 		start)
 			echo "Starting $NAME access point..."
+			# bring down hostapd + dnsmasq to ensure wlan0 is brought up first
+			service hostapd stop
+			service dnsmasq stop
+			
 			# associate the ap0 interface to a physical devices
 			# check to see if wlan1 exists; use that radio, if so.
 			FOUND=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
