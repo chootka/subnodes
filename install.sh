@@ -74,9 +74,8 @@ sed -i '$a batman-adv' /etc/modules
 modprobe batman-adv;
 echo ""
 echo "Installing Node.js..."
-wget https://nodejs.org/download/release/v0.11.12/node-v0.11.12-linux-arm-pi.tar.gz
-cd /usr/local
-sudo tar xzvf ~/node-v0.11.12-linux-arm-pi.tar.gz --strip=1
+wget http://node-arm.herokuapp.com/node_archive_armhf.deb
+sudo dpkg -i node_archive_armhf.deb
 echo ""
 
 # INSTALLING node.js chat room
