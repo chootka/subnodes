@@ -42,8 +42,8 @@ PHY="phy0"
 			iw phy $PHY interface add ap0 type __ap
 
 			# start the hostapd and dnsmasq services
-			service hostapd restart
-			service dnsmasq restart
+			service hostapd start
+			service dnsmasq start
 
 			# start the node.js chat application
 			cd $DAEMON_PATH
