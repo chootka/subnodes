@@ -11,3 +11,4 @@ scripts/node_install.sh
 scripts/__notused
 _untracked
 _untracked/*
+new-app-config.json
