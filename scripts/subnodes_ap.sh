@@ -16,10 +16,6 @@ PHY="phy0"
 	case "$1" in
 		start)
 			echo "Starting $NAME access point..."
-			# bring down hostapd + dnsmasq to ensure wlan0 is brought up first
-			service hostapd stop
-			service dnsmasq stop
-			
 			# associate the ap0 interface to a physical devices
 			# check to see if wlan1 exists; use that radio, if so.
 			FOUND=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
@@ -43,8 +39,8 @@ PHY="phy0"
 			ifconfig br0 192.168.3.1 netmask 255.255.255.0 up
 
 			# start the hostapd and dnsmasq services
-			service hostapd start
-			service dnsmasq start
+			service hostapd restart
+			service dnsmasq restart
 
 			# start the node.js chat application
 			cd $DAEMON_PATH
