@@ -1,0 +1,12 @@
+{
+	"preapproved": [
+		{
+			"title": "subnodes-chat",
+			"repo": "https://github.com/chootka/subnodes-chat"
+		},
+		{
+			"title": "subnodes-fileshare",
+			"repo": "https://github.com/chootka/subnodes-fileshare"
+		}
+	]
+}

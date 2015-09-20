@@ -1,0 +1,17 @@
+extends framework
+
+block content
+	div.text-center.reboot-button
+		br
+		h4 When you're ready, reboot!
+		br
+		form(name='rebuild', action='/rebuild', method='post')
+			button(onclick="rebooting()").btn.btn-success Start Reboot
+	div#rebootingScreen.text-center
+		br
+		h4 Your Reboot In Progress!
+		p Look out for your new wifi network:
+		h2 "#{wifi}"
+
+block scripts
+	script(src='/js/finish.js')
