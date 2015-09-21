@@ -25,14 +25,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true})); //True makes the body object forwarded an object rather than array (if set to false)
 // URL Renaming
-app.use(function (req, res, next){
-	var hostname = req.header('host').split(':')[0];
-	if (hostname != 'www.subnodes.com') {
-		res.redirect('http://www.subnodes.com');
-		return;
-	}
-	next();
-});
+// app.use(function (req, res, next){
+// 	var hostname = req.header('host').split(':')[0];
+// 	if (hostname != 'www.subnodes.com') {
+// 		res.redirect('http://www.subnodes.com');
+// 		return;
+// 	}
+// 	next();
+// });
 
 
 
