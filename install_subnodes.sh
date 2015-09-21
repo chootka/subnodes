@@ -221,6 +221,7 @@ clear
 echo -en "Copying access point startup script for boot"
 update-rc.d hostapd enable
 update-rc.d dnsmasq enable
+cd /home/pi/subnodes
 cp scripts/subnodes_config_ap.sh /etc/init.d/subnodes_config_ap
 chmod 755 /etc/init.d/subnodes_config_ap
 update-rc.d subnodes_config_ap defaults
