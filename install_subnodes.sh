@@ -19,7 +19,7 @@ RADIO_DRIVER=nl80211
 
 # ACCESS POINT
 AP_COUNTRY=US
-AP_SSID="subnodes$((RANDOM%200+100))"
+AP_SSID="subnodes$((RANDOM%10000+1))"
 AP_CHAN=1
 
 # DNSMASQ STUFF
@@ -217,30 +217,27 @@ EOF
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 #
+# Change Directory
+cd /home/pi/subnodes
+
 clear
+# AP Startup Script
 echo -en "Copying access point startup script for boot"
 update-rc.d hostapd enable
 update-rc.d dnsmasq enable
-cd /home/pi/subnodes
 cp scripts/subnodes_config_ap.sh /etc/init.d/subnodes_config_ap
 chmod 755 /etc/init.d/subnodes_config_ap
 update-rc.d subnodes_config_ap defaults
 
+# Subnode Dashboard Startup Script
+cp scripts/setup_dashboard.sh /etc/init.d/setup_dashboard
+chmod 755 /etc/init.d/setup_dashboard
+update-rc.d setup_dashboard defaults
 
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# COPY OVER THE START UP SCRIPTS for dashboard and app
-#
-# clear
-# # Dashboard Startup Script
-# cp scripts/setup_dashboard.sh /etc/init.d/setup_dashboard
-# chmod 755 /etc/init.d/setup_dashboard
-# update-rc.d setup_dashboard defaults
-
-# # App Startup Script
-# cp scripts/setup_app.sh /etc/init.d/setup_app
-# chmod 755 /etc/init.d/setup_app
-# update-rc.d setup_app defaults
+# Node App Startup Script
+cp scripts/setup_app.sh /etc/init.d/setup_app
+chmod 755 /etc/init.d/setup_app
+update-rc.d setup_app defaults
 
 
 

@@ -4,8 +4,6 @@
 
 NAME=subnodes_config_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
-DAEMON_PATH="/home/pi/subnodes/subnodes-dashboard"
-DAEMONOPTS="sudo NODE_ENV=production nodemon index.js"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 PHY="phy0"
@@ -46,16 +44,6 @@ PHY="phy0"
 			service hostapd restart
 			service dnsmasq restart
 
-			# start the node.js subnodes dashboard application
-			cd $DAEMON_PATH
-			PID=`$DAEMONOPTS > /dev/null 2>&1 & echo $!`
-			#echo "Saving PID" $PID " to " $PIDFILE
-				if [ -z $PID ]; then
-					printf "%s\n" "Fail"
-				else
-					echo $PID > $PIDFILE
-					printf "%s\n" "Ok"
-				fi
 			;;
 		status)
 			printf "%-50s" "Checking $NAME..."
@@ -73,7 +61,6 @@ PHY="phy0"
 		stop)
 			printf "%-50s" "Shutting down $NAME..."
 				PID=`cat $PIDFILE`
-				cd $DAEMON_PATH
 			if [ -f $PIDFILE ]; then
 				kill -HUP $PID
 				printf "%s\n" "Ok"
