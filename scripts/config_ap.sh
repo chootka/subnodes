@@ -46,7 +46,7 @@ PHY="phy0"
 			service hostapd restart
 			service dnsmasq restart
 
-			# start the node.js chat application
+			# start the node.js subnodes dashboard application
 			cd $DAEMON_PATH
 			PID=`$DAEMONOPTS > /dev/null 2>&1 & echo $!`
 			#echo "Saving PID" $PID " to " $PIDFILE
