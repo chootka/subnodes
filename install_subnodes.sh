@@ -40,7 +40,7 @@ echo "// Welcome to Subnodes!"
 echo "// ~~~~~~~~~~~~~~~~~~~~~"
 echo ""
 
-read -p "This installation script will install a node.js chatroom and will give you the options of configuring either a wireless access point, a BATMAN-ADV mesh point, or both. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding. Press any key to continue..."
+echo "This installation script will install a node.js chatroom and will give you the options of configuring either a wireless access point, a BATMAN-ADV mesh point, or both. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding."
 echo ""
 #
 # CHECK USB WIFI HARDWARE IS FOUND
@@ -85,57 +85,20 @@ echo ""
 # check that iw list does not fail with 'nl80211 not found'
 echo -en "checking that nl80211 USB wifi radio is plugged in...				"
 iw list > /dev/null 2>&1 | grep 'nl80211 not found'
-	rc=$?
-	if [[ $rc = 0 ]] ; then
-		echo -en "[FAIL]\n"
-		echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
-		exit $rc
-	else
-		echo -en "[OK]\n"
-	fi
+rc=$?
+if [[ $rc = 0 ]] ; then
+	echo -en "[FAIL]\n"
+	echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
+	exit $rc
+else
+	echo -en "[OK]\n"
+fi
 
 # install required packages
 echo ""
 echo -en "Installing bridge-utils, hostapd and dnsmasq... 			"
 apt-get install -y bridge-utils hostapd dnsmasq
 echo -en "[OK]\n"
-
-# CONFIGURE /etc/network/interfaces
-echo -en "Creating new network interfaces configuration file with your settings... 	"
-cat <<EOF > /etc/network/interfaces
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet dhcp
-
-iface ap0 inet static
-	address 10.0.0.1
-	netmask 255.255.255.0
-
-# create bridge
-iface br0 inet static
-  bridge_ports bat0 ap0
-  bridge_stp off
-  address $BRIDGE_IP
-  netmask $BRIDGE_NETMASK
-
-iface default inet dhcp
-EOF
-	rc=$?
-	if [[ $rc != 0 ]] ; then
-			echo -en "[FAIL]\n"
-		echo ""
-		exit $rc
-	else
-		echo -en "[OK]\n"
-	fi
-
-# delete wlan0 and wlan1
-ifconfig wlan0 down
-ifconfig wlan1 down
-iw wlan0 del
-iw wlan1 del
 
 # create hostapd init file
 echo -en "Creating default hostapd file...			"
@@ -189,6 +152,37 @@ cp /etc/network/interfaces /etc/network/interfaces.bak
 		echo -en "[OK]\n"
 	fi
 
+# CONFIGURE /etc/network/interfaces
+echo -en "Creating new network interfaces configuration file with your settings... 	"
+cat <<EOF > /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+iface ap0 inet static
+	address 10.0.0.1
+	netmask 255.255.255.0
+
+# create bridge
+iface br0 inet static
+  bridge_ports bat0 ap0
+  bridge_stp off
+  address $BRIDGE_IP
+  netmask $BRIDGE_NETMASK
+
+iface default inet dhcp
+EOF
+	rc=$?
+	if [[ $rc != 0 ]] ; then
+			echo -en "[FAIL]\n"
+		echo ""
+		exit $rc
+	else
+		echo -en "[OK]\n"
+	fi
+
 # CONFIGURE dnsmasq
 echo -en "Creating dnsmasq configuration file... 			"
 cat <<EOF > /etc/dnsmasq.conf
@@ -225,16 +219,16 @@ update-rc.d config_ap defaults
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # COPY OVER THE START UP SCRIPTS for dashboard and app
 #
-clear
-# Dashboard Startup Script
-cp scripts/setup_dashboard.sh /etc/init.d/setup_dashboard
-chmod 755 /etc/init.d/setup_dashboard
-update-rc.d setup_dashboard defaults
+# clear
+# # Dashboard Startup Script
+# cp scripts/setup_dashboard.sh /etc/init.d/setup_dashboard
+# chmod 755 /etc/init.d/setup_dashboard
+# update-rc.d setup_dashboard defaults
 
-# App Startup Script
-cp scripts/setup_app.sh /etc/init.d/setup_app
-chmod 755 /etc/init.d/setup_app
-update-rc.d setup_app defaults
+# # App Startup Script
+# cp scripts/setup_app.sh /etc/init.d/setup_app
+# chmod 755 /etc/init.d/setup_app
+# update-rc.d setup_app defaults
 
 
 

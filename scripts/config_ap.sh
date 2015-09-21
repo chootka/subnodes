@@ -4,8 +4,8 @@
 
 NAME=config_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
-DAEMON_PATH="/home/pi/subnodes"
-DAEMONOPTS="sudo NODE_ENV=production nodemon ./subnodes-dashboard/index.js"
+DAEMON_PATH="/home/pi/subnodes/subnodes-dashboard"
+DAEMONOPTS="sudo NODE_ENV=production nodemon index.js"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 PHY="phy0"
