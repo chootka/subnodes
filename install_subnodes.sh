@@ -19,7 +19,7 @@ RADIO_DRIVER=nl80211
 
 # ACCESS POINT
 AP_COUNTRY=US
-AP_SSID=subnodes
+AP_SSID="subnodes$((RANDOM%200+100))"
 AP_CHAN=1
 
 # DNSMASQ STUFF
@@ -58,7 +58,12 @@ fi
 #
 # update the packages
 echo "Updating apt-get and installing iw package for network interface configuration..."
-apt-get update && apt-get install -y iw
+apt-get update && apt-get install -y iw batctl
+echo ""
+echo "Enabling the batman-adv kernel module..."
+# add the batman-adv module to be started on boot
+sed -i '$a batman-adv' /etc/modules
+modprobe batman-adv;
 echo ""
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_archive_armhf.deb
@@ -138,22 +143,22 @@ iw wlan0 del
 iw wlan1 del
 
 # create hostapd init file
-echo -en "Creating default hostapd file...			"
-cat <<EOF > /etc/default/hostapd
+		echo -en "Creating default hostapd file...			"
+		cat <<EOF > /etc/default/hostapd
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
 EOF
-	rc=$?
-	if [[ $rc != 0 ]] ; then
-		echo -en "[FAIL]\n"
-		echo ""
-		exit $rc
-	else
-		echo -en "[OK]\n"
-	fi
+			rc=$?
+			if [[ $rc != 0 ]] ; then
+				echo -en "[FAIL]\n"
+				echo ""
+				exit $rc
+			else
+				echo -en "[OK]\n"
+			fi
 
-# create hostapd configuration with user's settings
-echo -en "Creating hostapd.conf file...				"
-cat <<EOF > /etc/hostapd/hostapd.conf
+		# create hostapd configuration with user's settings
+		echo -en "Creating hostapd.conf file...				"
+		cat <<EOF > /etc/hostapd/hostapd.conf
 interface=ap0
 bridge=br0
 driver=$RADIO_DRIVER
@@ -170,41 +175,42 @@ macaddr_acl=0
 wmm_enabled=1
 ap_isolate=1
 EOF
-	rc=$?
-	if [[ $rc != 0 ]] ; then
-		echo -en "[FAIL]\n"
-		exit $rc
-	else
-		echo -en "[OK]\n"
-	fi
+			rc=$?
+			if [[ $rc != 0 ]] ; then
+				echo -en "[FAIL]\n"
+				echo ""
+				exit $rc
+			else
+				echo -en "[OK]\n"
+			fi
 
-# backup the existing interfaces file
-echo -en "Creating backup of network interfaces configuration file... 			"
-cp /etc/network/interfaces /etc/network/interfaces.bak
-	rc=$?
-	if [[ $rc != 0 ]] ; then
-		echo -en "[FAIL]\n"
-		exit $rc
-	else
-		echo -en "[OK]\n"
-	fi
+		# backup the existing interfaces file
+		echo -en "Creating backup of network interfaces configuration file... 			"
+		cp /etc/network/interfaces /etc/network/interfaces.bak
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+			echo -en "[FAIL]\n"
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
 
-# CONFIGURE dnsmasq
-echo -en "Creating dnsmasq configuration file... 			"
-cat <<EOF > /etc/dnsmasq.conf
+		# CONFIGURE dnsmasq
+		echo -en "Creating dnsmasq configuration file... 			"
+		cat <<EOF > /etc/dnsmasq.conf
 interface=br0
 address=/#/$BRIDGE_IP
 address=/apple.com/0.0.0.0
 dhcp-range=$DHCP_START,$DHCP_END,$DHCP_NETMASK,$DHCP_LEASE
 EOF
-	rc=$?
-	if [[ $rc != 0 ]] ; then
-			echo -en "[FAIL]\n"
-		echo ""
-		exit $rc
-	else
-		echo -en "[OK]\n"
-	fi
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+    			echo -en "[FAIL]\n"
+			echo ""
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
 
 
 
