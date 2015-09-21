@@ -1,8 +1,8 @@
 #!/bin/sh
-# /etc/init.d/config_ap
+# /etc/init.d/subnodes_config_ap
 # starts up ap0 interface and hostapd for broadcasting a wireless network
 
-NAME=config_ap
+NAME=subnodes_config_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
 DAEMON_PATH="/home/pi/subnodes/subnodes-dashboard"
 DAEMONOPTS="sudo NODE_ENV=production nodemon index.js"

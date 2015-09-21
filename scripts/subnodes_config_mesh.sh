@@ -1,8 +1,8 @@
 #!/bin/sh
-# /etc/init.d/config_mesh
+# /etc/init.d/subnodes_config_mesh
 # starts up mesh0, bat0 interfaces
 
-NAME=config_mesh
+NAME=subnodes_config_mesh
 DESC="Brings our BATMAN-ADV mesh point up."
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME

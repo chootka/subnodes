@@ -85,20 +85,57 @@ echo ""
 # check that iw list does not fail with 'nl80211 not found'
 echo -en "checking that nl80211 USB wifi radio is plugged in...				"
 iw list > /dev/null 2>&1 | grep 'nl80211 not found'
-rc=$?
-if [[ $rc = 0 ]] ; then
-	echo -en "[FAIL]\n"
-	echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
-	exit $rc
-else
-	echo -en "[OK]\n"
-fi
+	rc=$?
+	if [[ $rc = 0 ]] ; then
+		echo -en "[FAIL]\n"
+		echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
+		exit $rc
+	else
+		echo -en "[OK]\n"
+	fi
 
 # install required packages
 echo ""
 echo -en "Installing bridge-utils, hostapd and dnsmasq... 			"
 apt-get install -y bridge-utils hostapd dnsmasq
 echo -en "[OK]\n"
+
+# CONFIGURE /etc/network/interfaces
+echo -en "Creating new network interfaces configuration file with your settings... 	"
+cat <<EOF > /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+iface ap0 inet static
+	address 10.0.0.1
+	netmask 255.255.255.0
+
+# create bridge
+iface br0 inet static
+  bridge_ports bat0 ap0
+  bridge_stp off
+  address $BRIDGE_IP
+  netmask $BRIDGE_NETMASK
+
+iface default inet dhcp
+EOF
+	rc=$?
+	if [[ $rc != 0 ]] ; then
+			echo -en "[FAIL]\n"
+		echo ""
+		exit $rc
+	else
+		echo -en "[OK]\n"
+	fi
+
+# delete wlan0 and wlan1
+ifconfig wlan0 down
+ifconfig wlan1 down
+iw wlan0 del
+iw wlan1 del
 
 # create hostapd init file
 echo -en "Creating default hostapd file...			"
@@ -152,37 +189,6 @@ cp /etc/network/interfaces /etc/network/interfaces.bak
 		echo -en "[OK]\n"
 	fi
 
-# CONFIGURE /etc/network/interfaces
-echo -en "Creating new network interfaces configuration file with your settings... 	"
-cat <<EOF > /etc/network/interfaces
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet dhcp
-
-iface ap0 inet static
-	address 10.0.0.1
-	netmask 255.255.255.0
-
-# create bridge
-iface br0 inet static
-  bridge_ports bat0 ap0
-  bridge_stp off
-  address $BRIDGE_IP
-  netmask $BRIDGE_NETMASK
-
-iface default inet dhcp
-EOF
-	rc=$?
-	if [[ $rc != 0 ]] ; then
-			echo -en "[FAIL]\n"
-		echo ""
-		exit $rc
-	else
-		echo -en "[OK]\n"
-	fi
-
 # CONFIGURE dnsmasq
 echo -en "Creating dnsmasq configuration file... 			"
 cat <<EOF > /etc/dnsmasq.conf
@@ -206,13 +212,12 @@ EOF
 # COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 #
 clear
+echo -en "Copying access point startup script for boot"
 update-rc.d hostapd enable
 update-rc.d dnsmasq enable
-cp scripts/config_ap.sh /etc/init.d/config_ap
-chmod 755 /etc/init.d/config_ap
-update-rc.d config_ap defaults
-
-#exit 0
+cp scripts/subnodes_config_ap.sh /etc/init.d/subnodes_config_ap
+chmod 755 /etc/init.d/subnodes_config_ap
+update-rc.d subnodes_config_ap defaults
 
 
 
