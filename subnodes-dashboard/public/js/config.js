@@ -14,3 +14,7 @@ var hideAdvancedConfig = function(){
 	$('#advancedConfigButton').show();
 	$('#hideAdvancedConfigButton').hide();
 }
+
+$('.load-button').on('click', function() {
+	alert('Loading... You\'ll be redirected when it\'s completed');
+});

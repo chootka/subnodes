@@ -1,12 +1,8 @@
 {
 	"preapproved": [
 		{
-			"title": "subnodes-chat",
-			"repo": "https://github.com/chootka/subnodes-chat"
-		},
-		{
-			"title": "subnodes-fileshare",
-			"repo": "https://github.com/chootka/subnodes-fileshare"
+			"title": "Starter App",
+			"repo": "https://github.com/youmustfight/subnodes_starter_app"
 		}
 	]
 }

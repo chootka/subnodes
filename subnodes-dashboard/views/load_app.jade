@@ -1,0 +1,23 @@
+extends framework
+
+block content
+	form(name='config', action='/loadApp', method='post').form-group.text-center
+		hr
+		h3 Select an App to Load
+		label Our Favorites
+		br
+		select.app-quick-select
+			option(disabled selected) -- None Selected -- 	
+			each app in apps
+				option #{app.repo}
+		br
+		br
+		label(for='repo') Github Repo
+		input(type='text', placeholder='https://github.com/chootka/subnodes', name='repo', required).form-control.app-repo-input
+		br
+		hr
+		input(type='submit', value='Load App').btn.btn-success.load-button
+
+
+block scripts
+	script(src='/js/config.js')

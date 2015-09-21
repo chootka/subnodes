@@ -1,7 +1,7 @@
 #!/bin/sh
 # Sets startup script for subnodes dashboard
 
-NAME=setup_dashboard
+NAME=subnodes_setup_dashboard
 DESC="Startup script for running subnodes dashboard"
 DAEMON_PATH="/home/pi/subnodes/subnodes-dashboard"
 DAEMONOPTS="sudo NODE_ENV=production nodemon index.js"

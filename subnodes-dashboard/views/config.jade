@@ -1,13 +1,13 @@
 extends framework
 
 block content
-	form(name='config', action='/save', method='post').form-group.text-center
+	form(name='config', action='/saveConfig', method='post').form-group.text-center
 		hr
 		h3 Select an App to Load
 		label Our Favorites
 		br
 		select.app-quick-select
-			option -- None Selected -- 	
+			option(disabled selected) -- None Selected -- 	
 			each app in apps
 				option #{app.repo}
 		br

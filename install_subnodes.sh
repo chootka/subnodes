@@ -72,11 +72,13 @@ echo ""
 
 # INSTALLING subnodes app initializer
 echo "Installing subnodes app dashboard..."
-# go back to our subnodes directory
+# go back to our subnodes directory and download dependencies
 cd /home/pi/subnodes/subnodes-dashboard
-
-# download subnodes app dependencies
 sudo npm install
+# go to app directory and download dependencies
+cd /home/pi/subnodes/app
+sudo npm install
+# install nodemon for all environments
 sudo npm install -g nodemon
 echo "Done!"
 
@@ -230,14 +232,14 @@ chmod 755 /etc/init.d/subnodes_config_ap
 update-rc.d subnodes_config_ap defaults
 
 # Subnode Dashboard Startup Script
-cp scripts/setup_dashboard.sh /etc/init.d/setup_dashboard
-chmod 755 /etc/init.d/setup_dashboard
-update-rc.d setup_dashboard defaults
+cp scripts/subnodes_setup_dashboard.sh /etc/init.d/subnodes_setup_dashboard
+chmod 755 /etc/init.d/subnodes_setup_dashboard
+update-rc.d subnodes_setup_dashboard defaults
 
 # Node App Startup Script
-cp scripts/setup_app.sh /etc/init.d/setup_app
-chmod 755 /etc/init.d/setup_app
-update-rc.d setup_app defaults
+# cp scripts/subnodes_setup_app.sh /etc/init.d/subnodes_setup_app
+# chmod 755 /etc/init.d/subnodes_setup_app
+# update-rc.d subnodes_setup_app defaults
 
 
 

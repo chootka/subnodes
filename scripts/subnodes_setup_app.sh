@@ -1,7 +1,7 @@
 #!/bin/sh
 # Sets startup script for webapp
 
-NAME=setup_app
+NAME=subnodes_setup_app
 DESC="Startup script for running installed app"
 DAEMON_PATH="/home/pi/subnodes/app"
 DAEMONOPTS="sudo NODE_ENV=production nodemon index.js"
