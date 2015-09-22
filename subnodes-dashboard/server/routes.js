@@ -44,7 +44,10 @@ module.exports = function(app) {
 		process.exec("sudo iwlist wlan2 scan | grep 'ESSID'", function(error, stdout, stderr){
 			var regExp = /(?:ESSID:)"(.+)"/gm;
 			var filteredSTDOUT = regExp.exec(stdout);
-			res.render('sign_in', {ESSIDs: filteredSTDOUT[1]});
+			filteredSTDOUT.forEach(function(element, index, array){
+				array[index] = element.join();
+			});
+			res.render('sign_in', {ESSIDs: filteredSTDOUT});
 		});
 	});
 
