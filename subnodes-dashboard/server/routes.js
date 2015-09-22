@@ -42,11 +42,9 @@ module.exports = function(app) {
 	// Sign into Wifi
 	app.get('/signin', function(req, res) {
 		process.exec("sudo iwlist wlan2 scan | grep 'ESSID'", function(error, stdout, stderr){
-			console.log(typeof stdout);
-			console.log(stdout);
-			var regExp = /(?:ESSID:)"(.+)"/;
+			var regExp = /(?:ESSID:)"(.+)"/gm;
 			var filteredSTDOUT = regExp.exec(stdout);
-			res.render('sign_in', {ESSIDs: filteredSTDOUT});
+			res.render('sign_in', {ESSIDs: filteredSTDOUT[1]});
 		});
 	});
 
