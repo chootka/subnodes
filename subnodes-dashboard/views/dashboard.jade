@@ -9,7 +9,7 @@ block content
 		ul
 			each ip in ips
 				option #{ip}
-		span.btn.btn-default Sign Into Wifi
+		a(href='/signin').btn.btn-default Sign Into Wifi
 		h6 Network Config
 		a(href='/config').btn.btn-default Reconfigure RPi
 		a.btn.btn-default Set to Defaults

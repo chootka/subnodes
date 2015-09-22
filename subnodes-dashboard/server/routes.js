@@ -25,22 +25,28 @@ module.exports = function(app) {
 					filteredOut.push(newOut[i+1]);
 				}
 			}
-
 			res.render('dashboard', {ips: filteredOut});
 		});
 	});
 
 	app.post('/reboot', function(req, res) {
 		console.log('Rebooting RPi');
-		// process.execSync('sudo reboot');
+		process.execSync('sudo reboot');
 	});
 
 	app.post('/shutdown', function(req, res) {
 		console.log('Shutting Down RPi');
-		// process.execSync('sudo shutdown -hP now');
+		process.execSync('sudo shutdown -hP now');
 	});
 
 	// Sign into Wifi
+	app.get('/signin', function(req, res) {
+		process.exec('sudo iwlist wlan2 scan', function(error, stdout, stderr){
+			var regExp = new RegExp(/(?:ESSID:)"(.+)"/gmi);
+			var filteredSTDOUT = regExp.exec(stdout);
+			res.render('sign_in', {ESSIDs: filteredSTDOUT});
+		});
+	});
 
 	// Get IFCONFIG
 	app.get('/ifconfig', function(req, res) {

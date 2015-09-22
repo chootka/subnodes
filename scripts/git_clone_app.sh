@@ -16,4 +16,4 @@ cd app
 sudo npm install
 
 # Reboot?
-# sudo reboot
+sudo reboot

@@ -65,9 +65,16 @@ echo "Enabling the batman-adv kernel module..."
 sed -i '$a batman-adv' /etc/modules
 modprobe batman-adv;
 echo ""
+# add Node.js
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_archive_armhf.deb
 sudo dpkg -i node_archive_armhf.deb
+echo ""
+#add MongoDB
+echo "Installing MongoDB..."
+# curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz
+# tar -zxvf mongodb-linux-x86_64-3.0.6.tgz
+
 echo ""
 
 # INSTALLING subnodes app initializer
@@ -237,9 +244,9 @@ chmod 755 /etc/init.d/subnodes_setup_dashboard
 update-rc.d subnodes_setup_dashboard defaults
 
 # Node App Startup Script
-# cp scripts/subnodes_setup_app.sh /etc/init.d/subnodes_setup_app
-# chmod 755 /etc/init.d/subnodes_setup_app
-# update-rc.d subnodes_setup_app defaults
+cp scripts/subnodes_setup_app.sh /etc/init.d/subnodes_setup_app
+chmod 755 /etc/init.d/subnodes_setup_app
+update-rc.d subnodes_setup_app defaults
 
 
 
