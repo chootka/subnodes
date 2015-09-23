@@ -43,7 +43,7 @@ module.exports = function(app) {
 	app.get('/signin', function(req, res) {
 		process.exec("sudo iwlist wlan2 scan | grep 'ESSID'", function(error, stdout, stderr){
 			var filteredSTDOUT;
-			filteredSTDOUT = str.split(/(?:ESSID:)"([^"]+)"/g);
+			filteredSTDOUT = stdout.split(/(?:ESSID:)"([^"]+)"/g);
 			filteredSTDOUT = filteredSTDOUT.filter(function(element, index, array) {
 			    if(element.match(/[^\s]/) === null) {
 			        return false;
@@ -55,11 +55,18 @@ module.exports = function(app) {
 		});
 	});
 
+	app.post('/signIntoWifi', function(req, res) {
+		var filePath = '../scripts/write_wpa.sh';
+		process.execSync('chmod a+x ' + filePath);
+		process.execFile(filePath,['sudo', req.body.ssid, req.body.psk], function (err, stdout, stderr) {
+			res.redirect('/');
+		});
+	});
+
 	// Get IFCONFIG
 	app.get('/ifconfig', function(req, res) {
 		process.exec('ifconfig',
 			function (error, stdout, stderr) {
-		    console.log('stdout: ' + stdout);
 		    res.render('ifconfig', {config: stdout});
 		});
 	});
@@ -81,7 +88,6 @@ module.exports = function(app) {
 			// Get Repo Name
 			var projectRegExp = new RegExp("([^\/]+)$")
 			var repoName = projectRegExp.exec(req.body.repo)[0];
-			console.log(repoName);
 			process.execSync('chmod a+x ' + filePath);
 			process.execFile(filePath,['sudo','bash', req.body.repo, repoName], function (err, stdout, stderr) {
 				res.redirect('/');

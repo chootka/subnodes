@@ -134,6 +134,12 @@ iface br0 inet static
   address $BRIDGE_IP
   netmask $BRIDGE_NETMASK
 
+# handle wifidongel for gateway to internet - Appending these lines needs to be broken out into a separate script
+auto wlan2
+	allow-hotplug wlan2
+	iface wlan2 inet dhcp
+	wpa-conf /etc/wpa.config
+
 iface default inet dhcp
 EOF
 	rc=$?

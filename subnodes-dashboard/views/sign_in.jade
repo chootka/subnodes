@@ -1,20 +1,20 @@
 extends framework
 
 block content
-	form(name='sign_in', action='/signIntoWifi', method='post').form-group.text-center
+	form(name='network', action='/signIntoWifi', method='post').form-group.text-center
 		hr
 		h3 WIFI Sign-In
 		hr
 		label Select a Wifi Network (AKA Wifi_SSID)
 		br
-		select(name='wifi_network')
+		select(name='ssid')
 			option(disabled selected) -- None Selected -- 	
 			each ssid in ESSIDs
 				option #{ssid}
 		br
 		br
-		label(for='password') Enter a Password
-		input(type='text', placeholder='password', name='password').form-control
+		label(for='psk') Enter a Password
+		input(type='text', placeholder='password', name='psk').form-control
 		hr
 		input(type='submit', value='Login').btn.btn-info
 
