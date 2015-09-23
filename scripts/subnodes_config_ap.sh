@@ -67,6 +67,7 @@ PHY="phy0"
 			ifconfig br0 down
 			ifconfig bat0 down
 			ifconfig ap0 down
+			ifconfig wlan2 down
 
 			service hostapd stop
             service dnsmasq stop

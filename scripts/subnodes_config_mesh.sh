@@ -44,6 +44,7 @@ PHY="phy0"
 		stop)
 			ifconfig mesh0 down
 			ifconfig bat0 down
+			ifconfig wlan2 down
 		;;
 
 		restart)
