@@ -56,6 +56,8 @@ fi
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SOFTWARE INSTALL
 #
+
+
 # update the packages
 echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw batctl
@@ -69,12 +71,6 @@ echo ""
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_archive_armhf.deb
 sudo dpkg -i node_archive_armhf.deb
-echo ""
-#add MongoDB
-echo "Installing MongoDB..."
-# curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz
-# tar -zxvf mongodb-linux-x86_64-3.0.6.tgz
-
 echo ""
 
 # INSTALLING subnodes app initializer
@@ -120,12 +116,6 @@ cat <<EOF > /etc/network/interfaces
 auto lo
 iface lo inet loopback
 
-# handle wifidongel for gateway to internet - Appending these lines needs to be broken out into a separate script
-auto wlan2
-allow-hotplug wlan2
-iface wlan2 inet dhcp
-wpa-conf /etc/wpa.config
-
 auto eth0
 iface eth0 inet dhcp
 
@@ -139,6 +129,12 @@ iface br0 inet static
   bridge_stp off
   address $BRIDGE_IP
   netmask $BRIDGE_NETMASK
+
+# handle wifidongel for gateway to internet - Appending these lines needs to be broken out into a separate script
+auto wlan2
+allow-hotplug wlan2
+iface wlan2 inet dhcp
+wpa-conf /etc/wpa.config
 
 iface default inet dhcp
 EOF
