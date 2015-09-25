@@ -63,6 +63,11 @@ module.exports = function(app) {
 		});
 	});
 
+	app.post('/signOutOfWifi', function(req, res) {
+		process.execSync('sudo ifdown wlan2');
+		res.redirect('/');
+	});
+
 	// Get IFCONFIG
 	app.get('/ifconfig', function(req, res) {
 		process.exec('ifconfig',

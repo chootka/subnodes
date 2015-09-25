@@ -1,6 +1,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # INSTALLING MONGODB ONTO THE RASPBERRY PI 2 
 # Once done, can see/edit settings via sudo nano /etc/init.d/mongod
+# Followed: http://c-mobberley.com/wordpress/2013/10/14/raspberry-pi-mongodb-installation-the-working-guide/
 
 echo "Installing MongoDB 2.1.1..."
 	# Get packages for compiling

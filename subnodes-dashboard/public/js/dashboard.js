@@ -12,3 +12,7 @@ var shutdownRPi = function(){
 	alert('Shutting Down');
 	$.post('/shutdown');
 }
+
+var signOutOfWifi = function(){
+	$.post('/signOutOfWifi');
+}
