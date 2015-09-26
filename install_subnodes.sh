@@ -241,14 +241,14 @@ chmod 755 /etc/init.d/subnodes_config_ap
 update-rc.d subnodes_config_ap defaults
 
 # Subnode Dashboard Startup Script
-cp scripts/subnodes_setup_dashboard.sh /etc/init.d/subnodes_setup_dashboard
-chmod 755 /etc/init.d/subnodes_setup_dashboard
-update-rc.d subnodes_setup_dashboard defaults
+cp scripts/subnodes_startup_dashboard.sh /etc/init.d/subnodes_startup_dashboard
+chmod 755 /etc/init.d/subnodes_startup_dashboard
+update-rc.d subnodes_startup_dashboard defaults
 
 # Node App Startup Script
-cp scripts/subnodes_setup_app.sh /etc/init.d/subnodes_setup_app
-chmod 755 /etc/init.d/subnodes_setup_app
-update-rc.d subnodes_setup_app defaults
+cp scripts/subnodes_startup_app.sh /etc/init.d/subnodes_startup_app
+chmod 755 /etc/init.d/subnodes_startup_app
+update-rc.d subnodes_startup_app defaults
 
 
 

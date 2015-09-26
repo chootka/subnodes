@@ -1,10 +1,9 @@
 #!/bin/sh
-# Sets startup script for subnodes dashboard
+# Sets startup script for webapp
 
-NAME=subnodes_setup_dashboard
-DESC="Startup script for running subnodes dashboard"
-DAEMON_PATH="/home/pi/subnodes/subnodes-dashboard"
-DAEMONOPTS="sudo NODE_ENV=production nodemon index.js"
+NAME=subnodes_startup_app
+DESC="Startup script for running installed app"
+DAEMON_PATH="/home/pi/subnodes/app"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
@@ -12,6 +11,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 		start)
 			# Set background process for currently installed app
 			cd $DAEMON_PATH
+			# Parse package.json for npm start script
+			$DAEMONOPTS=`grep -Po '(?<="start": ")]^"]*' package.json`
 			PID=`$DAEMONOPTS > /dev/null 2>&1 & echo $!`
 			#echo "Saving PID" $PID " to " $PIDFILE
 				if [ -z $PID ]; then

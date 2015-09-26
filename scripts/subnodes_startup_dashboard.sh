@@ -1,9 +1,9 @@
 #!/bin/sh
-# Sets startup script for webapp
+# Sets startup script for subnodes dashboard
 
-NAME=subnodes_setup_app
-DESC="Startup script for running installed app"
-DAEMON_PATH="/home/pi/subnodes/app"
+NAME=subnodes_startup_dashboard
+DESC="Startup script for running subnodes dashboard"
+DAEMON_PATH="/home/pi/subnodes/subnodes-dashboard"
 DAEMONOPTS="sudo NODE_ENV=production nodemon index.js"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
