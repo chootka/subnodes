@@ -13,7 +13,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 			cd $DAEMON_PATH
 			# Parse package.json for npm start script
 			$DAEMONOPTS=`grep -Po '(?<="start": ")[^"]*' package.json`
-			PID=`$DAEMONOPTS > /dev/null 2>&1 & echo $!`
+			PID=`sudo $DAEMONOPTS > /dev/null 2>&1 & echo $!`
 			#echo "Saving PID" $PID " to " $PIDFILE
 				if [ -z $PID ]; then
 					printf "%s\n" "Fail"
