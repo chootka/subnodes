@@ -2,7 +2,7 @@
 # Handling cloning and clean up for app from web admin panel
 
 # Go to Subnodes Root Folder
-cd home/pi/subnodes
+cd ../
 
 # Delete App
 sudo rm -rf app
@@ -12,7 +12,7 @@ sudo mkdir app
 git clone $3.git app
 
 # Switch into app folder and try installing dependencies
-cd home/pi/subnodes/app
+cd app
 sudo npm install
 gulp
 
