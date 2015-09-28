@@ -12,7 +12,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 			# Set background process for currently installed app
 			cd $DAEMON_PATH
 			# Parse package.json for npm start script
-			$DAEMONOPTS=$( sudo $(grep -Po '(?<="start": ")[^"]*' package.json))	
+			# $DAEMONOPTS=$( sudo $(grep -Po '(?<="start": ")[^"]*' package.json))
+			$DAEMONOPTS=$(sudo npm start)
 			PID=`$DAEMONOPTS > /dev/null 2>&1 & echo $!`
 			#echo "Saving PID" $PID " to " $PIDFILE
 				if [ -z $PID ]; then

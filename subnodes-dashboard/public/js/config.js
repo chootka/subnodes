@@ -16,5 +16,5 @@ var hideAdvancedConfig = function(){
 }
 
 $('.load-button').on('click', function() {
-	alert('Loading... You\'ll be redirected when it\'s completed');
+	alert('LOADING - WILL REREDIRECT WHEN COMPLETE');
 });

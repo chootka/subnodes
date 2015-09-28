@@ -1,13 +1,13 @@
 extends framework
 
 block content
-	div.text-center.reboot-button
+	div.subnodes-block.reboot-button
 		br
 		h4 When you're ready, reboot!
 		br
 		form(name='rebuild', action='/rebuild', method='post')
-			button(onclick="rebooting()").btn.btn-success Start Reboot
-	div#rebootingScreen.text-center
+			button(onclick="rebooting()").btn Start Reboot
+	div#rebootingScreen.subnodes-block
 		br
 		h4 Your Reboot In Progress!
 		p Look out for your new wifi network:

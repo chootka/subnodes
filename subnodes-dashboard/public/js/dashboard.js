@@ -1,15 +1,15 @@
 var updateApp = function(){
-	alert('Pulling');
+	alert('UPDATING');
 	$.post('/makePull');
 }
 
 var rebootRPi = function(){
-	alert('Rebooting');
+	alert('REBOOTING');
 	$.post('/reboot');
 }
 
 var shutdownRPi = function(){
-	alert('Shutting Down');
+	alert('SHUTTING DOWN');
 	$.post('/shutdown');
 }
 

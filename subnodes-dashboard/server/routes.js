@@ -7,25 +7,24 @@ module.exports = function(app) {
 
 	// Home Page
 	app.get('/', function(req, res) {
+		var dashData = {};
+		dashData.IPList = [];
+		// Get IPs
 		process.exec('ifconfig', function (error, stdout, stderr) {
-			// console.log(stdout);
-			// var ip4RegExp = new RegExp(/(?:inet)\s+((?:[a-zA-Z0-9]{1,3}.){0,4})/igm);
-			// var ip6RegExp = new RegExp(/(?:inet6)\s+(\b.+\b)/igm);
-			// var ips = ip4RegExp.exec(stdout).concat(ip6RegExp.exec(stdout));
-
-			// var ipRegExp = new RegExp(/(inet|inet6)/gmi);
-			// var filteredIP = ipRegExp.exec(stdout)
-			// console.log(filteredIP);
-
 			var newOut = stdout.split(' ');
-			var filteredOut = []
 			var regExp = new RegExp(/inet(?!6)/);
 			for (var i = 0; i < newOut.length; i++){
 				if(regExp.exec(newOut[i])){
-					filteredOut.push(newOut[i+1]);
+					dashData.IPList.push(newOut[i+1]);
 				}
 			}
-			res.render('dashboard', {ips: filteredOut});
+
+			// Get Project Info
+			process.exec("cat ../app/package.json", function(err2, stdout2, stderr2) {
+				dashData.app = JSON.parse(stdout2);
+				// Render
+				res.render('dashboard', dashData);				
+			});
 		});
 	});
 

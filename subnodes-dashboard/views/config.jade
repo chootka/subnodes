@@ -1,57 +1,41 @@
 extends framework
 
 block content
-	form(name='config', action='/saveConfig', method='post').form-group.text-center
-		hr
-		h3 Select an App to Load
-		label Our Favorites
-		br
-		select.app-quick-select
-			option(disabled selected) -- None Selected -- 	
-			each app in apps
-				option #{app.repo}
-		br
-		br
-		label(for='repo') Github Repo
-		input(type='text', placeholder='https://github.com/chootka/subnodes', name='repo', required).form-control.app-repo-input
-		br
-		hr
-		h3 Setup Networking
-		label(for='wifi-access-point') Broadcast Wifi Network?
-		input(type='checkbox', name='wifi-access-point' checked)
-		br
-		label(for='wifi-ssid') Wifi Network Name (Must be Unique!)
-		input(type='text', name='wifi-ssid', placeholder='Name of your organization, cause, or purpose?', required).form-control
-		br
-		span(onclick='showAdvancedConfig()')#advancedConfigButton.btn.btn-default Show Advanced Settings
-		div#advancedConfig
-			span(onclick='hideAdvancedConfig()')#hideAdvancedConfigButton.btn.btn-default Hide Advanced Settings
-			hr
-			label(for='mesh-node') Make a Mesh Node?
-			input(type='checkbox', name='mesh-node')
+	div.subnodes-block
+		form(name='config', action='/saveConfig', method='post').form-group
+			h4 Setup Networking
+			h6 Broadcast Wifi Network?
+			input(type='checkbox', name='wifi-access-point' checked).subnodes-input
+			h6 Wifi Network Name (Must be Unique!)
+			input(type='text', name='wifi-ssid', placeholder='Name of your organization, cause, or purpose?', required).subnodes-input.form-control
 			br
-			label(for='mesh-ssid') Mesh Network Name (Must be the same across meshed devices!)
-			input(type='text', name='mesh-ssid', placeholder='meshnodes', value='meshnodes', required).form-control
-			label(for='wifi-country') Wifi Country
-			input(type='text', name='wifi-country', value='US').form-control
-			label(for='wifi-channel') Wifi Channel
-			input(type='text', name='wifi-channel', value='1').form-control
-			label(for='bridge-ip') Bridge IP (Unique between Raspberry Pis)
-			input(type='text', name='bridge-ip', value='192.168.3.1').form-control
-			label(for='bridge-subnet-mask') Bridge Subnet Mask
-			input(type='text', name='bridge-subnet-mask', value='255.255.255.0').form-control
-			label(for='dhcp-starting-address') DHCP Starting Address
-			input(type='text', name='dhcp-starting-address', value='192.168.3.101').form-control
-			label(for='dhcp-ending-address') DHCP Ending Address
-			input(type='text', name='dhcp-ending-address', value='192.168.3.254').form-control
-			label(for='dhcp-mask') DHCP Mask
-			input(type='text', name='dhcp-mask', value='255.255.255.0').form-control
-			label(for='dhcp-lease') DHCP Lease
-			input(type='text', name='dhcp-lease', value='1h').form-control
-		br
-		hr
-		h3 Save Configuration?
-		input(type='submit', value='Save').btn.btn-success
+			span(onclick='showAdvancedConfig()')#advancedConfigButton.btn.btn-default Advanced Settings
+			div#advancedConfig
+				span(onclick='hideAdvancedConfig()')#hideAdvancedConfigButton.btn.btn-default Hide Advanced Settings
+				h6 Make a Mesh Node?
+				input(type='checkbox', name='mesh-node').subnodes-input
+				br
+				h6 Mesh Network Name (Must be the same across meshed devices!)
+				input(type='text', name='mesh-ssid', placeholder='meshnodes', value='meshnodes', required).subnodes-input.form-control
+				h6 Wifi Country
+				input(type='text', name='wifi-country', value='US').subnodes-input.form-control
+				h6 Wifi Channel
+				input(type='text', name='wifi-channel', value='1').subnodes-input.form-control
+				h6 Bridge IP (Unique between Raspberry Pis)
+				input(type='text', name='bridge-ip', value='192.168.3.1').subnodes-input.form-control
+				h6 Bridge Subnet Mask
+				input(type='text', name='bridge-subnet-mask', value='255.255.255.0').subnodes-input.form-control
+				h6 DHCP Starting Address
+				input(type='text', name='dhcp-starting-address', value='192.168.3.101').subnodes-input.form-control
+				h6 DHCP Ending Address
+				input(type='text', name='dhcp-ending-address', value='192.168.3.254').subnodes-input.form-control
+				h6 DHCP Mask
+				input(type='text', name='dhcp-mask', value='255.255.255.0').subnodes-input.form-control
+				h6 DHCP Lease
+				input(type='text', name='dhcp-lease', value='1h').subnodes-input.form-control
+			div.subnodes-block
+				h4 Save Configuration?
+				input(type='submit', value='Save').btn
 
 
 block scripts

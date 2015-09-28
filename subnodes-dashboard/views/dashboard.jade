@@ -1,29 +1,43 @@
 extends framework
 
 block content
-	div.text-center
-		hr
-		h4 Hey Pi!
-		hr
+	div.subnodes-block
+		h6 Current App
+		h2 #{app.name}
+		//- h6 #{app.repository.url}
+		ul
+			//- li
+			//- 	a(href='/#').btn Details
+			li
+				a(href='/app').btn Load App
+			li
+				span(onclick='updateApp()').btn Update
+	div.subnodes-block
 		h6 My IPs
 		ul
-			each ip in ips
-				option #{ip}
-		a(href='/signin').btn.btn-info Sign Into Wifi
-		span(onclick='signOutOfWifi()').btn.btn-default Sign Out of Wifi
-		h6 Network Config
-		a(href='/config').btn.btn-default Reconfigure RPi
-		a.btn.btn-default Set to Defaults
-		h6 Hardware Info
-		a(href='/ifconfig').btn.btn-info View Device ifconfig
-		hr
-		h4 App
-		a(href='/app').btn.btn-success Load an App
-		span(onclick='updateApp()').btn.btn-success Pull Update
-		hr
-		h4 Power
-		span(onclick='rebootRPi()').btn.btn-danger Reboot
-		span(onclick='shutdownRPi()').btn.btn-danger Shutdown
+			each ip in IPList
+				h4 #{ip}
+		ul
+			li
+				a(href='/signin').btn Sign Into Wifi
+			li
+				span(onclick='signOutOfWifi()').btn Sign Out of Wifi
+	div.subnodes-block
+		h6 Network Configuration
+		ul
+			li
+				a(href='/ifconfig').btn ifconfig
+			li
+				a(href='/config').btn Reconfigure
+			li
+				a.btn.btn-default Reset
+	div.subnodes-block
+		h6 Power
+		ul
+			li
+				span(onclick='rebootRPi()').btn Reboot
+			li
+				span(onclick='shutdownRPi()').btn Shutdown
 
 block scripts
 	script(src='/js/dashboard.js')

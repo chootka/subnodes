@@ -14,7 +14,7 @@ git clone $3.git app
 # Switch into app folder and try installing dependencies
 cd app
 sudo npm install
-gulp
+# gulp
 
 # Reboot?
-sudo reboot
+# sudo reboot

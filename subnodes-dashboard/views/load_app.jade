@@ -1,22 +1,18 @@
 extends framework
 
 block content
-	form(name='config', action='/loadApp', method='post').form-group.text-center
-		hr
-		h3 Select an App to Load
-		label Our Favorites
-		br
-		select.app-quick-select
-			option(disabled selected) -- None Selected -- 	
-			each app in apps
-				option #{app.repo}
-		br
-		br
-		label(for='repo') Github Repo
-		input(type='text', placeholder='https://github.com/chootka/subnodes', name='repo', required).form-control.app-repo-input
-		br
-		hr
-		input(type='submit', value='Load App').btn.btn-success.load-button
+	div.subnodes-block
+		form(name='config', action='/loadApp', method='post').form-group
+			h4 Select/Enter In an App
+			h6 Here's a List of Our Favorites
+			select.subnodes-select.app-quick-select
+				option(disabled selected) -- None Selected -- 	
+				each app in apps
+					option #{app.repo}
+			h6 Or Enter a Github Repo URL
+			input(type='text', placeholder='https://github.com/chootka/subnodes', name='repo', required).subnodes-input.app-repo-input
+			h6 Load Application?
+			input(type='submit', value='Load').btn
 
 
 block scripts
