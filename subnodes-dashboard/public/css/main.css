@@ -30,23 +30,41 @@ hr {
 	background-color: #ffffff;
 }
 
-select {
+select, input[type=checkbox] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 }
 
-.subnodes-input, .subnodes-select {
+input[type=text], .subnodes-select {
 	display: block;
-	width: 91%;
 	background-color: #1f1f1f;
 	border-radius: 0px;
 	outline: none;
 	border: 1px solid #ffffff;
 	color: #ffffff;
-	padding: 6px 12px;
 	font-size: 11px;
 }
+
+input[type=text], .subnodes-select {
+	padding: 6px 12px;
+	width: 91%;
+}
+
+input[type=checkbox] {
+	display: block;
+	background-color: none;
+	border-radius: 0px;
+	outline: none;
+	border: 1px solid #ffffff;
+	width: 16px;
+	height: 16px;
+}
+
+input[type=checkbox]:checked {
+	background-color: #ffffff;
+}
+
 
 /* DEFAULTS - TYPOGRAPHY */
 

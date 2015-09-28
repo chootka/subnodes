@@ -5,7 +5,7 @@ block content
 		form(name='config', action='/saveConfig', method='post').form-group
 			h4 Setup Networking
 			h6 Broadcast Wifi Network?
-			input(type='checkbox', name='wifi-access-point' checked).subnodes-input
+			input(type='checkbox', name='wifi-access-point').subnodes-checkbox
 			h6 Wifi Network Name (Must be Unique!)
 			input(type='text', name='wifi-ssid', placeholder='Name of your organization, cause, or purpose?', required).subnodes-input.form-control
 			br
