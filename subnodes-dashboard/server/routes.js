@@ -158,38 +158,44 @@ module.exports = function(app) {
             var parsedConfig = JSON.parse(data);
             console.log("Parsed Config", parsedConfig);
 			
-            // Whipe Config
-                var whipeFilePath = '../scripts/whipe_network_config.sh';
-                process.execSync('chmod a+x ' + whipeFilePath);
-                process.execFileSync(whipeFilePath,['sudo','bash']);
+            // Whipe Config - Believe this is working
+                // var whipeFilePath = '../scripts/whipe_network_config.sh';
+                // process.execSync('chmod a+x ' + whipeFilePath);
+                // process.execFileSync(whipeFilePath,['sudo','bash']);
 
-			// Setup Access Point
-            if (parsedConfig.wifiAccessPoint === "yes") {
-
+			// Setup Access Point - Not sure
+            if (parsedConfig.wifiAccessPoint == "yes") {
                 console.log('Configuring Access Point...');
                 var wifiFilePath = '../scripts/reconfigure_ap.sh';
                 process.execSync('chmod a+x ' + wifiFilePath);
-                process.execFileSync(wifiFilePath,[parsedConfig.wifiSSID, parsedConfig.wifiCountry, parsedConfig.wifiChannel, parsedConfig.bridgeIP, parsedConfig.bridgeSubnetMask, parsedConfig.dhcpStartingAddress, parsedConfig.dhcpEndingAddress, parsedConfig.dhcpMask, parsedConfig.dhcpLease, 'sudo','bash' ]);
+                process.execFileSync(wifiFilePath,['sudo', 'bash', parsedConfig.wifiSSID, parsedConfig.wifiCountry, parsedConfig.wifiChannel, parsedConfig.bridgeIP, parsedConfig.bridgeSubnetMask, parsedConfig.dhcpStartingAddress, parsedConfig.dhcpEndingAddress, parsedConfig.dhcpMask, parsedConfig.dhcpLease]);
+            } else {
 
             }
 
-			// Setup Mesh Node
-            if (parsedConfig.meshNode === "yes") {
-
+			// Setup Mesh Node - Not sure
+            if (parsedConfig.meshNode == "yes") {
                 console.log('Configuring Mesh...');
                 var meshFilePath = '../scripts/reconfigure_mesh.sh';
                 process.execSync('chmod a+x ' + meshFilePath);
-                process.execFileSync(meshFilePath,['sudo', parsedConfig.meshSSID,'bash' ]);
+                process.execFileSync(meshFilePath,['sudo', 'bash', parsedConfig.meshSSID]);
+            } else {
 
             }
 
             // Wlan2
 			
-            // Reboot
+            // Reboot - Not hitting
             process.execSync('sudo reboot');
             // res.redirect('/');
 		});
 	});
+
+    app.post('/rollbackNetworkConfig', function(req, res){
+        var filePath = '../scripts/rollback_network_config.sh'
+        process.execSync('chmod a+x ' + filePath);
+        process.execFile(filePath,['sudo','bash']);
+    });
 
 
 	//Catch gets for non-existant URLs

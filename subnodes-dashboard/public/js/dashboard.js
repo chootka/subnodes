@@ -16,3 +16,7 @@ var shutdownRPi = function(){
 var signOutOfWifi = function(){
 	$.post('/signOutOfWifi');
 }
+
+var rollbackNetworkConfig = function(){
+	$.post('/rollbackNetworkConfig');
+}
