@@ -1,25 +1,53 @@
-#!/bin/sh
-# reconfigure network
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Defaults
+# SOME DEFAULT VALUES
 #
-
-RADIO_DRIVER=nl80211
-AP_SSID=$3
-AP_COUNTRY=$4
-AP_CHANNEL=$5
+# BRIDGE
 BRIDGE_IP=$6
 BRIDGE_NETMASK=$7
+
+# WIRELESS RADIO DRIVER
+RADIO_DRIVER=nl80211
+
+# ACCESS POINT
+AP_COUNTRY=$4
+AP_SSID=$3
+AP_CHAN=$5
+
+# DNSMASQ STUFF
 DHCP_START=$8
 DHCP_END=$9
 DHCP_NETMASK=${10}
 DHCP_LEASE=${11}
 
+# MESH POINT
+MESH_SSID=${13}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Configure Access Point
+# CONFIGURE A MESH POINT?
 #
+case ${12} in
+	[Yy]* )
+
+		# pass the selected mesh ssid into mesh startup script
+		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
+
+		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+		# COPY OVER THE MESH POINT START UP SCRIPT
+		#
+		echo ""
+		echo "Adding startup script for mesh point..."
+		cp scripts/subnodes_config_mesh.sh /etc/init.d/subnodes_config_mesh
+		chmod 755 /etc/init.d/subnodes_config_mesh
+		update-rc.d subnodes_config_mesh defaults
+	;;
+	[Nn]* ) ;;
+esac
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL?
+#
+case ${14} in
+	[Yy]* )
 		
 		# CONFIGURE /etc/network/interfaces
 		echo -en "Creating new network interfaces configuration file with your settings... 	"
@@ -37,6 +65,8 @@ iface br0 inet static
   bridge_stp off
   address $BRIDGE_IP
   netmask $BRIDGE_NETMASK
+
+# gateway wifi dongel
 auto wlan2
 allow-hotplug wlan2
 iface wlan2 inet dhcp
@@ -100,6 +130,16 @@ EOF
 				echo -en "[OK]\n"
 			fi
 
+		# backup the existing interfaces file
+		echo -en "Creating backup of network interfaces configuration file... 			"
+		cp /etc/network/interfaces /etc/network/interfaces.bak
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+			echo -en "[FAIL]\n"
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
 
 		# CONFIGURE dnsmasq
 		echo -en "Creating dnsmasq configuration file... 			"
@@ -124,6 +164,10 @@ EOF
 		clear
 		update-rc.d hostapd enable
 		update-rc.d dnsmasq enable
-		cp subnodes_config_ap.sh /etc/init.d/subnodes_config_ap
-		chmod 755 /etc/init.d/subnodes_config_ap
-		update-rc.d subnodes_config_ap defaults
+		cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
+		chmod 755 /etc/init.d/subnodes_ap
+		update-rc.d subnodes_ap defaults
+	;;
+
+	[Nn]* ) ;;
+esac
