@@ -18,7 +18,6 @@ module.exports = function(app) {
 					dashData.IPList.push(newOut[i+1]);
 				}
 			}
-
 			// Get Project Info
 			process.exec("cat ../app/package.json", function(err2, stdout2, stderr2) {
 				dashData.app = JSON.parse(stdout2);
@@ -130,29 +129,64 @@ module.exports = function(app) {
 			req.body['meshNode'] = 'no';
 		}
 		var newAppConfig = JSON.stringify(req.body);
-		// Setup Conifg 
-			fs.writeFile(__dirname + '/../../new_app_config.json', newAppConfig, function (err){
-				if (err) throw err;
-				console.log('Saved Config!', newAppConfig);
-			});
-		// Redirect
-		res.redirect('/finish');
+		// Write Conifg File
+		fs.writeFile(__dirname + '/../../new_app_config.json', newAppConfig, function (err){
+			if (err) throw err;
+			console.log('Saved Config!', newAppConfig);
+			// Redirect
+			res.redirect('/finishConfig');
+		});
 	});
 
 	// Reboot Page
-	app.get('/finish', function(req, res) {
+	app.get('/finishConfig', function(req, res) {
 		var configJSONPath = path.join(__dirname, '..', '..', 'new_app_config.json');
 		fs.readFile(configJSONPath, function (err, data) {
 			var parsedConfig = JSON.parse(data);
 			console.log(parsedConfig);
-			res.render('finish', { wifi: parsedConfig['wifi-ssid'] });
+			res.render('finish', { wifi: parsedConfig['wifiSSID'] });
 		});
 	});
 
 	// Initialize Rebuild
 	app.post('/rebuild', function(req, res) {
 		console.log('Rebuilding...');
-		//child processes running shell script
+
+		// Read Config Settings
+		var configJSONPath = path.join(__dirname, '..', '..', 'new_app_config.json');
+		fs.readFile(configJSONPath, function (err, data) {
+            var parsedConfig = JSON.parse(data);
+            console.log("Parsed Config", parsedConfig);
+			
+            // Whipe Config
+                var whipeFilePath = '../scripts/whipe_network_config.sh';
+                process.execSync('chmod a+x ' + whipeFilePath);
+                process.execFile(whipeFilePath,['sudo']);
+
+			// Setup Access Point
+            if (parsedConfig.wifiAccessPoint === "yes") {
+
+                console.log('Configuring Access Point...');
+                var wifiFilePath = '../scripts/reconfigure_ap.sh';
+                process.execSync('chmod a+x ' + wifiFilePath);
+                process.execFileSync(wifiFilePath,[parsedConfig.wifiSSID, parsedConfig.wifiCountry, parsedConfig.wifiChannel, parsedConfig.bridgeIP, parsedConfig.bridgeSubnetMask, parsedConfig.dhcpStartingAddress, parsedConfig.dhcpEndingAddress, parsedConfig.dhcpMask, parsedConfig.dhcpLease, 'sudo' ]);
+
+            }
+
+			// Setup Mesh Node
+            if (parsedConfig.meshNode === "yes") {
+
+                console.log('Configuring Mesh...');
+                var meshFilePath = '../scripts/reconfigure_mesh.sh';
+                process.execSync('chmod a+x ' + meshFilePath);
+                process.execFileSync(meshFilePath,['sudo', parsedConfig.meshSSID ]);
+
+            }
+			
+            // Reboot
+            process.execSync('sudo reboot');
+            // res.redirect('/');
+		});
 	});
 
 

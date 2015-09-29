@@ -2,15 +2,12 @@ extends framework
 
 block content
 	div.subnodes-block.reboot-button
-		br
 		h4 When you're ready, reboot!
-		br
 		form(name='rebuild', action='/rebuild', method='post')
 			button(onclick="rebooting()").btn Start Reboot
-	div#rebootingScreen.subnodes-block
-		br
-		h4 Your Reboot In Progress!
-		p Look out for your new wifi network:
+	div#rebootingScreen
+		h6 Rebooting...
+		p Look out for a new wifi network:
 		h2 "#{wifi}"
 
 block scripts
