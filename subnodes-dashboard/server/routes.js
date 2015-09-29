@@ -161,7 +161,7 @@ module.exports = function(app) {
             // Whipe Config
                 var whipeFilePath = '../scripts/whipe_network_config.sh';
                 process.execSync('chmod a+x ' + whipeFilePath);
-                process.execFile(whipeFilePath,['sudo']);
+                process.execFileSync(whipeFilePath,['sudo']);
 
 			// Setup Access Point
             if (parsedConfig.wifiAccessPoint === "yes") {
@@ -182,6 +182,8 @@ module.exports = function(app) {
                 process.execFileSync(meshFilePath,['sudo', parsedConfig.meshSSID ]);
 
             }
+
+            // Wlan2
 			
             // Reboot
             process.execSync('sudo reboot');
