@@ -21,8 +21,14 @@ module.exports = function(app) {
 			// Get Project Info
 			process.exec("cat ../app/package.json", function(err2, stdout2, stderr2) {
 				dashData.app = JSON.parse(stdout2);
-				// Render
-				res.render('dashboard', dashData);				
+
+                // Get Currently Beaming SSID
+                process.exec("cat /etc/hostapd/hostapd.conf | grep -Po '(?<=ssid=)(.*)'", function(err3, stdout3, stderr3) {
+                    dashData.wifiSSID = stdout3;
+
+                    // Render
+                    res.render('dashboard', dashData);              
+                });
 			});
 		});
 	});
