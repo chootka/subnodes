@@ -19,6 +19,6 @@ sed -i "s/SSID/$MESH_SSID/" subnodes_config_mesh.sh
 #
 echo ""
 echo "Adding startup script for mesh point..."
-cp scripts/subnodes_config_mesh.sh /etc/init.d/subnodes_config_mesh
+cp subnodes_config_mesh.sh /etc/init.d/subnodes_config_mesh
 chmod 755 /etc/init.d/subnodes_config_mesh
 update-rc.d subnodes_config_mesh defaults

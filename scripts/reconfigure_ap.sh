@@ -124,6 +124,6 @@ EOF
 		clear
 		update-rc.d hostapd enable
 		update-rc.d dnsmasq enable
-		cp scripts/subnodes_config_ap.sh /etc/init.d/subnodes_config_ap
+		cp subnodes_config_ap.sh /etc/init.d/subnodes_config_ap
 		chmod 755 /etc/init.d/subnodes_config_ap
 		update-rc.d subnodes_config_ap defaults

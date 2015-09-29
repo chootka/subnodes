@@ -10,9 +10,12 @@
 # ifconfig mesh0 down
 # ifconfig bat0 down
 # ifconfig wlan2 down
-
 # service hostapd stop
 # service dnsmasq stop
+
+echo -en "Disabling hostapd and dnsmasq on boot... 			"
+update-rc.d hostapd disable
+update-rc.d dnsmasq disable
 
 # remove hostapd init file
 echo -en "Deleting default hostapd and configuration files...			"
