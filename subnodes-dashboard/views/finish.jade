@@ -3,8 +3,7 @@ extends framework
 block content
 	div.subnodes-block.reboot-button
 		h4 When you're ready, reboot!
-		form(name='rebuild', action='/rebuild', method='post')
-			button(onclick="rebooting()").btn Start Reboot
+		button(onclick="rebooting()").btn Start Reboot
 	div#rebootingScreen
 		h6 Rebooting...
 		p Look out for a new wifi network:

@@ -2,6 +2,18 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # whipe network configuration
 #
+
+# bring network interfaces and services down
+# ifconfig br0 down
+# ifconfig bat0 down
+# ifconfig ap0 down
+# ifconfig mesh0 down
+# ifconfig bat0 down
+# ifconfig wlan2 down
+
+# service hostapd stop
+# service dnsmasq stop
+
 # remove hostapd init file
 echo -en "Deleting default hostapd and configuration files...			"
 rm /etc/default/hostapd

@@ -161,7 +161,7 @@ module.exports = function(app) {
             // Whipe Config
                 var whipeFilePath = '../scripts/whipe_network_config.sh';
                 process.execSync('chmod a+x ' + whipeFilePath);
-                process.execFileSync(whipeFilePath,['sudo']);
+                process.execFileSync(whipeFilePath,['sudo','bash']);
 
 			// Setup Access Point
             if (parsedConfig.wifiAccessPoint === "yes") {
@@ -169,7 +169,7 @@ module.exports = function(app) {
                 console.log('Configuring Access Point...');
                 var wifiFilePath = '../scripts/reconfigure_ap.sh';
                 process.execSync('chmod a+x ' + wifiFilePath);
-                process.execFileSync(wifiFilePath,[parsedConfig.wifiSSID, parsedConfig.wifiCountry, parsedConfig.wifiChannel, parsedConfig.bridgeIP, parsedConfig.bridgeSubnetMask, parsedConfig.dhcpStartingAddress, parsedConfig.dhcpEndingAddress, parsedConfig.dhcpMask, parsedConfig.dhcpLease, 'sudo' ]);
+                process.execFileSync(wifiFilePath,[parsedConfig.wifiSSID, parsedConfig.wifiCountry, parsedConfig.wifiChannel, parsedConfig.bridgeIP, parsedConfig.bridgeSubnetMask, parsedConfig.dhcpStartingAddress, parsedConfig.dhcpEndingAddress, parsedConfig.dhcpMask, parsedConfig.dhcpLease, 'sudo','bash' ]);
 
             }
 
@@ -179,7 +179,7 @@ module.exports = function(app) {
                 console.log('Configuring Mesh...');
                 var meshFilePath = '../scripts/reconfigure_mesh.sh';
                 process.execSync('chmod a+x ' + meshFilePath);
-                process.execFileSync(meshFilePath,['sudo', parsedConfig.meshSSID ]);
+                process.execFileSync(meshFilePath,['sudo', parsedConfig.meshSSID,'bash' ]);
 
             }
 
