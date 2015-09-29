@@ -157,37 +157,13 @@ module.exports = function(app) {
 		fs.readFile(configJSONPath, function (err, data) {
             var parsedConfig = JSON.parse(data);
             console.log("Parsed Config", parsedConfig);
-			
-            // Whipe Config - Believe this is working
-                // var whipeFilePath = '../scripts/whipe_network_config.sh';
-                // process.execSync('chmod a+x ' + whipeFilePath);
-                // process.execFileSync(whipeFilePath,['sudo','bash']);
 
-			// Setup Access Point - Not sure
-            if (parsedConfig.wifiAccessPoint == "yes") {
-                console.log('Configuring Access Point...');
-                var wifiFilePath = '../scripts/reconfigure_ap.sh';
-                process.execSync('chmod a+x ' + wifiFilePath);
-                process.execFileSync(wifiFilePath,['sudo', 'bash', parsedConfig.wifiSSID, parsedConfig.wifiCountry, parsedConfig.wifiChannel, parsedConfig.bridgeIP, parsedConfig.bridgeSubnetMask, parsedConfig.dhcpStartingAddress, parsedConfig.dhcpEndingAddress, parsedConfig.dhcpMask, parsedConfig.dhcpLease]);
-            } else {
-
-            }
-
-			// Setup Mesh Node - Not sure
-            if (parsedConfig.meshNode == "yes") {
-                console.log('Configuring Mesh...');
-                var meshFilePath = '../scripts/reconfigure_mesh.sh';
-                process.execSync('chmod a+x ' + meshFilePath);
-                process.execFileSync(meshFilePath,['sudo', 'bash', parsedConfig.meshSSID]);
-            } else {
-
-            }
-
-            // Wlan2
-			
-            // Reboot - Not hitting
-            process.execSync('sudo reboot');
-            // res.redirect('/');
+            var configFilePath = '../scripts/reconfigure_network_config.sh';
+            process.execSync('chmod a+x ' + configFilePath);
+            process.execFile(configFilePath,['sudo', 'bash', parsedConfig.wifiSSID, parsedConfig.wifiCountry, parsedConfig.wifiChannel, parsedConfig.bridgeIP, parsedConfig.bridgeSubnetMask, parsedConfig.dhcpStartingAddress, parsedConfig.dhcpEndingAddress, parsedConfig.dhcpMask, parsedConfig.dhcpLease, parsedConfig.meshNode, parsedConfig.meshSSID, parsedConfig.wifiAccessPoint], function (error, stdout, stderr) {
+                console.log('Rebooting...')
+                process.execSync('sudo reboot');
+            });
 		});
 	});
 
