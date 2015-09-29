@@ -130,17 +130,6 @@ EOF
 				echo -en "[OK]\n"
 			fi
 
-		# backup the existing interfaces file
-		echo -en "Creating backup of network interfaces configuration file... 			"
-		cp /etc/network/interfaces /etc/network/interfaces.bak
-		rc=$?
-		if [[ $rc != 0 ]] ; then
-			echo -en "[FAIL]\n"
-			exit $rc
-		else
-			echo -en "[OK]\n"
-		fi
-
 		# CONFIGURE dnsmasq
 		echo -en "Creating dnsmasq configuration file... 			"
 		cat <<EOF > /etc/dnsmasq.conf
@@ -164,9 +153,9 @@ EOF
 		clear
 		update-rc.d hostapd enable
 		update-rc.d dnsmasq enable
-		cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
-		chmod 755 /etc/init.d/subnodes_ap
-		update-rc.d subnodes_ap defaults
+		cp scripts/subnodes_config_ap.sh /etc/init.d/subnodes_config_ap
+		chmod 755 /etc/init.d/subnodes_config_ap
+		update-rc.d subnodes_config_ap defaults
 	;;
 
 	[Nn]* ) ;;
