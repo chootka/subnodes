@@ -12,7 +12,7 @@ MESH_SSID=$2
 # Configure Mesh Point
 #
 
-sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_config_mesh.sh
+sed -i "s/SSID/$MESH_SSID/" subnodes_config_mesh.sh
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # COPY OVER THE MESH POINT START UP SCRIPT

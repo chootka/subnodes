@@ -37,6 +37,11 @@ iface br0 inet static
   bridge_stp off
   address $BRIDGE_IP
   netmask $BRIDGE_NETMASK
+auto wlan2
+allow-hotplug wlan2
+iface wlan2 inet dhcp
+wpa-conf /etc/wpa.config
+
 iface default inet dhcp
 EOF
 		rc=$?
