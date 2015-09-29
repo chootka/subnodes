@@ -29,7 +29,7 @@ case ${12} in
 	[Yy]* )
 
 		# pass the selected mesh ssid into mesh startup script
-		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
+		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_config_mesh.sh
 
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE MESH POINT START UP SCRIPT
