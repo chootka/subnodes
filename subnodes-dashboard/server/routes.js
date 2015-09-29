@@ -109,25 +109,25 @@ module.exports = function(app) {
 
 	// Network Configuration Page
 	app.get('/config', function(req, res) {
-		var appsJSONPath = path.join(__dirname, '..', '..', 'verified_apps.json');
-		fs.readFile(appsJSONPath, function (err, data) {
+		var appConfigJSONPath = path.join(__dirname, '..', '..', 'new_app_config.json');
+		fs.readFile(appConfigJSONPath, function (err, data) {
 			var parsedData = JSON.parse(data);
-			res.render('config', {apps: parsedData.preapproved});
+			res.render('config', parsedData);
 		});
 	});
 
 	// Saving Configuration
 	app.post('/saveConfig', function(req, res) {
 		//Rewrite checkbox values
-		if(req.body['wifi-access-point']){
-			req.body['wifi-access-point'] = 'yes';
+		if(req.body['wifiAccessPoint']){
+			req.body['wifiAccessPoint'] = 'yes';
 		} else {
-			req.body['wifi-access-point'] = 'no';			
+			req.body['wifiAccessPoint'] = 'no';			
 		}
-		if(req.body['mesh-node']) {
-			req.body['mesh-node'] = 'yes';
+		if(req.body['meshNode']) {
+			req.body['meshNode'] = 'yes';
 		} else {
-			req.body['mesh-node'] = 'no';
+			req.body['meshNode'] = 'no';
 		}
 		var newAppConfig = JSON.stringify(req.body);
 		// Setup Conifg 
@@ -153,6 +153,12 @@ module.exports = function(app) {
 	app.post('/rebuild', function(req, res) {
 		console.log('Rebuilding...');
 		//child processes running shell script
+	});
+
+
+	//Catch gets for non-existant URLs
+	app.get('/*', function(req, res) {
+		res.redirect('/');
 	});
 
 }
