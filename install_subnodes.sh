@@ -125,7 +125,7 @@ iface ap0 inet static
 
 # create bridge
 iface br0 inet static
-  bridge_ports bat0 ap0
+  bridge_ports bat0 ap0 eth0 wlan2
   bridge_stp off
   address $BRIDGE_IP
   netmask $BRIDGE_NETMASK
