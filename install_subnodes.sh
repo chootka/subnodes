@@ -113,6 +113,8 @@ echo -en "[OK]\n"
 # CONFIGURE /etc/network/interfaces
 echo -en "Creating new network interfaces configuration file with your settings... 	"
 cat <<EOF > /etc/network/interfaces
+auto lo
+iface lo inet loopback
 
 auto eth0
 iface eth0 inet dhcp
