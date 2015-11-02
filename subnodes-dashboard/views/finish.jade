@@ -1,0 +1,13 @@
+extends framework
+
+block content
+	div.subnodes-block.reboot-button
+		h4 When you're ready, reboot!
+		button(onclick="rebooting()").btn Start Reboot
+	div#rebootingScreen
+		h6 Rebooting...
+		p Look out for a new wifi network:
+		h2 "#{wifi}"
+
+block scripts
+	script(src='/js/finish.js')

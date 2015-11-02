@@ -1,0 +1,55 @@
+extends framework
+
+block content
+	div.subnodes-block
+		form(name='config', action='/saveConfig', method='post').form-group
+			h4 Setup Networking
+
+			h6 Broadcast Wifi Network?
+			- if (wifiAccessPoint == "yes")
+				input(type='checkbox', name='wifiAccessPoint', checked).subnodes-checkbox
+			- else
+				input(type='checkbox', name='wifiAccessPoint').subnodes-checkbox
+
+			h6 Wifi Network Name (Must be Unique!)
+			input(type='text', name='wifiSSID', placeholder='Name of your organization, cause, or purpose?', value='#{wifiSSID}', required).subnodes-input.form-control
+			br
+
+			span(onclick='showAdvancedConfig()')#advancedConfigButton.btn.btn-default Show Advanced Settings
+
+			div#advancedConfig
+				span(onclick='hideAdvancedConfig()')#hideAdvancedConfigButton.btn.btn-default Hide Advanced Settings
+
+				h6 Make a Mesh Node?
+				- if (meshNode == "yes")	
+					input(type='checkbox', name='meshNode', checked).subnodes-input
+				- else 
+					input(type='checkbox', name='meshNode').subnodes-input
+				br
+
+				h6 Mesh Network Name (Must be the same across meshed devices!)
+				input(type='text', name='meshSSID', placeholder='meshnodes', value='#{meshSSID}', required).subnodes-input.form-control
+				h6 Wifi Country
+				input(type='text', name='wifiCountry', value='#{wifiCountry}').subnodes-input.form-control
+				h6 Wifi Channel
+				input(type='text', name='wifiChannel', value='#{wifiChannel}').subnodes-input.form-control
+				h6 Bridge IP (Unique between Raspberry Pis)
+				input(type='text', name='bridgeIP', value='#{bridgeIP}').subnodes-input.form-control
+				h6 Bridge Subnet Mask
+				input(type='text', name='bridgeSubnetMask', value='#{bridgeSubnetMask}').subnodes-input.form-control
+				h6 DHCP Starting Address
+				input(type='text', name='dhcpStartingAddress', value='#{dhcpStartingAddress}').subnodes-input.form-control
+				h6 DHCP Ending Address
+				input(type='text', name='dhcpEndingAddress', value='#{dhcpEndingAddress}').subnodes-input.form-control
+				h6 DHCP Mask
+				input(type='text', name='dhcpMask', value='#{dhcpMask}').subnodes-input.form-control
+				h6 DHCP Lease
+				input(type='text', name='dhcpLease', value='#{dhcpLease}').subnodes-input.form-control
+
+			div.subnodes-block
+				h4 Save Configuration?
+				input(type='submit', value='Save').btn
+
+
+block scripts
+	script(src='/js/config.js')

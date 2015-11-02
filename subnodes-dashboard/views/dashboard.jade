@@ -1,0 +1,44 @@
+extends framework
+
+block content
+	div.subnodes-block
+		h6 Current App
+		h2 #{app.name}
+		//- h6 #{app.repository.url}
+		ul
+			//- li
+			//- 	a(href='/#').btn Details
+			li
+				a(href='/app').btn Load App
+			li
+				span(onclick='updateApp()').btn Update
+	div.subnodes-block
+		h6 My IPs
+		ul
+			each ip in IPList
+				h4 #{ip}
+		ul
+			li
+				a(href='/signin').btn Sign Into Wifi
+			li
+				span(onclick='signOutOfWifi()').btn Sign Out of Wifi
+	div.subnodes-block
+		h6 Network Config - Current SSID
+		h4 #{wifiSSID}
+		ul
+			li
+				a(href='/ifconfig').btn ifconfig
+			li
+				a(href='/config').btn Reconfigure
+			li
+				span(onclick="rollbackNetworkConfig()").btn.btn-default Reset
+	div.subnodes-block
+		h6 Power
+		ul
+			li
+				span(onclick='rebootRPi()').btn Reboot
+			li
+				span(onclick='shutdownRPi()').btn Shutdown
+
+block scripts
+	script(src='/js/dashboard.js')

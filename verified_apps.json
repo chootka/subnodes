@@ -1,0 +1,12 @@
+{
+	"preapproved": [
+		{
+			"title": "Starter App",
+			"repo": "https://github.com/youmustfight/subnodes_starter_app"
+		},
+		{
+			"title": "Talking Points",
+			"repo": "https://github.com/jeesunikim/super-mesh"
+		}
+	]
+}

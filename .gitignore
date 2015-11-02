@@ -1,13 +1,8 @@
 _dev/
-node_latest_armhf.deb
 .DS_Store
-final_instructions.rtf
 node_modules
 npm-debug.log
-scripts/awkwardChatBot.js
-scripts/content.js
-scripts/haproxy.cfg
-scripts/node_install.sh
-scripts/__notused
 _untracked
 _untracked/*
+new-app-config.json
+app

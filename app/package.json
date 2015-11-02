@@ -1,0 +1,20 @@
+{
+  "name": "subnodes-default-app",
+  "version": "1.0.0",
+  "description": "Blank app for subnodes initial subnodes install",
+  "author": {
+    "name": "Mark Hansen",
+    "email": "x@markthemark.com"
+  },
+  "license": "AGLPv3",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "express": "^4.13.3",
+    "jade": "^1.11.0",
+    "morgan": "^1.6.1",
+    "path": "^0.12.7"
+  }
+}
