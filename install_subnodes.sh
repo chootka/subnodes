@@ -4,36 +4,36 @@
 # Mark Hansen
 # took guidance from a script by Sarah Grant
 # who took guidance from a script by Paul Miller : https://dl.dropboxusercontent.com/u/1663660/scripts/install-rtl8188cus.sh
-# Updated 20 September 2015
+# Updated 01 November 2015
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SOME DEFAULT VALUES
 #
+#  READ configuration file
+. ./subnodes.config
+
 # BRIDGE
-BRIDGE_IP=192.168.3.1
-BRIDGE_NETMASK=255.255.255.0
+#BRIDGE_IP=192.168.3.1
+#BRIDGE_NETMASK=255.255.255.0
 
 # WIRELESS RADIO DRIVER
-RADIO_DRIVER=nl80211
+#RADIO_DRIVER=nl80211
 
 # ACCESS POINT
-AP_COUNTRY=US
-AP_SSID="subnodes$((RANDOM%10000+1))"
-AP_CHAN=1
+#AP_COUNTRY=US
+#AP_SSID="subnodes$((RANDOM%10000+1))"
+#AP_CHAN=1
 
 # DNSMASQ STUFF
-DHCP_START=192.168.3.101
-DHCP_END=192.168.3.254
-DHCP_NETMASK=255.255.255.0
-DHCP_LEASE=1h
-
-#  READ Mesh configuration file
-. ./subnode_mesh.config
+#DHCP_START=192.168.3.101
+#DHCP_END=192.168.3.254
+#DHCP_NETMASK=255.255.255.0
+#DHCP_LEASE=1h
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CHECK USER PRIVILEGES
-(( `id -u` )) && echo "This script *must* be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
+(( `id -u` )) && echo "This script must be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # BEGIN INSTALLATION PROCESS
@@ -43,24 +43,22 @@ echo "// Welcome to Subnodes!"
 echo "// ~~~~~~~~~~~~~~~~~~~~~"
 echo ""
 
-echo "This installation script will install a node.js chatroom and will give you the options of configuring either a wireless access point, a BATMAN-ADV mesh point, or both. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding."
+echo "This installation script will install a node.js dashboard and wireless access point, with the option of configuring a BATMAN-ADV mesh point. Make sure you have one or two USB wifi radios connected to your Raspberry Pi before proceeding."
 echo ""
 #
 # CHECK USB WIFI HARDWARE IS FOUND
 # also, i will need to check for one device per network config for a total of two devices
-if [[ -n $(lsusb | grep RT5370) ]]; then
-    echo "The RT5370 device has been successfully located."
-else
-    echo "The RT5370 device has not been located, check it is inserted and run script again when done."
-    exit 1
-fi
+# if [[ -n $(lsusb | grep RT5370) ]]; then
+#     echo "The RT5370 device has been successfully located."
+# else
+#     echo "The RT5370 device has not been located, check it is inserted and run script again when done."
+#     exit 1
+# fi
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SOFTWARE INSTALL
 #
-
-
 # update the packages
 echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw batctl
@@ -70,6 +68,22 @@ echo "Enabling the batman-adv kernel module..."
 sed -i '$a batman-adv' /etc/modules
 modprobe batman-adv;
 echo ""
+echo "Loading the subnodes configuration file..."
+## Check if configuration exists, ask for overwriting
+if [ -e /etc/subnodes.config ] ; then
+        read -p "Older config file found! Overwrite? (y/n) [N]" -e $q
+        if [ "$q" == "y" ] ; then
+                echo "...overwriting"
+                copy_ok="yes"
+        else
+                echo "...not overwriting. Re-reading found configuration file..."
+                . /etc/subnodes.config
+        fi
+else
+        copy_ok="yes"
+fi
+# copy config file to /etc
+[ "$copy_ok" == "yes" ] && cp subnodes.config /etc
 # add Node.js
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_archive_armhf.deb
