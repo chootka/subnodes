@@ -28,6 +28,9 @@ DHCP_END=192.168.3.254
 DHCP_NETMASK=255.255.255.0
 DHCP_LEASE=1h
 
+#  READ Mesh configuration file
+. ./subnode_mesh.config
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CHECK USER PRIVILEGES
 (( `id -u` )) && echo "This script *must* be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
