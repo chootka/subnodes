@@ -1,0 +1,23 @@
+doctype html
+html
+	head
+		title='SUBNODES'
+		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0')
+		link(rel='stylesheet', href='/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/main.css')
+
+	body
+		div.container-fluid
+			div#header.col-xs-12
+				hr
+				a(href="/")
+					img(src="/images/logo.png")
+				hr
+
+			div#config-container.col-xs-12.col-xs-offset-1
+				block content
+
+		script(src='/js/jquery.min.js')
+		script(src='/js/bootstrap.min.js')
+
+		block scripts

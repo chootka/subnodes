@@ -1,0 +1,19 @@
+extends framework
+
+block content
+	div.subnodes-block
+		form(name='config', action='/loadApp', method='post').form-group
+			h4 Select/Enter In an App
+			h6 Here's a List of Our Favorites
+			select.subnodes-select.app-quick-select
+				option(disabled selected) -- None Selected -- 	
+				each app in apps
+					option #{app.repo}
+			h6 Or Enter a Github Repo URL
+			input(type='text', placeholder='https://github.com/chootka/subnodes', name='repo', required).subnodes-input.app-repo-input
+			h6 Load Application?
+			input(type='submit', value='Load').btn
+
+
+block scripts
+	script(src='/js/config.js')
