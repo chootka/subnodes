@@ -74,7 +74,7 @@ sed -i '$a batman-adv' /etc/modules
 modprobe batman-adv;
 echo ""
 echo "Installing Node.js..."
-wget http://node-arm.herokuapp.com/node_latest_armhf.deb
+wget http://node-arm.herokuapp.com/node_archive_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
 echo ""
 
