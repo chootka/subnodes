@@ -6,11 +6,16 @@ NAME=subnodes_config_mesh
 DESC="Brings our BATMAN-ADV mesh point up."
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
+CONFIG_FILE=/etc/subnodes.config
 PHY="phy0"
+
 
 	case "$1" in
 		start)
 			echo "Starting $NAME mesh point..."
+			# load config file
+			. $CONFIG_FILE
+
 			# delete wlan0 and wlan1, if they exist
 			WLAN0=`iw dev | awk '/Interface/ { print $2}' | grep wlan0`
 			if [ -n "$WLAN0" ] ; then
@@ -26,8 +31,8 @@ PHY="phy0"
 
 			# associate the mesh0 interface to a physical device
 			iw phy $PHY interface add mesh0 type adhoc
-			ifconfig mesh0 mtu 1532
-			iwconfig mesh0 mode ad-hoc essid SSID ap 02:12:34:56:78:90 channel 3
+			ifconfig mesh0 mtu $MTU
+			iwconfig mesh0 mode ad-hoc essid $MESH_SSID ap $CELL_ID channel $MESH_CHANNEL
 			ifconfig mesh0 down
 
 			# add the interface to batman
