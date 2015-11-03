@@ -62,6 +62,11 @@ case $yn in
 		update-rc.d -f subnodes_ap remove
 		rm /etc/init.d/subnodes_ap
 
+		# remove settings file
+		echo -en "Deleting subnodes configuration file...			"
+		rm /etc/subnodes.config
+		echo -en "[OK]\n"
+
 		echo "Deleting subnodes folder			"
 		cd /home/pi/
 		rm -rf /home/pi/subnodes
