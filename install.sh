@@ -75,7 +75,7 @@ modprobe batman-adv;
 echo ""
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_archive_armhf.deb
-sudo dpkg -i node_latest_armhf.deb
+sudo dpkg -i node_archive_armhf.deb
 echo ""
 
 # INSTALLING node.js chat room
