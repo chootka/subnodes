@@ -29,15 +29,5 @@
   "bugs": {
     "url": "https://github.com/chootka/subnodes/issues"
   },
-  "homepage": "https://github.com/chootka/subnodes",
-  "dependencies": {
-    "express": "^4.13.4",
-    "pug": "^2.0.0-alpha3",
-    "socket.io": "1.4.5",
-    "stylus": "^0.54.2"
-  },
-  "engines": {
-    "node": "5.0.0",
-    "npm": "3.8.x"
-  }
+  "homepage": "https://github.com/chootka/subnodes"
 }
