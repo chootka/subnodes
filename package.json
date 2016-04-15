@@ -31,13 +31,13 @@
   },
   "homepage": "https://github.com/chootka/subnodes",
   "dependencies": {
-    "express": "3.0.6",
-    "stylus": ">= 0.0.1",
-    "jade": ">= 0.0.1",
-    "socket.io": "0.9.6"  
+    "express": "^3.0.6",
+    "pug": "^0.1.0",
+    "socket.io": "0.9.6",
+    "stylus": "^0.0.1"
   },
   "engines": {
-      "node": "0.6.17",
-      "npm":  "2.10.x"
+    "node": "^0.6.17",
+    "npm": "3.3.6"
   }
 }
