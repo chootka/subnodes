@@ -16,7 +16,7 @@ module.exports = function(app, exp) {
 
 	app.configure(function(){
 		app.set('views', app.root + '/app/server/views');
-		app.set('view engine', 'jade');
+		app.set('view engine', 'pug');
 		app.set('view options', { doctype: 'html', pretty: true });
 		app.use(exp.logger('dev'));
   		app.use(exp.bodyParser());

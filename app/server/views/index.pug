@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	div(id='login')
+		p enter a screen name:
+		div(id='screenname', class='singleLine', contenteditable='true', spellcheck='false', required='true')
+		div(id='buttonWrapper')
+			button(id='joinButton') START CHATTING!
+
+
+	div(id='about')
+		p Subnodes is a free and anonymous network. Log on for local chat with others in your immediate area. All communication takes place offline and anonymously.<br/><br/>Subnodes is an open source project that enables people to easily set up portable local area networks for anonymous, local communication. Learn more at http://subnodes.org (after you reconnect to the Internet :))
+
+block scripts
+	script(src='/js/index.js')

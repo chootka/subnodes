@@ -11,7 +11,6 @@
 var express   = require('express'),
 	app         = express(),
   http        = require('http'),
-  https       = require('https'),
   server      = http.createServer(app),
   io          = require('socket.io').listen(server);
 
