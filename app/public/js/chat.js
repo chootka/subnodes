@@ -83,7 +83,7 @@
 					.append( '<div class="green"> > '+decoded+' connected</div>');
 				chatClient.fn.autoscroll();
 				chatClient.cfg.$incoming
-					.append( '<div class="hot-pink"> > *** Welcome to Hot Probs, '+decoded+'!!! ***</div>')
+					.append( '<div class="hot-pink"> > *** Welcome to Subnodes chat, '+decoded+'!!! ***</div>')
 					.append( '<div class="hot-pink"> > ***  '+countStr+' ***</div>');
 				chatClient.fn.autoscroll();
 			},
