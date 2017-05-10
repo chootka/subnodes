@@ -21,7 +21,7 @@ PHY="phy2"
 				# associate the mesh0 interface to a physical device
 				iw phy $PHY interface add mesh0 type adhoc
 				ifconfig mesh0 mtu 1532
-				iwconfig mesh0 mode ad-hoc essid "$SSID" ap 02:12:34:56:78:90 channel 3
+				iwconfig mesh0 mode ad-hoc essid SSID ap 02:12:34:56:78:90 channel 3
 				ifconfig mesh0 down
 
 				# add the interface to batman
