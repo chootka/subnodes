@@ -9,16 +9,12 @@
  * Module dependencies.
  */
 var express   = require('express'),
-	app         = express(),
-  http        = require('http'),
-  server      = http.createServer(app),
-  io          = require('socket.io').listen(server);
+	app       = express(),
+  	http      = require('http'),
+  	server    = http.createServer(app),
+  	io        = require('socket.io').listen(server);
 
-  app.root    	= __dirname;
-
-io.configure('development', function(){
-  io.set('transports', ['websocket']);
-});
+  	app.root  = __dirname;
 
 // create the application
 require('./app/config')(app, express);
