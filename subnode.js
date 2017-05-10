@@ -15,6 +15,7 @@ var express   = require('express'),
   	io        = require('socket.io').listen(server);
 
   	app.root  = __dirname;
+  	app.set('port', process.env.PORT || 8080);
 
 // create the application
 require('./app/config')(app, express);
@@ -22,6 +23,6 @@ require('./app/server/router')(app);
 require('./app/server/modules/chat')(io);
 
 // boot up HTTP server on port 80
-server.listen(8080, function() {
-  console.log("Express server listening on port %d in %s mode", server.address().port, app.settings.env);
-});
+server.listen(app.get('port'), function () {
+  console.log('Express server listening on port ' + app.get('port'))
+})

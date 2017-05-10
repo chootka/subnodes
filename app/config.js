@@ -33,20 +33,13 @@ module.exports = function(app, exp) {
 		app.use(exp.logger('dev'));
   		app.use(exp.bodyParser());
 		app.use(exp.methodOverride());
-		//app.use(exp.cookieParser());
-		//app.use(exp.basicAuth('username','password'));
 		app.use(exp.static(app.root + '/app/server'));
 		app.use(require('stylus').middleware({
 	        src: app.root + '/app/public',
 	        compress: true
 	    }));
 		app.use(exp.static(app.root + '/app/public'));
-		//app.use(exp.session())
-		//app.use(app.router) // the router itself (app.get(), app.put() etc)
 		app.use(function(err, req, res, next){
-		  // if an error occurs Connect will pass it down
-		  // through these "error-handling" middleware
-		  // allowing you to respond however you like
 		  res.send(500, { error: 'A vague server error has occurred: ' + err + '. Bad connection, perhaps?'});
 		})
 	});
