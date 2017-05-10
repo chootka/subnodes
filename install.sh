@@ -228,9 +228,37 @@ case $yn in
 		read -p "DHCP length of lease [$DHCP_LEASE]: " -e t1
 		if [ -n "$t1" ]; then DHCP_LEASE="$t1";fi
 
-		
-		# CONFIGURE /etc/network/interfaces
-		echo -en "Creating new network interfaces configuration file with your settings... 	"
+
+		# APPEND TO /etc/dhcpcd.conf
+		echo -en "Appending new network interfaces to /etc/dhcpcd.conf file with your settings... 	"
+		cat <<EOF > /etc/dhcpcd.conf
+# create bridge
+interface br0
+static ip_address=$BRIDGE_IP
+static netmask=$BRIDGE_NETMASK
+EOF
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+    			echo -en "[FAIL]\n"
+			echo ""
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
+
+		# backup the existing interfaces file
+		echo -en "Creating backup of network interfaces configuration file... 			"
+		cp /etc/network/interfaces /etc/network/interfaces.bak
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+			echo -en "[FAIL]\n"
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
+
+		# CREATE NEW /etc/network/interfaces
+		echo -en "Creating new network interfaces with your settings... 	"
 		cat <<EOF > /etc/network/interfaces
 auto lo
 iface lo inet loopback
@@ -239,15 +267,13 @@ auto eth0
 iface eth0 inet dhcp
 
 iface ap0 inet static
-	address 10.0.0.1
-	netmask 255.255.255.0
+  address 10.0.0.1
+  netmask 255.255.255.0
 
-# create bridge
+auto br0
 iface br0 inet static
-  bridge_ports bat0 ap0
-  bridge_stp off
-  address $BRIDGE_IP
-  netmask $BRIDGE_NETMASK
+bridge_ports bat0 ap0
+bridge_stp off
 
 iface default inet dhcp
 EOF
@@ -306,17 +332,6 @@ EOF
 			else
 				echo -en "[OK]\n"
 			fi
-
-		# backup the existing interfaces file
-		echo -en "Creating backup of network interfaces configuration file... 			"
-		cp /etc/network/interfaces /etc/network/interfaces.bak
-		rc=$?
-		if [[ $rc != 0 ]] ; then
-			echo -en "[FAIL]\n"
-			exit $rc
-		else
-			echo -en "[OK]\n"
-		fi
 
 		# CONFIGURE dnsmasq
 		echo -en "Creating dnsmasq configuration file... 			"

@@ -4,7 +4,6 @@ module.exports = function(app, exp) {
 	app.configure('development', function(){
 		
 		app.use(function(req, res, next){
-			// res.redirect('http://www.subnodes.com');
 			var hostname = req.header("host").split(":")[0];
 			if (hostname != "www.subnodes.com") {
 				res.redirect('http://www.subnodes.com:8080');
@@ -16,7 +15,6 @@ module.exports = function(app, exp) {
 	app.configure('production', function(){
 		
 		app.use(function(req, res, next){
-			// res.redirect('http://www.subnodes.com');
 			var hostname = req.header("host").split(":")[0];
 			if (hostname != "www.subnodes.com") {
 				res.redirect('http://www.subnodes.com');

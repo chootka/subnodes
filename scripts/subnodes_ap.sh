@@ -14,20 +14,6 @@ PHY="phy1"
 		start)
 			echo "Starting $NAME access point..."
 			# associate the ap0 interface to a physical devices
-			# check to see if wlan1 exists; use that radio, if so.
-			# FOUND=`iw dev | grep phy#1`
-			# if  [ -n "$FOUND" ] ; then
-			# 	#WLAN="wlan1"
-			# 	PHY="phy1"
-			# fi
-
-			# delete wlan0 and wlan1, if they exist
-			# WLAN0=`iw dev | awk '/Interface/ { print $2}' | grep wlan0`
-			# if [ -n "$WLAN0" ] ; then
-			# 	ifconfig $WLAN0 down
-			# 	iw $WLAN0 del
-			# fi
-
 			WLAN1=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
 			if [ -n "$WLAN1" ] ; then
 				ifconfig $WLAN1 down
@@ -37,9 +23,9 @@ PHY="phy1"
 				iw phy $PHY interface add ap0 type __ap
 
 				# for now, set static ip on br0 here
-				ifconfig br0 down
-				ifconfig br0 192.168.3.1
-				ifconfig br0 up
+				# ifconfig br0 down
+				# ifconfig br0 192.168.3.1
+				# ifconfig br0 up
 
 				# start the hostapd and dnsmasq services
 				service hostapd restart
