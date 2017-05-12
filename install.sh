@@ -231,12 +231,12 @@ case $yn in
 
 		# APPEND TO /etc/dhcpcd.conf
 		echo -en "Appending new network interfaces to /etc/dhcpcd.conf file with your settings... 	"
-		cat <<EOF > /etc/dhcpcd.conf
+		cat <<EOT >> /etc/dhcpcd.conf
 # create bridge
 interface br0
 static ip_address=$BRIDGE_IP
 static netmask=$BRIDGE_NETMASK
-EOF
+EOT
 		rc=$?
 		if [[ $rc != 0 ]] ; then
     			echo -en "[FAIL]\n"
