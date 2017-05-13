@@ -75,7 +75,7 @@ modprobe batman-adv;
 echo ""
 echo "Installing Node.js..."
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
-sudo dpkg -i node_latest_armhf.deb
+dpkg -i node_latest_armhf.deb
 echo ""
 
 # INSTALLING node.js chat room
@@ -84,8 +84,8 @@ echo "Installing chat room..."
 cd /home/pi/subnodes/
 
 # download subnodes app dependencies
-sudo npm install
-sudo npm install -g nodemon
+npm install
+npm install -g nodemon
 echo "Done!"
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
