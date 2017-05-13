@@ -22,11 +22,6 @@ PHY="phy1"
 				# assign ap0 to the hardware device found
 				iw phy $PHY interface add ap0 type __ap
 
-				# for now, set static ip on br0 here
-				# ifconfig br0 down
-				# ifconfig br0 192.168.3.1
-				# ifconfig br0 up
-
 				# start the hostapd and dnsmasq services
 				service hostapd restart
 				service dnsmasq restart

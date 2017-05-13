@@ -32,9 +32,9 @@
   "homepage": "https://github.com/chootka/subnodes",
   "dependencies": {
     "body-parser": "^1.15.0",
-    "express": "^3.0.0",
+    "express": ">=3.11",
     "pug": "^2.0.0-alpha3",
-    "socket.io": "0.9",
+    "socket.io": ">=0.9.7",
     "stylus": "^0.54.2"
   },
   "engines": {
