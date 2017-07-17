@@ -15,10 +15,10 @@ module.exports = function(io) {
 				// pass socket id to client
 				data.id = socket.id;
 				// save client username in the socket session for this client
-				socket.set('name',data.name);
+				connections[socket.id].name = data.name;
 				// save client color in the socket session for this client
 				data.color = colors[Math.floor(Math.random() * colors.length)];
-				socket.set('color',data.color);
+				connections[socket.id].color =  data.color;
 				
 				// send user to main room and let everyone know
 				data.connections = connections;
