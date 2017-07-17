@@ -15,10 +15,10 @@ module.exports = function(io) {
 				// pass socket id to client
 				data.id = socket.id;
 				// save client username in the socket session for this client
-				connections[socket.id].name = data.name;
+				connections[socket.id].data.name = data.name;
 				// save client color in the socket session for this client
 				data.color = colors[Math.floor(Math.random() * colors.length)];
-				connections[socket.id].color =  data.color;
+				connections[socket.id].data.color =  data.color;
 				
 				// send user to main room and let everyone know
 				data.connections = connections;
@@ -26,17 +26,13 @@ module.exports = function(io) {
 			});
 
 			socket.on('userMessage', function( data ) {
-				socket.get('color', function (err, color) {
-					data.color = color || '#ffffff';
-					broadcastMessage( 'userMessage', data );
-				});
+				data.color = connections[socket.id].data.color || '#ffffff';
+				broadcastMessage( 'userMessage', data );
 			});
 
 			socket.on('disconnect', function() {
-				socket.get('name', function (err, name) {
-					delete connections[socket.id];
-					broadcastMessage('userDisconnected', { name : name });
-				});				
+				delete connections[socket.id];
+				broadcastMessage('userDisconnected', { name : connections[socket.id].data.name });		
 			});
 
 			function broadcastMessage( message, data ) {
