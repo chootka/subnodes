@@ -8,7 +8,7 @@ module.exports = function(io) {
 		.on('connection', function( socket ) {
 
 			// record client connection to connections obj
-			connections[socket.id] = {};
+			connections[socket.id] = { data: {} };
 
 			// give each connected user a random color so it's easier to tell them apart in the chat log
 			socket.on('userReady', function( data ) {
@@ -31,8 +31,8 @@ module.exports = function(io) {
 			});
 
 			socket.on('disconnect', function() {
-				delete connections[socket.id];
-				broadcastMessage('userDisconnected', { name : connections[socket.id].data.name });		
+				broadcastMessage('userDisconnected', { name : connections[socket.id].data.name });
+				delete connections[socket.id];	
 			});
 
 			function broadcastMessage( message, data ) {
