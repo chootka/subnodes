@@ -17,21 +17,21 @@ PHY="phy2"
 			if [ -n "$WLAN2" ] ; then
 				ifdown $WLAN2
 				iw $WLAN2 del
-
-				# associate the mesh0 interface to a physical device
-				iw phy $PHY interface add mesh0 type adhoc
-				ifconfig mesh0 mtu 1532
-				iwconfig mesh0 mode ad-hoc essid SSID ap 02:12:34:56:78:90 channel 3
-				ifdown mesh0
-
-				# add the interface to batman
-				batctl if add mesh0
-				batctl ap_isolation 1
-
-				# bring up the BATMAN adv interface
-				ifup mesh0
-				ifup bat0
 			fi
+
+			# associate the mesh0 interface to a physical device
+			iw phy $PHY interface add mesh0 type adhoc
+			ifconfig mesh0 mtu 1532
+			iwconfig mesh0 mode ad-hoc essid SSID ap 02:12:34:56:78:90 channel 3
+			ifdown mesh0
+
+			# add the interface to batman
+			batctl if add mesh0
+			batctl ap_isolation 1
+
+			# bring up the BATMAN adv interface
+			ifup mesh0
+			ifup bat0
 			;;
 		status)
 		;;

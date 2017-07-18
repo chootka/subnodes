@@ -238,10 +238,10 @@ macaddr_acl=0
 wmm_enabled=1
 
 # Enable 802.11n
-ieee80211n=1
+#ieee80211n=1
 
 # Enable 40MHz channels with 20ns guard interval
-ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
+#ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -346,10 +346,10 @@ macaddr_acl=0
 wmm_enabled=1
 
 # Enable 802.11n
-ieee80211n=1
+#ieee80211n=1
 
 # Enable 40MHz channels with 20ns guard interval
-ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
+#ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
