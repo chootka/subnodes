@@ -1,13 +1,12 @@
 #!/bin/sh
 # /etc/init.d/subnodes_ap
-# starts up ap0 interface and hostapd for broadcasting a wireless network
+# starts up node.js app, ap0 interface, hostapd, and dnsmasq for broadcasting a wireless network with captive portal
 
 NAME=subnodes_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
 DAEMON_PATH="/home/pi/subnodes"
 DAEMONOPTS="sudo NODE_ENV=production PORT=80 nodemon subnode.js"
 PIDFILE=/var/run/$NAME.pid
-SCRIPTNAME=/etc/init.d/$NAME
 PHY="phy1"
 
 	case "$1" in
@@ -63,8 +62,8 @@ PHY="phy1"
 				printf "%s\n" "pidfile not found"
 			fi
 
-			ifconfig br0 down
-			ifconfig bat0 down
+			#ifconfig br0 down
+			#ifconfig bat0 down
 			ifconfig ap0 down
 
 			service hostapd stop
