@@ -18,15 +18,18 @@ PHY="phy1"
 			if [ -n "$WLAN1" ] ; then
 				ifdown $WLAN1
 				iw $WLAN1 del
+
+				# assign ap0 to the hardware device found
+				iw phy $PHY interface add ap0 type __ap
 			fi
 
-			# assign ap0 to the hardware device found
-			iw phy $PHY interface add ap0 type __ap
+			# bring up ap0 wireless access point interface
 			ifup ap0
 
 			# start the hostapd and dnsmasq services
-			service hostapd start
 			service dnsmasq start
+			#service hostapd start
+			hostapd -B /etc/hostapd/hostapd.conf
 
 			# start the node.js chat application
 			cd $DAEMON_PATH

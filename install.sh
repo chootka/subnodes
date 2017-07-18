@@ -229,19 +229,9 @@ beacon_int=100
 auth_algs=1
 wpa=0
 ap_isolate=1
-
-# Accept all MAC addresses
 macaddr_acl=0
-
-# Following lines added for compatibility with onboard radio in RPi3
-# Enable WMM for QoS
 wmm_enabled=1
-
-# Enable 802.11n
-#ieee80211n=1
-
-# Enable 40MHz channels with 20ns guard interval
-#ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
+ieee80211n=1
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -336,19 +326,9 @@ beacon_int=100
 auth_algs=1
 wpa=0
 ap_isolate=1
-
-# Accept all MAC addresses
 macaddr_acl=0
-
-# Following lines added for compatibility with onboard radio in RPi3
-# Enable WMM for QoS
 wmm_enabled=1
-
-# Enable 802.11n
-#ieee80211n=1
-
-# Enable 40MHz channels with 20ns guard interval
-#ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
+ieee80211n=1
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
