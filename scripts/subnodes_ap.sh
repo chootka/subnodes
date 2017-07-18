@@ -12,6 +12,7 @@ PHY="phy1"
 	case "$1" in
 		start)
 			echo "Starting $NAME access point..."
+			
 			# associate the ap0 interface to a physical devices
 			WLAN1=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
 			if [ -n "$WLAN1" ] ; then
@@ -21,10 +22,12 @@ PHY="phy1"
 				# assign ap0 to the hardware device found
 				iw phy $PHY interface add ap0 type __ap
 				ifconfig ap0 up
+				echo "Bringing up ap0..."
 
 				# start the hostapd and dnsmasq services
 				service hostapd start
 				service dnsmasq start
+				echo "Restarting hostapd and dnsmasq..."
 			fi
 
 			# start the node.js chat application
