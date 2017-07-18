@@ -335,7 +335,6 @@ channel=$AP_CHAN
 beacon_int=100
 auth_algs=1
 wpa=0
-
 ap_isolate=1
 
 # Accept all MAC addresses
@@ -360,13 +359,6 @@ EOF
 		fi
 	;;
 esac
-
-# to-do: check which wlan if's are available, then delete from that list (on RPi 3, would be default wlan0, and then wlan1, and potentially wlan2)
-# delete default wlan0 and wlan1 interfaces, since we have created ap0 and bat0
-# ifdown wlan0
-# ifdown wlan1
-# iw wlan0 del
-# iw wlan1 del
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # COPY OVER THE ACCESS POINT START UP SCRIPT + enable services

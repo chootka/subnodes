@@ -23,12 +23,10 @@ PHY="phy1"
 			# assign ap0 to the hardware device found
 			iw phy $PHY interface add ap0 type __ap
 			ifup ap0
-			echo "Bringing up ap0..."
 
 			# start the hostapd and dnsmasq services
-			service dnsmasq start
 			service hostapd start
-			echo "Restarting hostapd and dnsmasq..."
+			service dnsmasq start
 
 			# start the node.js chat application
 			cd $DAEMON_PATH
@@ -66,8 +64,6 @@ PHY="phy1"
 				printf "%s\n" "pidfile not found"
 			fi
 
-			#ifdown br0
-			#ifdown bat0
 			ifdown ap0
 
 			service hostapd stop
