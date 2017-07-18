@@ -103,6 +103,17 @@ if [[ $rc != 0 ]] ; then
 	exit $rc
 else
 	echo -en "[OK]\n"
+fi		
+
+# backup the existing /etc/dhcpcd.conf file
+echo -en "Creating backup of dhcpcd configuration file..."
+cp /etc/dhcpcd.conf /etc/dhcpcd.conf.bak
+rc=$?
+if [[ $rc != 0 ]] ; then
+		echo -en "[FAIL]\n"
+	exit $rc
+else
+	echo -en "[OK]\n"
 fi
 
 # create hostapd init file
@@ -138,17 +149,6 @@ case $DO_SET_MESH in
 
 		# pass the selected mesh ssid into mesh startup script
 		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
-		
-		# backup the existing /etc/dhcpcd.conf file
-		echo -en "Creating backup of network interfaces configuration file..."
-		cp /etc/dhcpcd.conf /etc/dhcpcd.conf.bak
-		rc=$?
-		if [[ $rc != 0 ]] ; then
-				echo -en "[FAIL]\n"
-			exit $rc
-		else
-			echo -en "[OK]\n"
-		fi
 
 		# append bridge settings to /etc/dhcpcd.conf
 		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
@@ -194,8 +194,8 @@ auto eth0
 iface eth0 inet dhcp
 
 iface ap0 inet static
-  address $AP_IP
-  netmask $AP_NETMASK
+address $AP_IP
+netmask $AP_NETMASK
 
 auto br0
 iface br0 inet static
@@ -228,9 +228,20 @@ channel=$AP_CHAN
 beacon_int=100
 auth_algs=1
 wpa=0
-macaddr_acl=0
-wmm_enabled=1
 ap_isolate=1
+
+# Accept all MAC addresses
+macaddr_acl=0
+
+# Following lines added for compatibility with onboard radio in RPi3
+# Enable WMM for QoS
+wmm_enabled=1
+
+# Enable 802.11n
+ieee80211n=1
+
+# Enable 40MHz channels with 20ns guard interval
+ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -252,6 +263,22 @@ EOF
 
 	[Nn]* ) 
 	# if no mesh point is created, set up network interfaces, hostapd and dnsmasq to operate without a bridge
+
+		# append bridge settings to /etc/dhcpcd.conf
+		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
+		cat <<EOT >> /etc/dhcpcd.conf
+denyinterfaces wlan0
+EOT
+		rc=$?
+		if [[ $rc != 0 ]] ; then
+		    	echo -en "[FAIL]\n"
+			echo ""
+			exit $rc
+		else
+			echo -en "[OK]\n"
+		fi
+
+
 		# configure dnsmasq
 		echo -en "Creating dnsmasq configuration file..."
 		cat <<EOF > /etc/dnsmasq.conf
@@ -280,8 +307,8 @@ iface eth0 inet dhcp
 
 auto ap0
 iface ap0 inet static
-  address $AP_IP
-  netmask $AP_NETMASK
+address $AP_IP
+netmask $AP_NETMASK
 
 iface default inet dhcp
 EOF
@@ -308,9 +335,21 @@ channel=$AP_CHAN
 beacon_int=100
 auth_algs=1
 wpa=0
-macaddr_acl=0
-wmm_enabled=1
+
 ap_isolate=1
+
+# Accept all MAC addresses
+macaddr_acl=0
+
+# Following lines added for compatibility with onboard radio in RPi3
+# Enable WMM for QoS
+wmm_enabled=1
+
+# Enable 802.11n
+ieee80211n=1
+
+# Enable 40MHz channels with 20ns guard interval
+ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
 EOF
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -324,8 +363,8 @@ esac
 
 # to-do: check which wlan if's are available, then delete from that list (on RPi 3, would be default wlan0, and then wlan1, and potentially wlan2)
 # delete default wlan0 and wlan1 interfaces, since we have created ap0 and bat0
-# ifconfig wlan0 down
-# ifconfig wlan1 down
+# ifdown wlan0
+# ifdown wlan1
 # iw wlan0 del
 # iw wlan1 del
 

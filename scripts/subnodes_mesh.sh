@@ -15,29 +15,29 @@ PHY="phy2"
 			# delete wlan2 if it exists
 			WLAN2=`iw dev | awk '/Interface/ { print $2}' | grep wlan2`
 			if [ -n "$WLAN2" ] ; then
-				ifconfig $WLAN2 down
+				ifdown $WLAN2
 				iw $WLAN2 del
 
 				# associate the mesh0 interface to a physical device
 				iw phy $PHY interface add mesh0 type adhoc
 				ifconfig mesh0 mtu 1532
 				iwconfig mesh0 mode ad-hoc essid SSID ap 02:12:34:56:78:90 channel 3
-				ifconfig mesh0 down
+				ifdown mesh0
 
 				# add the interface to batman
 				batctl if add mesh0
 				batctl ap_isolation 1
 
 				# bring up the BATMAN adv interface
-				ifconfig mesh0 up
-				ifconfig bat0 up
+				ifup mesh0
+				ifup bat0
 			fi
 			;;
 		status)
 		;;
 		stop)
-			ifconfig mesh0 down
-			ifconfig bat0 down
+			ifdown mesh0
+			ifdown bat0
 		;;
 
 		restart)

@@ -12,23 +12,23 @@ PHY="phy1"
 	case "$1" in
 		start)
 			echo "Starting $NAME access point..."
-			
+
 			# associate the ap0 interface to a physical devices
 			WLAN1=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
 			if [ -n "$WLAN1" ] ; then
-				ifconfig $WLAN1 down
+				ifdown $WLAN1
 				iw $WLAN1 del
-
-				# assign ap0 to the hardware device found
-				iw phy $PHY interface add ap0 type __ap
-				ifconfig ap0 up
-				echo "Bringing up ap0..."
-
-				# start the hostapd and dnsmasq services
-				service hostapd start
-				service dnsmasq start
-				echo "Restarting hostapd and dnsmasq..."
 			fi
+
+			# assign ap0 to the hardware device found
+			iw phy $PHY interface add ap0 type __ap
+			ifup ap0
+			echo "Bringing up ap0..."
+
+			# start the hostapd and dnsmasq services
+			service dnsmasq start
+			service hostapd start
+			echo "Restarting hostapd and dnsmasq..."
 
 			# start the node.js chat application
 			cd $DAEMON_PATH
@@ -66,9 +66,9 @@ PHY="phy1"
 				printf "%s\n" "pidfile not found"
 			fi
 
-			#ifconfig br0 down
-			#ifconfig bat0 down
-			ifconfig ap0 down
+			#ifdown br0
+			#ifdown bat0
+			ifdown ap0
 
 			service hostapd stop
             service dnsmasq stop
