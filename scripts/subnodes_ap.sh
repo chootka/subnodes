@@ -20,10 +20,11 @@ PHY="phy1"
 
 				# assign ap0 to the hardware device found
 				iw phy $PHY interface add ap0 type __ap
+				ifconfig ap0 up
 
 				# start the hostapd and dnsmasq services
-				service hostapd restart
-				service dnsmasq restart
+				service hostapd start
+				service dnsmasq start
 			fi
 
 			# start the node.js chat application

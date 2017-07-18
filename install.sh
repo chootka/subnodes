@@ -193,6 +193,7 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
+auto ap0
 iface ap0 inet static
   address $AP_IP
   netmask $AP_NETMASK
