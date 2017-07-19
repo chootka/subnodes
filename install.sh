@@ -138,14 +138,15 @@ echo "Checking whether to configure mesh point or not..."
 case $DO_SET_MESH in
 	[Yy]* )
 		clear
+		echo "Configuring Raspberry Pi as a BATMAN-ADV mesh point..."
+		echo ""
+		echo "Installing batctl..."
 		apt-get install -y batctl
 		echo ""
 		echo "Enabling the batman-adv kernel module..."
 		# add the batman-adv module to be started on boot
 		sed -i '$a batman-adv' /etc/modules
 		modprobe batman-adv;
-		echo "Configuring Raspberry Pi as a BATMAN-ADV mesh point..."
-		echo ""
 
 		# pass the selected mesh ssid into mesh startup script
 		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
@@ -153,6 +154,7 @@ case $DO_SET_MESH in
 		# append bridge settings to /etc/dhcpcd.conf
 		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
 		cat <<EOT >> /etc/dhcpcd.conf
+denyinterfaces wlan0
 # create bridge
 interface br0
 static ip_address=$BRIDGE_IP

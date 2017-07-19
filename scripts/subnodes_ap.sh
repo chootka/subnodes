@@ -16,7 +16,7 @@ PHY="phy1"
 			# associate the ap0 interface to a physical devices
 			WLAN1=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
 			if [ -n "$WLAN1" ] ; then
-				ifdown $WLAN1
+				ifconfig $WLAN1 down
 				iw $WLAN1 del
 
 				# assign ap0 to the hardware device found
