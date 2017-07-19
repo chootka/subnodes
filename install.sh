@@ -7,23 +7,57 @@
 #
 # TO-DO
 # - allow a selection of radio drivers
-# - fix addressing to avoid collisions below (peek at pirate box)
-#
+# - fix addressing to avoid collisions below w/avahi
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+
+
+
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# SOME DEFAULT VALUES
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# first find out if this is RPi3 or not, based on revision code
+# reference: http://www.raspberrypi-spy.co.uk/2012/09/checking-your-raspberry-pi-board-version/
+REV="$(cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}')"
+
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# LOAD CONFIG FILE WITH USER OPTIONS
 #
 #  READ configuration file
 . ./subnodes.config
 
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CHECK USER PRIVILEGES
 (( `id -u` )) && echo "This script *must* be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
 
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # BEGIN INSTALLATION PROCESS
 #
+
+clear
 echo "////////////////////////"
 echo "// Welcome to Subnodes!"
 echo "// ~~~~~~~~~~~~~~~~~~~~"
@@ -31,16 +65,26 @@ echo ""
 
 read -p "This installation script will install the latest arm version of node.js with a chatroom, set up a wireless access point and captive portal, and provide the option of configuring a BATMAN-ADV mesh point. Make sure you have one (or two, if installing the additional mesh point) USB wifi radios connected to your Raspberry Pi before proceeding. Press any key to continue..."
 echo ""
-#
+
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SOFTWARE INSTALL
 #
+
+clear
 # update the packages
 echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw 
 echo ""
 echo "Loading the subnodes configuration file..."
-## Check if configuration exists, ask for overwriting
+
+# Check if configuration exists, ask for overwriting
 if [ -e /etc/subnodes.config ] ; then
         read -p "Older config file found! Overwrite? (y/n) [N]" -e $q
         if [ "$q" == "y" ] ; then
@@ -53,14 +97,17 @@ if [ -e /etc/subnodes.config ] ; then
 else
         copy_ok="yes"
 fi
+
 # copy config file to /etc
 [ "$copy_ok" == "yes" ] && cp subnodes.config /etc
+
+# install node.js
 echo "Installing latest Node.js for arm..."
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 dpkg -i node_latest_armhf.deb
 echo ""
 
-# INSTALLING node.js chat room
+# install chat room
 echo "Installing chat room..."
 # go back to our subnodes directory
 cd /home/pi/subnodes/
@@ -69,9 +116,17 @@ cd /home/pi/subnodes/
 npm install
 npm install -g nodemon
 
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL
 #
+
 clear
 echo "Configuring Access Point..."
 echo ""
@@ -130,11 +185,30 @@ EOF
 		echo -en "[OK]\n"
 	fi
 
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE A MESH POINT?
-#
+
 clear
 echo "Checking whether to configure mesh point or not..."
+
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# 	DO CONFIGURE MESH POINT
+#
+
 case $DO_SET_MESH in
 	[Yy]* )
 		clear
@@ -243,9 +317,7 @@ EOF
 			echo -en "[OK]\n"
 		fi
 
-		# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 		# COPY OVER THE MESH POINT START UP SCRIPT
-		#
 		echo ""
 		echo "Adding startup script for mesh point..."
 		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
@@ -253,10 +325,22 @@ EOF
 		update-rc.d subnodes_mesh defaults
 	;;
 
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# 	ACCESS POINT ONLY
+#
+
 	[Nn]* ) 
 	# if no mesh point is created, set up network interfaces, hostapd and dnsmasq to operate without a bridge
-
-		# append bridge settings to /etc/dhcpcd.conf
+		clear
+		
+		# append interface settings to /etc/dhcpcd.conf
 		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
 		cat <<EOT >> /etc/dhcpcd.conf
 denyinterfaces wlan0
@@ -342,9 +426,17 @@ EOF
 	;;
 esac
 
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # COPY OVER THE ACCESS POINT START UP SCRIPT + enable services
 #
+
 clear
 update-rc.d hostapd enable
 update-rc.d dnsmasq enable
