@@ -6,17 +6,17 @@ NAME=subnodes_mesh
 DESC="Brings our BATMAN-ADV mesh point up."
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-PHY="phy2"
+PHY="phy1"
 
 	case "$1" in
 		start)
 			echo "Starting $NAME mesh point..."
 
-			# delete wlan2 if it exists
-			WLAN2=`iw dev | awk '/Interface/ { print $2}' | grep wlan2`
-			if [ -n "$WLAN2" ] ; then
-				ifconfig $WLAN2 down
-				iw $WLAN2 del
+			# delete wlan1 if it exists
+			WLAN1=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
+			if [ -n "$WLAN1" ] ; then
+				ifconfig $WLAN1 down
+				iw $WLAN1 del
 
 				# associate the mesh0 interface to a physical device
 				iw phy $PHY interface add mesh0 type adhoc
