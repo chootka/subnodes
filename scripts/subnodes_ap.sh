@@ -69,7 +69,7 @@ PHY="phy1"
 
 			ifconfig ap0 down
 
-			service hostapd stop
+			/etc/init.d/hostapd stop
             service dnsmasq stop
 		;;
 
