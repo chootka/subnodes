@@ -31,14 +31,14 @@ PHY="phy2"
 			batctl ap_isolation 1
 
 			# bring up the BATMAN adv interface
-			ifup mesh0
-			ifup bat0
+			ifconfig mesh0 up
+			ifconfig bat0 up
 			;;
 		status)
 		;;
 		stop)
-			ifdown mesh0
-			ifdown bat0
+			ifconfig mesh0 down
+			ifconfig bat0 down
 		;;
 
 		restart)

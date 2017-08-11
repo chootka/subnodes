@@ -24,7 +24,7 @@ PHY="phy1"
 			fi
 
 			# bring up ap0 wireless access point interface
-			ifup ap0
+			ifconfig ap0 up
 
 			# start the hostapd and dnsmasq services
 			service dnsmasq start
@@ -67,7 +67,7 @@ PHY="phy1"
 				printf "%s\n" "pidfile not found"
 			fi
 
-			ifdown ap0
+			ifconfig ap0 down
 
 			service hostapd stop
             service dnsmasq stop
