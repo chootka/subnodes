@@ -228,11 +228,11 @@ case $DO_SET_MESH in
 		# append bridge settings to /etc/dhcpcd.conf
 		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
 		cat <<EOT >> /etc/dhcpcd.conf
-denyinterfaces wlan0
-# create bridge
-interface br0
-static ip_address=$BRIDGE_IP
-static netmask=$BRIDGE_NETMASK
+denyinterfaces wlan0 br0
+# create ap0
+interface ap0
+static ip_address=$AP_IP
+static netmask=$AP_NETMASK
 EOT
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -269,12 +269,13 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
+auto ap0
 iface ap0 inet static
-address $AP_IP
-netmask $AP_NETMASK
 
 auto br0
 iface br0 inet static
+address $BRIDGE_IP
+netmask $BRIDGE_NETMASK
 bridge_ports bat0 ap0
 bridge_stp off
 
@@ -344,6 +345,10 @@ EOF
 		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
 		cat <<EOT >> /etc/dhcpcd.conf
 denyinterfaces wlan0
+# create ap0
+interface ap0
+static ip_address=$AP_IP
+static netmask=$AP_NETMASK
 EOT
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -383,8 +388,6 @@ iface eth0 inet dhcp
 
 auto ap0
 iface ap0 inet static
-address $AP_IP
-netmask $AP_NETMASK
 
 iface default inet dhcp
 EOF
