@@ -7,17 +7,17 @@ DESC="Brings up wireless access point for connecting to web server running on th
 DAEMON_PATH="/home/pi/subnodes"
 DAEMONOPTS="sudo NODE_ENV=production PORT=80 nodemon subnode.js"
 PIDFILE=/var/run/$NAME.pid
-PHY="phy1"
+PHY="phy0"
 
 	case "$1" in
 		start)
 			echo "Starting $NAME access point..."
 
 			# associate the ap0 interface to a physical devices
-			WLAN1=`iw dev | awk '/Interface/ { print $2}' | grep wlan1`
-			if [ -n "$WLAN1" ] ; then
-				ifconfig $WLAN1 down
-				iw $WLAN1 del
+			WLAN0=`iw dev | awk '/Interface/ { print $2}' | grep wlan0`
+			if [ -n "$WLAN0" ] ; then
+				ifconfig $WLAN0 down
+				iw $WLAN0 del
 
 				# assign ap0 to the hardware device found
 				iw phy $PHY interface add ap0 type __ap
