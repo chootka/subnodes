@@ -23,6 +23,9 @@ PHY="phy1"
 				iw phy $PHY interface add ap0 type __ap
 			fi
 
+			# add ap0 to our bridge
+			brctl addif br0 ap0
+
 			# bring up ap0 wireless access point interface
 			ifconfig ap0 up
 

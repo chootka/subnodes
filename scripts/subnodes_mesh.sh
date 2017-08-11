@@ -30,6 +30,9 @@ PHY="phy2"
 			batctl if add mesh0
 			batctl ap_isolation 1
 
+			# add bat0 to our bridge
+			brctl addif br0 bat0
+
 			# bring up the BATMAN adv interface
 			ifconfig mesh0 up
 			ifconfig bat0 up
