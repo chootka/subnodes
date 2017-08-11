@@ -1,9 +1,10 @@
 #! /bin/bash
 #
 # Raspberry Pi network configuration / AP, MESH install script
-# Contributors: Sarah Grant, Mark Hansen
+# Author: Sarah Grant
+# Contributors: Mark Hansen, Matthias Strubel
 # took guidance from a script by Paul Miller : https://dl.dropboxusercontent.com/u/1663660/scripts/install-rtl8188cus.sh
-# Updated 18 July 2017
+# Updated 11 August 2017
 #
 # TO-DO
 # - allow a selection of radio drivers
