@@ -7,14 +7,22 @@ DESC="Brings up wireless access point for connecting to web server running on th
 DAEMON_PATH="/home/pi/subnodes"
 DAEMONOPTS="sudo NODE_ENV=production PORT=80 nodemon subnode.js"
 PIDFILE=/var/run/$NAME.pid
-PHY="phy0"
+
+# get first PHY WLAN pair
+readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2~"wlan"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
+
+IW0=( ${IW[0]} )
+
+PHY=${IW0[0]}
+WLAN0=${IW0[1]}
+
+echo $PHY $WLAN0 > /tmp/ap.log
 
 	case "$1" in
 		start)
 			echo "Starting $NAME access point..."
 
 			# associate the ap0 interface to a physical devices
-			WLAN0=`iw dev | awk '/Interface/ { print $2}' | grep wlan0`
 			if [ -n "$WLAN0" ] ; then
 				ifconfig $WLAN0 down
 				iw $WLAN0 del
@@ -24,7 +32,9 @@ PHY="phy0"
 			fi
 
 			# add ap0 to our bridge
-			brctl addif br0 ap0
+			if [[ -x /sys/class/net/br0 ]]; 
+				brctl addif br0 ap0
+			fi
 
 			# bring up ap0 wireless access point interface
 			ifconfig ap0 up

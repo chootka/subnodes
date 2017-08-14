@@ -133,7 +133,7 @@ echo "Configuring Access Point..."
 echo ""
 
 # check that iw list does not fail with 'nl80211 not found'
-echo -en "checking that nl80211 USB wifi radio is plugged in..."
+echo -en "checking that nl80211 USB wifi radio is available..."
 iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 rc=$?
 if [[ $rc = 0 ]] ; then
@@ -223,17 +223,16 @@ case $DO_SET_MESH in
 		sed -i '$a batman-adv' /etc/modules
 		modprobe batman-adv;
 
-		# pass the selected mesh ssid into mesh startup script
+		# pass custom params into mesh startup script
+		sed -i "s/MTU/$MTU/" scripts/subnodes_mesh.sh
 		sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_mesh.sh
+		sed -i "s/CELL_ID/$CELL_ID/" scripts/subnodes_mesh.sh
+		sed -i "s/CHAN/$MESH_CHANNEL/" scripts/subnodes_mesh.sh
 
 		# append bridge settings to /etc/dhcpcd.conf
 		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
 		cat <<EOT >> /etc/dhcpcd.conf
 denyinterfaces wlan0 br0
-# create ap0
-interface ap0
-static ip_address=$AP_IP
-static netmask=$AP_NETMASK
 EOT
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -272,6 +271,8 @@ iface eth0 inet dhcp
 
 auto ap0
 iface ap0 inet static
+static ip_address=$AP_IP
+static netmask=$AP_NETMASK
 
 auto br0
 iface br0 inet static
@@ -303,7 +304,6 @@ ctrl_interface_group=0
 ssid=$AP_SSID
 hw_mode=g
 channel=$AP_CHAN
-beacon_int=100
 auth_algs=1
 wpa=0
 ap_isolate=1
@@ -346,10 +346,6 @@ EOF
 		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
 		cat <<EOT >> /etc/dhcpcd.conf
 denyinterfaces wlan0
-# create ap0
-interface ap0
-static ip_address=$AP_IP
-static netmask=$AP_NETMASK
 EOT
 		rc=$?
 		if [[ $rc != 0 ]] ; then
@@ -389,6 +385,8 @@ iface eth0 inet dhcp
 
 auto ap0
 iface ap0 inet static
+static ip_address=$AP_IP
+static netmask=$AP_NETMASK
 
 iface default inet dhcp
 EOF
@@ -412,7 +410,6 @@ ctrl_interface_group=0
 ssid=$AP_SSID
 hw_mode=g
 channel=$AP_CHAN
-beacon_int=100
 auth_algs=1
 wpa=0
 ap_isolate=1
@@ -444,6 +441,10 @@ esac
 clear
 update-rc.d hostapd enable
 update-rc.d dnsmasq enable
+
+
+# pass custom params into ap startup script
+sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_ap.sh
 cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
 chmod 755 /etc/init.d/subnodes_ap
 update-rc.d subnodes_ap defaults
