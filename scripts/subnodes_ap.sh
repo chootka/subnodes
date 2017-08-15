@@ -35,12 +35,9 @@ echo $PHY $WLAN0 > /tmp/ap.log
 			echo "Starting $NAME access point on interfaces $PHY:$WLAN0..."
 
 			# associate the access point interface to a physical devices
-			if [ -n "$WLAN0" ] ; then
-				ifconfig $WLAN0 down
-
-				# assign access point iface to the hardware device found
-				iw phy $PHY interface add $WLAN0 type __ap
-			fi
+			ifconfig $WLAN0 down
+			# put iface into AP mode
+			iw phy $PHY interface add $WLAN0 type __ap
 
 			# add access point iface to our bridge
 			if [[ -x /sys/class/net/br0 ]]; then

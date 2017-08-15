@@ -78,7 +78,7 @@ clear
 # CHECK THAT REQUIRED RADIOS ARE AVAILABLE FOR AP & MESH POINT [IF SELECTED]
 #
 # check that iw list does not fail with 'nl80211 not found'
-echo -en "Checking that USB wifi radio is available..."
+echo -en "Checking that USB wifi radio is available for access point..."
 readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2~"wlan"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
 if [[ -z $IW ]] ; then
 	echo -en "[FAIL]\n"
@@ -92,9 +92,11 @@ fi
 # now check that iw list finds a radio other than wlan0 if mesh point option was set to 'y' in config file
 case $DO_SET_MESH in
 	[Yy]* )
+		echo -en "Checking that USB wifi radio is available for mesh point..."
 		readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2!="wlan0"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
 
 		if [[ -z $IW ]] ; then
+			echo -en "[FAIL]\n"
 			echo "Warning! Second wireless adapter not found! Please plug in an addition wireless radio after installation completes and before reboot."
 			echo "Installation process will proceed in 5 seconds..."
 			sleep 5
@@ -385,8 +387,8 @@ iface eth0 inet dhcp
 
 auto wlan0
 iface wlan0 inet static
-static ip_address=$AP_IP
-static netmask=$AP_NETMASK
+address $AP_IP
+netmask $AP_NETMASK
 
 iface default inet dhcp
 EOF
