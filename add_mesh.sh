@@ -101,9 +101,6 @@ case $DO_SET_MESH in
 		clear
 		echo "Configuring Raspberry Pi as a BATMAN-ADV mesh point..."
 		echo ""
-		echo "Installing batctl..."
-		apt-get install -y batctl
-		echo ""
 		echo "Enabling the batman-adv kernel module..."
 		# add the batman-adv module to be started on boot
 		sed -i '$a batman-adv' /etc/modules

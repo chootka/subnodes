@@ -2,9 +2,9 @@
 #
 # Raspberry Pi network configuration / AP, MESH install script
 # Author: Sarah Grant
-# Contributors: Mark Hansen, Matthias Strubel
+# Contributors: Mark Hansen, Matthias Strubel, Danja Vasiliev
 # took guidance from a script by Paul Miller : https://dl.dropboxusercontent.com/u/1663660/scripts/install-rtl8188cus.sh
-# Updated 11 August 2017
+# Updated 15 August 2017
 #
 # TO-DO
 # - allow a selection of radio drivers
@@ -185,8 +185,8 @@ echo ""
 
 # install required packages
 echo ""
-echo -en "Installing bridge-utils, hostapd and dnsmasq..."
-apt-get install -y bridge-utils hostapd dnsmasq
+echo -en "Installing bridge-utils, batctl, hostapd and dnsmasq..."
+apt-get install -y bridge-utils hostapd dnsmasq batctl
 echo -en "[OK]\n"
 
 # backup the existing interfaces file
@@ -242,9 +242,6 @@ case $DO_SET_MESH in
 	[Yy]* )
 		clear
 		echo "Configuring Raspberry Pi as a BATMAN-ADV mesh point..."
-		echo ""
-		echo "Installing batctl..."
-		apt-get install -y batctl
 		echo ""
 		echo "Enabling the batman-adv kernel module..."
 		# add the batman-adv module to be started on boot
@@ -309,7 +306,7 @@ EOF
 		# create hostapd configuration with user's settings
 		echo -en "Creating hostapd.conf file..."
 		cat <<EOF > /etc/hostapd/hostapd.conf
-interface=wlan0
+interface=ap0
 bridge=br0
 driver=$RADIO_DRIVER
 country_code=$AP_COUNTRY
@@ -318,6 +315,7 @@ ctrl_interface_group=0
 ssid=$AP_SSID
 hw_mode=g
 channel=$AP_CHAN
+beacon_int=100
 auth_algs=1
 wpa=0
 ap_isolate=1
