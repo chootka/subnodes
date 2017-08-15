@@ -78,13 +78,12 @@ clear
 # CHECK THAT REQUIRED RADIOS ARE AVAILABLE FOR AP & MESH POINT [IF SELECTED]
 #
 # check that iw list does not fail with 'nl80211 not found'
-echo -en "Checking that nl80211 compatible USB wifi radio is available..."
-iw list > /dev/null 2>&1 | grep 'nl80211 not found'
-rc=$?
-if [[ $rc = 0 ]] ; then
+echo -en "Checking that USB wifi radio is available..."
+readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2~"wlan"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
+if [[ -z $IW ]] ; then
 	echo -en "[FAIL]\n"
-	echo "Make sure you are using a wifi radio that is nl80211 compatible."
-	exit $rc
+	echo "Warning! Wireless adapter not found! Please plug in a wireless radio after installation completes and before reboot."
+	sleep 2
 else
 	echo -en "[OK]\n"
 fi
@@ -98,6 +97,8 @@ case $DO_SET_MESH in
 		if [[ -z $IW ]] ; then
 			echo "Warning! Second wireless adapter not found! Please plug in an addition wireless radio after installation completes and before reboot."
 			sleep 2
+		else
+			echo -en "[OK]\n"
 		fi
 ;;
 esac
