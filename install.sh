@@ -83,6 +83,7 @@ readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2~"wlan"{W
 if [[ -z $IW ]] ; then
 	echo -en "[FAIL]\n"
 	echo "Warning! Wireless adapter not found! Please plug in a wireless radio after installation completes and before reboot."
+	echo "Installation process will proceed in 5 seconds..."
 	sleep 5
 else
 	echo -en "[OK]\n"
@@ -95,6 +96,7 @@ case $DO_SET_MESH in
 
 		if [[ -z $IW ]] ; then
 			echo "Warning! Second wireless adapter not found! Please plug in an addition wireless radio after installation completes and before reboot."
+			echo "Installation process will proceed in 5 seconds..."
 			sleep 5
 		else
 			echo -en "[OK]\n"
