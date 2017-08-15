@@ -66,6 +66,29 @@ echo ""
 
 read -p "This installation script will install the latest arm version of node.js with a chatroom, set up a wireless access point and captive portal, and provide the option of configuring a BATMAN-ADV mesh point. Make sure you have one (or two, if installing the additional mesh point) USB wifi radios connected to your Raspberry Pi before proceeding. Press any key to continue..."
 echo ""
+clear
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# CHECK ADDITIONAL RADIO IS AVAILABLE FOR MESH POINT IF SELECTED
+#
+case $DO_SET_MESH in
+	[Yy]* )
+		clear
+		readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2!="wlan0"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
+
+		if [[ -z IW ]] ; then
+			echo "Second wireless adapter not found! Please plug in an addition wireless radio for the mesh point and re-run this script."
+			exit 0;
+		fi
+;;
+esac
+
 
 
 
@@ -77,8 +100,6 @@ echo ""
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SOFTWARE INSTALL
 #
-
-clear
 # update the packages
 echo "Updating apt-get and installing iw package for network interface configuration..."
 apt-get update && apt-get install -y iw 
