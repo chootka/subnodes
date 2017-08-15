@@ -34,9 +34,6 @@ echo $PHY $WLAN1 > /tmp/mesh.log
 			echo "Starting $NAME mesh point on interface $PHY:$WLAN1..."
 
 			ifconfig $WLAN1 down
-
-			# set the wlan interface to a ibss (ad-hoc) mode
-			#iw phy $PHY interface add $WLAN1 type ibss
 			ifconfig $WLAN1 mtu MTU
 			iwconfig $WLAN1 mode ad-hoc essid SSID ap CELL_ID channel CHAN
 

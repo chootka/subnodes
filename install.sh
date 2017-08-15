@@ -82,7 +82,7 @@ case $DO_SET_MESH in
 		clear
 		readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2!="wlan0"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
 
-		if [[ -z IW ]] ; then
+		if [[ -z $IW ]] ; then
 			echo "Second wireless adapter not found! Please plug in an addition wireless radio for the mesh point and re-run this script."
 			exit 0;
 		fi
@@ -328,9 +328,12 @@ EOF
 			echo -en "[OK]\n"
 		fi
 
-		# COPY OVER THE MESH POINT START UP SCRIPT
+		# COPY OVER START UP SCRIPTS
 		echo ""
-		echo "Adding startup script for mesh point..."
+		echo "Adding startup scripts to init.d..."
+		cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
+		chmod 755 /etc/init.d/subnodes_ap
+		update-rc.d subnodes_ap defaults
 		cp scripts/subnodes_mesh.sh /etc/init.d/subnodes_mesh
 		chmod 755 /etc/init.d/subnodes_mesh
 		update-rc.d subnodes_mesh defaults
@@ -418,6 +421,13 @@ EOF
 		else
 			echo -en "[OK]\n"
 		fi
+
+		# COPY OVER START UP SCRIPTS
+		echo ""
+		echo "Adding startup scripts to init.d..."
+		cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
+		chmod 755 /etc/init.d/subnodes_ap
+		update-rc.d subnodes_ap defaults
 	;;
 esac
 
@@ -436,15 +446,9 @@ clear
 update-rc.d hostapd remove
 update-rc.d dnsmasq enable
 
-
-# pass custom params into ap startup script
-cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
-chmod 755 /etc/init.d/subnodes_ap
-update-rc.d subnodes_ap defaults
-
 read -p "Do you wish to reboot now? [N] " yn
 	case $yn in
 		[Yy]* )
 			reboot;;
-		Nn]* ) exit 0;;
+		[Nn]* ) exit 0;;
 	esac
