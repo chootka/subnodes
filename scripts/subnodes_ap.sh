@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 # /etc/init.d/subnodes_ap
-# starts up node.js app, ap0 interface, hostapd, and dnsmasq for broadcasting a wireless network with captive portal
+# starts up node.js app, access point interface, hostapd, and dnsmasq for broadcasting a wireless network with captive portal
 
 NAME=subnodes_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
@@ -20,24 +20,23 @@ echo $PHY $WLAN0 > /tmp/ap.log
 
 	case "$1" in
 		start)
-			echo "Starting $NAME access point..."
+			echo "Starting $NAME access point on interfaces $PHY:$WLAN0..."
 
-			# associate the ap0 interface to a physical devices
+			# associate the access point interface to a physical devices
 			if [ -n "$WLAN0" ] ; then
 				ifconfig $WLAN0 down
-				iw $WLAN0 del
 
-				# assign ap0 to the hardware device found
-				iw phy $PHY interface add ap0 type __ap
+				# assign access point iface to the hardware device found
+				iw phy $PHY interface add $WLAN0 type __ap
 			fi
 
-			# add ap0 to our bridge
-			if [[ -x /sys/class/net/br0 ]]; 
-				brctl addif br0 ap0
+			# add access point iface to our bridge
+			if [[ -x /sys/class/net/br0 ]]; then
+				brctl addif br0 $WLAN0
 			fi
 
-			# bring up ap0 wireless access point interface
-			ifconfig ap0 up
+			# bring up access point iface wireless access point interface
+			ifconfig $WLAN0 up
 
 			# start the hostapd and dnsmasq services
 			service dnsmasq start
@@ -80,8 +79,13 @@ echo $PHY $WLAN0 > /tmp/ap.log
 				printf "%s\n" "pidfile not found"
 			fi
 
-			ifconfig ap0 down
-
+			ifconfig $WLAN0 down
+			
+			# delete access point iface to our bridge
+			if [[ -x /sys/class/net/br0 ]]; then
+				brctl delif br0 $WLAN0
+			fi
+			
 			/etc/init.d/hostapd stop
             service dnsmasq stop
 		;;

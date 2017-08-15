@@ -125,6 +125,19 @@ npm install -g nodemon
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# DISABLE DHCPCD SINCE WE ARE RELYING ON STATIC IPs IN A CLOSED NETWORK
+#
+systemctl disable dhcpcd
+systemctl enable networking
+
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CONFIGURE AN ACCESS POINT WITH CAPTIVE PORTAL
 #
 
@@ -133,12 +146,12 @@ echo "Configuring Access Point..."
 echo ""
 
 # check that iw list does not fail with 'nl80211 not found'
-echo -en "checking that nl80211 USB wifi radio is available..."
+echo -en "checking that nl80211 compatible USB wifi radio is available..."
 iw list > /dev/null 2>&1 | grep 'nl80211 not found'
 rc=$?
 if [[ $rc = 0 ]] ; then
 	echo -en "[FAIL]\n"
-	echo "Make sure you are using a wifi radio that runs via the nl80211 driver."
+	echo "Make sure you are using a wifi radio that is nl80211 compatible."
 	exit $rc
 else
 	echo -en "[OK]\n"
@@ -160,17 +173,6 @@ if [[ $rc != 0 ]] ; then
 else
 	echo -en "[OK]\n"
 fi		
-
-# backup the existing /etc/dhcpcd.conf file
-echo -en "Creating backup of dhcpcd configuration file..."
-cp /etc/dhcpcd.conf /etc/dhcpcd.conf.bak
-rc=$?
-if [[ $rc != 0 ]] ; then
-		echo -en "[FAIL]\n"
-	exit $rc
-else
-	echo -en "[OK]\n"
-fi
 
 # create hostapd init file
 echo -en "Creating default hostapd file..."
@@ -229,20 +231,6 @@ case $DO_SET_MESH in
 		sed -i "s/CELL_ID/$CELL_ID/" scripts/subnodes_mesh.sh
 		sed -i "s/CHAN/$MESH_CHANNEL/" scripts/subnodes_mesh.sh
 
-		# append bridge settings to /etc/dhcpcd.conf
-		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
-		cat <<EOT >> /etc/dhcpcd.conf
-denyinterfaces wlan0 br0
-EOT
-		rc=$?
-		if [[ $rc != 0 ]] ; then
-		    	echo -en "[FAIL]\n"
-			echo ""
-			exit $rc
-		else
-			echo -en "[OK]\n"
-		fi
-
 		# configure dnsmasq
 		echo -en "Creating dnsmasq configuration file..."
 		cat <<EOF > /etc/dnsmasq.conf
@@ -269,8 +257,8 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
-auto ap0
-iface ap0 inet static
+auto wlan0
+iface wlan0 inet static
 static ip_address=$AP_IP
 static netmask=$AP_NETMASK
 
@@ -278,7 +266,7 @@ auto br0
 iface br0 inet static
 address $BRIDGE_IP
 netmask $BRIDGE_NETMASK
-bridge_ports bat0 ap0
+bridge_ports bat0 wlan0
 bridge_stp off
 
 iface default inet dhcp
@@ -295,7 +283,7 @@ EOF
 		# create hostapd configuration with user's settings
 		echo -en "Creating hostapd.conf file..."
 		cat <<EOF > /etc/hostapd/hostapd.conf
-interface=ap0
+interface=wlan0
 bridge=br0
 driver=$RADIO_DRIVER
 country_code=$AP_COUNTRY
@@ -342,25 +330,10 @@ EOF
 	# if no mesh point is created, set up network interfaces, hostapd and dnsmasq to operate without a bridge
 		clear
 		
-		# append interface settings to /etc/dhcpcd.conf
-		echo -en "Appending bridge interface settings to /etc/dhcpcd.conf..."
-		cat <<EOT >> /etc/dhcpcd.conf
-denyinterfaces wlan0
-EOT
-		rc=$?
-		if [[ $rc != 0 ]] ; then
-		    	echo -en "[FAIL]\n"
-			echo ""
-			exit $rc
-		else
-			echo -en "[OK]\n"
-		fi
-
-
 		# configure dnsmasq
 		echo -en "Creating dnsmasq configuration file..."
 		cat <<EOF > /etc/dnsmasq.conf
-interface=ap0
+interface=wlan0
 address=/#/$AP_IP
 address=/apple.com/0.0.0.0
 dhcp-range=$AP_DHCP_START,$AP_DHCP_END,$DHCP_NETMASK,$DHCP_LEASE
@@ -383,8 +356,8 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
-auto ap0
-iface ap0 inet static
+auto wlan0
+iface wlan0 inet static
 static ip_address=$AP_IP
 static netmask=$AP_NETMASK
 
@@ -402,7 +375,7 @@ EOF
 		# create hostapd configuration with user's settings
 		echo -en "Creating hostapd.conf file..."
 		cat <<EOF > /etc/hostapd/hostapd.conf
-interface=ap0
+interface=wlan0
 driver=$RADIO_DRIVER
 country_code=$AP_COUNTRY
 ctrl_interface=/var/run/hostapd
@@ -444,7 +417,6 @@ update-rc.d dnsmasq enable
 
 
 # pass custom params into ap startup script
-sed -i "s/SSID/$MESH_SSID/" scripts/subnodes_ap.sh
 cp scripts/subnodes_ap.sh /etc/init.d/subnodes_ap
 chmod 755 /etc/init.d/subnodes_ap
 update-rc.d subnodes_ap defaults

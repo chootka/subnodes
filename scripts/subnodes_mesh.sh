@@ -1,6 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 # /etc/init.d/subnodes_mesh
 # starts up mesh0, bat0 interfaces
+
+### BEGIN INIT INFO
+# Provides:          subnodes_mesh
+# Required-Start:    dbus subnodes_ap
+# Required-Stop:     dbus subnodes_ap
+# Should-Start:	     $syslog
+# Should-Stop:       $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Subnodes MESH
+# Description:       Subnodes MESH script
+### END INIT INFO
 
 NAME=subnodes_mesh
 DESC="Brings our BATMAN-ADV mesh point up."
@@ -19,40 +31,32 @@ echo $PHY $WLAN1 > /tmp/mesh.log
 
 	case "$1" in
 		start)
-			echo "Starting $NAME mesh point..."
+			echo "Starting $NAME mesh point on interface $PHY:$WLAN1..."
 
-			# delete wlan1 if it exists
-			if [ -n "$WLAN1" ] ; then
-				ifconfig $WLAN1 down
-				iw $WLAN1 del
+			ifconfig $WLAN1 down
 
-				# associate the mesh0 interface to a physical device
-				iw phy $PHY interface add mesh0 type adhoc
-				# ifconfig mesh0 mtu 1532
-				ifconfig mesh0 mtu MTU
-				# iwconfig mesh0 mode ad-hoc essid submesh ap 02:12:34:56:78:90 channel 3
-				iwconfig mesh0 mode ad-hoc essid SSID ap CELL_ID channel CHAN
-			fi
-
-			ifconfig mesh0 down
+			# set the wlan interface to a ibss (ad-hoc) mode
+			iw phy $PHY interface add $WLAN1 type ibss
+			ifconfig $WLAN1 mtu MTU
+			iwconfig $WLAN1 mode ad-hoc essid SSID ap CELL_ID channel CHAN
 
 			# add the interface to batman
-			batctl if add mesh0
+			batctl if add $WLAN1
 			batctl ap_isolation 1
 
 			# add bat0 to our bridge
-			if [[ -x /sys/class/net/br0 ]]; 
+			if [[ -x /sys/class/net/br0 ]]; then
 				brctl addif br0 bat0
 			fi
 
 			# bring up the BATMAN adv interface
-			ifconfig mesh0 up
+			ifconfig $WLAN1 up
 			ifconfig bat0 up
 			;;
 		status)
 		;;
 		stop)
-			ifconfig mesh0 down
+			ifconfig $WLAN1 down
 			ifconfig bat0 down
 		;;
 
