@@ -75,16 +75,29 @@ clear
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# CHECK ADDITIONAL RADIO IS AVAILABLE FOR MESH POINT IF SELECTED
+# CHECK THAT REQUIRED RADIOS ARE AVAILABLE FOR AP & MESH POINT [IF SELECTED]
 #
+# check that iw list does not fail with 'nl80211 not found'
+echo -en "Checking that nl80211 compatible USB wifi radio is available..."
+iw list > /dev/null 2>&1 | grep 'nl80211 not found'
+rc=$?
+if [[ $rc = 0 ]] ; then
+	echo -en "[FAIL]\n"
+	echo "Make sure you are using a wifi radio that is nl80211 compatible."
+	exit $rc
+else
+	echo -en "[OK]\n"
+fi
+
+# now check that iw list finds a radio other than wlan0 if mesh point option was set to 'y' in config file
 case $DO_SET_MESH in
 	[Yy]* )
 		clear
 		readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2!="wlan0"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
 
 		if [[ -z $IW ]] ; then
-			echo "Second wireless adapter not found! Please plug in an addition wireless radio for the mesh point and re-run this script."
-			exit 0;
+			echo "Warning! Second wireless adapter not found! Please plug in an addition wireless radio after installation completes and before reboot."
+			sleep 2
 		fi
 ;;
 esac
@@ -165,18 +178,6 @@ systemctl enable networking
 clear
 echo "Configuring Access Point..."
 echo ""
-
-# check that iw list does not fail with 'nl80211 not found'
-echo -en "checking that nl80211 compatible USB wifi radio is available..."
-iw list > /dev/null 2>&1 | grep 'nl80211 not found'
-rc=$?
-if [[ $rc = 0 ]] ; then
-	echo -en "[FAIL]\n"
-	echo "Make sure you are using a wifi radio that is nl80211 compatible."
-	exit $rc
-else
-	echo -en "[OK]\n"
-fi
 
 # install required packages
 echo ""
