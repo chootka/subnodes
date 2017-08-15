@@ -83,7 +83,7 @@ readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2~"wlan"{W
 if [[ -z $IW ]] ; then
 	echo -en "[FAIL]\n"
 	echo "Warning! Wireless adapter not found! Please plug in a wireless radio after installation completes and before reboot."
-	sleep 2
+	sleep 5
 else
 	echo -en "[OK]\n"
 fi
@@ -91,12 +91,11 @@ fi
 # now check that iw list finds a radio other than wlan0 if mesh point option was set to 'y' in config file
 case $DO_SET_MESH in
 	[Yy]* )
-		clear
 		readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2!="wlan0"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
 
 		if [[ -z $IW ]] ; then
 			echo "Warning! Second wireless adapter not found! Please plug in an addition wireless radio after installation completes and before reboot."
-			sleep 2
+			sleep 5
 		else
 			echo -en "[OK]\n"
 		fi
