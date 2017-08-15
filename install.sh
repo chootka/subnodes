@@ -259,8 +259,8 @@ iface eth0 inet dhcp
 
 auto wlan0
 iface wlan0 inet static
-static ip_address=$AP_IP
-static netmask=$AP_NETMASK
+address $AP_IP
+netmask $AP_NETMASK
 
 auto br0
 iface br0 inet static
@@ -412,7 +412,7 @@ esac
 #
 
 clear
-update-rc.d hostapd enable
+update-rc.d hostapd remove
 update-rc.d dnsmasq enable
 
 

@@ -20,9 +20,9 @@ PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
 # get second PHY WLAN pair
-readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2~"wlan"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
+readarray IW < <(iw dev | awk '$1~"phy#"{PHY=$1}; $1=="Interface" && $2!="wlan0"{WLAN=$2; sub(/#/, "", PHY); print PHY " " WLAN}')
 
-IW1=( ${IW[1]} )
+IW1=( ${IW[0]} )
 
 PHY=${IW1[0]}
 WLAN1=${IW1[1]}
@@ -36,7 +36,7 @@ echo $PHY $WLAN1 > /tmp/mesh.log
 			ifconfig $WLAN1 down
 
 			# set the wlan interface to a ibss (ad-hoc) mode
-			iw phy $PHY interface add $WLAN1 type ibss
+			#iw phy $PHY interface add $WLAN1 type ibss
 			ifconfig $WLAN1 mtu MTU
 			iwconfig $WLAN1 mode ad-hoc essid SSID ap CELL_ID channel CHAN
 

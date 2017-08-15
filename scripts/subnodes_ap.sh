@@ -2,6 +2,18 @@
 # /etc/init.d/subnodes_ap
 # starts up node.js app, access point interface, hostapd, and dnsmasq for broadcasting a wireless network with captive portal
 
+### BEGIN INIT INFO
+# Provides:          subnodes_ap
+# Required-Start:    dbus
+# Required-Stop:     dbus
+# Should-Start:	     $syslog
+# Should-Stop:       $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Subnodes Access Point
+# Description:       Subnodes Access Point script
+### END INIT INFO
+
 NAME=subnodes_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
 DAEMON_PATH="/home/pi/subnodes"
@@ -40,7 +52,6 @@ echo $PHY $WLAN0 > /tmp/ap.log
 
 			# start the hostapd and dnsmasq services
 			service dnsmasq start
-			#service hostapd start
 			hostapd -B /etc/hostapd/hostapd.conf
 
 			# start the node.js chat application
@@ -80,12 +91,12 @@ echo $PHY $WLAN0 > /tmp/ap.log
 			fi
 
 			ifconfig $WLAN0 down
-			
+
 			# delete access point iface to our bridge
 			if [[ -x /sys/class/net/br0 ]]; then
 				brctl delif br0 $WLAN0
 			fi
-			
+
 			/etc/init.d/hostapd stop
             service dnsmasq stop
 		;;
