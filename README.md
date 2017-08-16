@@ -40,7 +40,7 @@ Also, if this is your first time connecting to your Raspberry Pi headlessly (i.e
         cd subnodes
         sudo ./install.sh
 
-The installation process takes about 15 minutes. You will be prompted to name your mesh network and the option to name and install a wireless access point. After it has completed, you will have a running web server, wireless access point, and BATMAN Advanced mesh node. Connecting to the network and navigating to a browser page will redirect you to http://www.subnodes.com, where a sample node.js chat client will be running. 
+The installation process takes about 15 minutes. You will be prompted to name your mesh network and the option to name and install a wireless access point. After it has completed, you will have a running web server, wireless access point, and BATMAN Advanced mesh node. Connecting to the network and navigating to a browser page will redirect you to http://www.subnodes.org, where a sample node.js chat client will be running. 
 
 From here, fork, build, share your ideas, and have fun!
 
