@@ -16,7 +16,7 @@
 
 NAME=subnodes_ap
 DESC="Brings up wireless access point for connecting to web server running on the device."
-DAEMON_PATH="/home/pi/subnodes"
+DAEMON_PATH="$(dirname "$(pwd)")"
 DAEMONOPTS="sudo NODE_ENV=production PORT=80 nodemon subnode.js"
 PIDFILE=/var/run/$NAME.pid
 

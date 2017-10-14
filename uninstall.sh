@@ -73,8 +73,8 @@ case $yn in
 		rm /etc/subnodes.config
 
 		echo "Deleting subnodes folder"
-		cd /home/pi/
-		rm -rf /home/pi/subnodes
+		cd "$(dirname "$(pwd)")"
+		rm -rf subnodes
 		echo -en "[OK]\n"
 		read -p "Do you wish to reboot now? [N] " yn
 		case $yn in
