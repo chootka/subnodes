@@ -149,7 +149,7 @@ echo ""
 # install chat room
 echo "Installing chat room..."
 # go back to our subnodes directory
-cd /home/pi/subnodes/
+cd "$(dirname $(readlink -f $0))"
 
 # download subnodes app dependencies
 npm install
