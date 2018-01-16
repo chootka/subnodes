@@ -17,19 +17,25 @@
   	<hr>
   	<p>The Subnodes project is an open source initiative focused on streamlining the process of setting up a <a href="http://www.raspberrypi.org/" target="_blank">Raspberry Pi</a> as a wireless access point for distributing content, media, and shared digital experiences. The device behaves as a web server, creates its own local area network, and does not connect with the Internet. This is key for the sake of offering a space where people can communicate anonymously and freely, as well as maximizing the portability of the network–no dependability on an internet connection means the device can be taken and remain active anywhere. The devices are also mesh enabled, implementing the <a href="http://www.open-mesh.org/projects/batman-adv/wiki" target="_blank">BATMAN Advanced</a> routing protocol.</p>
 
-  	<p>Support for Subnodes has been provided by <a href="http://eyebeam.org/" target="_blank">Eyebeam</a>. Source code can be found over on  <a href="https://github.com/chootka/subnodes" target="_blank">github</a>, which includes an installation script and detailed installation instructions.
+  	<p>Support for Subnodes has been provided by <a href="http://eyebeam.org/" target="_blank">Eyebeam</a>. There are several Subnodes github repositories available depending on your needs:</p>
+    <ul>
+      <li><a href="https://github.com/chootka/subnodes" target="_blank">Subnodes (Original)</a> provides an Access Point, Mesh Node, Node.js Server running socket.io chat room.</li>
+      <li><a href="https://github.com/chootka/subnodes-lighttpd" target="_blank">Subnodes-lighttpd</a> provides an Access Point, Mesh Node, lighttpd web server with default HTML page.</li>
+      <li><a href="https://github.com/chootka/subnodes" target="_blank">Subnodes-workshop-fs</a> provides an Access Point, Mesh Node, lighttpd web server with default HTML page, plus an installation of the samba file server and scripts for setting up either a mesh client or a meshed gateway node for connecting a mesh network to the Internet (and to other mesh networks via the Internet). Updated installation instructions and guide for this TBD.</li>
+    </ul>
+
+    <p>Detailed installation instructions scripts can be found in each respective repository.</p>
 
     <p>To get in contact, <a href="mailto:info@subnodes.org">email us</a>.</p>
 
     <div class="about">
       <h3>Hardware</h3>
-      <p>Subnodes runs off a <a href="http://www.newark.com/raspberry-pi/raspbrry-modb-512m/model-b-assembled-board-only/dp/43W5302" target="_blank">Raspberry Pi Model B</a>, <a href="http://www.amazon.com/gp/product/B003VNKNE6/" target="_blank">8GB class 10 SD card</a>, <a href="http://www.amazon.com/gp/product/B007BWFXYS/" target="_blank">wireless adapater</a> running the rt5370 chipset, and optional <a href="http://www.amazon.com/gp/product/B00AJA75Y0/" target="_blank">battery</a>, if you need to get mobile with your device. An additional <a href="http://www.amazon.com/gp/product/B007BWFXYS/" target="_blank">wireless adapter</a> is added for running the mesh point.</p>
+      <p>Subnodes runs off a Raspberry Pi 2 or 3, 8GB class 10 SD card, wireless adapater running the rt5370 chipset, and optional battery, if you need to get mobile with your device. An additional wireless adapter that supports 'mesh' or 'ad hoc' mode is required for running the mesh point.</p>
+      <p>*Note: If you are running a Raspberry Pi 3, you can make use of the onboard wireless radio for your access point. You will still need an additional wireless adapter that supports 'mesh' or 'ad hoc' mode for the mesh point.</p>
       <h3>Software</h3>
       <p>Subnodes networking is set up using linux software packages <a href="http://wireless.kernel.org/en/users/Documentation/hostapd" target="_blank">hostapd</a> and <a href="http://www.thekelleys.org.uk/dnsmasq/doc.html" target="_blank">dnsmasq</a>.</p>
 
-      <p>The latest version of Raspbian comes with the latest BATMAN advanced module installed, so mesh-enabling your device is as simple as turning the module on and running a few commands.</p>
-
-      <p>Detailed installation instructions and an installation script can be found over on <a href="https://github.com/chootka/subnodes" target="_blank">github</a>.</p>
+      <p>The latest version of Raspbian comes with the BATMAN advanced module installed, so mesh-enabling your device is as simple as turning the kernel module on and running a few commands.</p>
     </div>
   </body>
  </html>
