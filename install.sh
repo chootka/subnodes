@@ -118,8 +118,8 @@ esac
 # SOFTWARE INSTALL
 #
 # update the packages
-echo "Updating apt-get and installing iw package for network interface configuration..."
-apt-get update && apt-get install -y iw 
+echo "Updating apt-get and installing iw package for network interface configuration and batctl to manage batman adv..."
+apt-get update && apt-get install -y iw batctl
 echo ""
 echo "Loading the subnodes configuration file..."
 
@@ -185,8 +185,8 @@ echo ""
 
 # install required packages
 echo ""
-echo -en "Installing bridge-utils, batctl, hostapd and dnsmasq..."
-apt-get install -y bridge-utils hostapd dnsmasq batctl
+echo -en "Installing bridge-utils, hostapd and dnsmasq..."
+apt-get install -y bridge-utils hostapd dnsmasq
 echo -en "[OK]\n"
 
 # backup the existing interfaces file
@@ -277,6 +277,7 @@ EOF
 auto lo
 iface lo inet loopback
 
+allow-hotplug eth0
 auto eth0
 iface eth0 inet dhcp
 
@@ -380,6 +381,7 @@ EOF
 auto lo
 iface lo inet loopback
 
+allow-hotplug eth0
 auto eth0
 iface eth0 inet dhcp
 
