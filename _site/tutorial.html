@@ -1,0 +1,175 @@
+<!DOCTYPE HTML> 
+<HTML>
+  <head>
+    <title>subnodes</title>
+    <link href="css/foundation.min.css" rel="stylesheet" type="text/css">
+    <link href="css/app.css" rel="stylesheet" type="text/css">
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=js&skin=desert"></script>
+  </head>
+
+  <body>
+  	<ul>
+  		<li><h2><a href="index.html">subnodes</a></h2></li>
+  		<li class="active">Tutorial</li>
+      <li><a href="https://github.com/chootka/subnodes" target="_blank">Github</a></li>
+  		<li><a href="https://twitter.com/woolypixel" target="_blank">Twitter</a></li>
+  		<li><a href="mailto:info@subnodes.org">Email</a></li>
+  	</ul>
+  	<hr>
+    <div class="container">
+      <p>This tutorial assumes you know how to connect to your Raspberry Pi (henceforth referred to as RPi) and will be working from the command line. I work with the RPi 'headless', simply meaning I SSH into the pi from my computer and work solely in the command line. I will be posting other tutorials on how to do this if you aren't sure yourself!</p>
+      <div class="step">
+        <div class="heading">Make sure apt-get is updated</div>
+        <pre class="prettyprint">
+
+  sudo apt-get update
+      </pre>
+      </div>
+      <div class="step">
+        <div class="heading">install git</div>
+        <pre class="prettyprint">
+
+  sudo apt-get install git-core
+        </pre>
+      </div>
+      <div class="step">
+        <div class="heading">install node binaries</div>
+        <pre class="prettyprint">
+
+  cd /usr/local
+  wget http://nodejs.org/dist/v0.9.9/node-v0.9.9-linux-arm-pi.tar.gz
+  sudo tar xzvf node-v0.9.9-linux-arm-pi.tar.gz --strip=1
+        </pre>
+      </div>
+      <div class="step">
+        <div class="heading">Navigate back to your home directory and create a new directory to hold your applications</div>
+        <pre class="prettyprint">
+
+  cd ~
+  mkdir www
+  cd www
+        </pre>
+      </div>
+      <div class="step">
+        <div class="heading">Clone the subnodes repository</div> 
+        <div class="subheading">We will clone into this new `www` directory. There is a sample chat application we will be running, to get you started with Node and socket.io.</div>
+        <pre class="prettyprint">
+
+  git clone https://github.com/chootka/subnodes.git
+  cd subnodes
+        </pre>
+      </div>
+      <div class="step">
+        <div class="heading">Setup the node.js app</div>
+        <div class="subheading">We will use the Node Package Manager (NPM) to read the package.json file in the directory and install all needed dependencies. This may take a while.</div>
+        <pre class="prettyprint">
+
+  npm install
+        </pre>
+      </div>
+      <div class="step">
+        <div class="heading">Install nodemon globally.</div>
+        <div class="subheading">Nodemon is a background process that will run your node application and also watch for any changes in the node application's source code. If any changes are detected, nodemon recompiles the application and relaunches it.</div>
+        <pre class="prettyprint">
+
+  sudo npm install -g nodemon
+        </pre>
+      </div>
+      <div class="step">
+        <div class="heading">Let's run the node app!</div>
+        <pre class="prettyprint">
+
+  NODE_ENV=production nodemon subnode.js
+        </pre>
+        <div class="subheading">If you open up a browser window and navigate to the IP address of your RPi, you should see the chat application running.</div>
+      </div>
+      <div class="step">
+        <br/>
+        <div class="heading">Configuring the wireless access point (AP) and captive portal.</div>
+        <div class="subheading">in <b>/etc/network/interfaces</b>, comment out wpa-roam because it interferes with hostapd</div>
+        <pre class="prettyprint">
+
+  #wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+        </pre>
+        <div class="subheading">then add the following lines</div>
+        <pre class="prettyprint">
+
+  iface wlan0 inet static
+  address 10.0.0.1
+  netmask 255.255.255.0
+        </pre>
+      </div>
+      <div class="step">
+        <div class="subheading">Install hostapd.</div>
+        <pre class="prettyprint">
+
+  sudo apt-get install hostapd
+        </pre>
+        <div class="subheading">define DAEMON_CONF, so hostapd starts on system boot up</div>
+        <pre class="prettyprint">
+
+  DAEMON_CONF="/etc/hostapd/hostapd.conf"
+        </pre>
+        <div class="subheading">Now we will write our hostapd configuration file. Open up a blank file:</div>
+        <pre class="prettyprint">
+
+  sudo nano /etc/hostapd/hostapd.conf
+        </pre>
+        <div class="subheading">Add the following lines to it:</div>
+        <pre class="prettyprint">
+
+  interface=wlan0
+  driver=nl80211
+  ctrl_interface=/var/run/hostapd
+  ctrl_interface_group=0
+  ssid=myRadNetwork
+  hw_mode=g
+  channel=3
+  beacon_int=100
+  auth_algs=3
+  wmm_enabled=1
+  ap_isolate=1
+        </pre>
+      </div>
+      <div class="step">
+        <br/>
+        <div class="heading">Configure the captive portal with dnsmasq</div>
+        <div class="subheading">Install dnsmasq</div>
+        <pre class="prettyprint">
+
+  sudo apt-get install dnsmasq
+        </pre>
+        <div class="subheading">Open up the dnsmasq configuration file.</div>
+        <pre class="prettyprint">
+
+  sudo nano /etc/dnsmasq.conf
+        </pre>
+        <div class="subheading">... and replace everything in there with the lines below</div>
+        <pre class="prettyprint">
+
+  interface=wlan0
+  dhcp-range=10.0.0.2,10.0.0.254,255.255.255.0,12h
+  address=/#/10.0.0.1
+  address=/apple.com/0.0.0.0
+        </pre>
+        <div class="subheading">Restart dnsmasq so the changes take effect.</div>
+        <pre class="prettyprint">
+
+  sudo /etc/init.d/dnsmasq restart
+        </pre>
+        <div class="subheading">And now bring up the network!</div>
+        <pre class="prettyprint">
+
+  sudo hostapd -B /etc/hostapd/hostapd.conf
+        </pre>
+        <div class="subheading">You should see the open network named 'myRadNetwork' appear in your list of available networks on your laptop or phone. Keep in mind it sometimes takes several minutes before the network lets you connect to it. This only happens the first time you bring the network up (and I'm not yet sure why).
+
+          Join the network, open up a browser and type any url in (for example, chat.com). You should be redirected to hotprobs.com and into the chat application.
+        </div>
+      </div>
+      <div class="step">
+        <br/>
+        <div class="heading">Coming soon... how to make your RPi a mesh point!</div>
+    </div>
+  </body>
+ </html>
