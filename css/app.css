@@ -75,6 +75,17 @@ li.active {
 	margin: 20px 40px;
 }
 
+ul.list li {
+	color:#eee;
+	font-size:16px;
+	line-height: 26px;
+	margin: 10px 40px;
+}
+
+ul.list li a {
+	color: #2ba6cb;
+}
+
 
 /* -----------------------------------------
    TUTORIAL
